@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\UniversityController;
+use App\Http\Controllers\Admin\UniversityMediaController;
+use App\Http\Controllers\Admin\UniversityProgramController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -66,6 +68,22 @@ Route::middleware(['web', 'auth'])->prefix('admin')->group(function () {
     Route::delete('universities/{university}', [UniversityController::class, 'destroy'])->name('universities.destroy');
     // Dependent API (state -> cities)
     Route::get('api/cities-by-state', [UniversityController::class, 'citiesByState'])->name('api.citiesByState');
+
+    // University Programs Routes
+    Route::get('universities/{university}/programs', [UniversityProgramController::class, 'index'])->name('universities.programs.index');
+    Route::get('universities/{university}/programs/create', [UniversityProgramController::class, 'create'])->name('universities.programs.create');
+    Route::post('universities/{university}/programs', [UniversityProgramController::class, 'store'])->name('universities.programs.store');
+    Route::get('universities/{university}/programs/{program}/edit', [UniversityProgramController::class, 'edit'])->name('universities.programs.edit');
+    Route::put('universities/{university}/programs/{program}', [UniversityProgramController::class, 'update'])->name('universities.programs.update');
+    Route::delete('universities/{university}/programs/{program}', [UniversityProgramController::class, 'destroy'])->name('universities.programs.destroy');
+
+    // University Media Routes
+    Route::get('universities/{university}/media', [UniversityMediaController::class, 'index'])->name('universities.media.index');
+    Route::get('universities/{university}/media/create', [UniversityMediaController::class, 'create'])->name('universities.media.create');
+    Route::post('universities/{university}/media', [UniversityMediaController::class, 'store'])->name('universities.media.store');
+    Route::get('universities/{university}/media/{media}/edit', [UniversityMediaController::class, 'edit'])->name('universities.media.edit');
+    Route::put('universities/{university}/media/{media}', [UniversityMediaController::class, 'update'])->name('universities.media.update');
+    Route::delete('universities/{university}/media/{media}', [UniversityMediaController::class, 'destroy'])->name('universities.media.destroy');
 });
 
 require __DIR__ . '/auth.php';

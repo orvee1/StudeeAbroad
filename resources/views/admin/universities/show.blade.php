@@ -3,6 +3,21 @@
 @section('page_title', 'University Details')
 @section('breadcrumb', 'Admin / Universities / Details')
 
+<div class="mb-4 bg-white border border-slate-200 rounded-2xl p-3 flex flex-wrap gap-2">
+    <a href="{{ route('universities.show', $university) }}"
+       class="px-4 py-2 rounded-xl text-sm border border-slate-200 bg-slate-900 text-white">
+        Overview
+    </a>
+    <a href="{{ route('universities.programs.index', $university) }}"
+       class="px-4 py-2 rounded-xl text-sm border border-slate-200 hover:bg-slate-50">
+        Programs
+    </a>
+    <a href="{{ route('universities.media.index', $university) }}"
+       class="px-4 py-2 rounded-xl text-sm border border-slate-200 hover:bg-slate-50">
+        Media
+    </a>
+</div>
+
 @section('content')
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">

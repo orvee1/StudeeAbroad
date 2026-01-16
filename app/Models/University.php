@@ -48,4 +48,14 @@ class University extends Model
     {
         return $this->belongsTo(City::class);
     }
+
+    public function media()
+    {
+        return $this->hasMany(UniversityMedia::class);
+    }
+
+    public function programs()
+    {
+        return $this->hasMany(UniversityProgram::class);
+    }
 }
