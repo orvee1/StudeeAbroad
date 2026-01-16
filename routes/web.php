@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\StateController;
+use App\Http\Controllers\Admin\UniversityController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -54,6 +55,17 @@ Route::middleware(['web', 'auth'])->prefix('admin')->group(function () {
     Route::delete('cities/{city}', [CityController::class, 'destroy'])->name('cities.destroy');
     // Dependent API for state dropdown (country -> states)
     Route::get('api/states-by-country', [CityController::class, 'statesByCountry'])->name('api.statesByCountry');
+
+    // University Routes
+    Route::get('universities', [UniversityController::class, 'index'])->name('universities.index');
+    Route::get('universities/create', [UniversityController::class, 'create'])->name('universities.create');
+    Route::post('universities', [UniversityController::class, 'store'])->name('universities.store');
+    Route::get('universities/{university}', [UniversityController::class, 'show'])->name('universities.show');
+    Route::get('universities/{university}/edit', [UniversityController::class, 'edit'])->name('universities.edit');
+    Route::put('universities/{university}', [UniversityController::class, 'update'])->name('universities.update');
+    Route::delete('universities/{university}', [UniversityController::class, 'destroy'])->name('universities.destroy');
+    // Dependent API (state -> cities)
+    Route::get('api/cities-by-state', [UniversityController::class, 'citiesByState'])->name('api.citiesByState');
 });
 
 require __DIR__ . '/auth.php';
