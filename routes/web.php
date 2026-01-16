@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,15 @@ Route::middleware(['web', 'auth'])->prefix('admin')->group(function () {
     Route::get('countries/{country}/edit', [CountryController::class, 'edit'])->name('countries.edit');
     Route::put('countries/{country}', [CountryController::class, 'update'])->name('countries.update');
     Route::delete('countries/{country}', [CountryController::class, 'destroy'])->name('countries.destroy');
+
+    // State Routes
+    Route::get('states', [StateController::class, 'index'])->name('states.index');
+    Route::get('states/create', [StateController::class, 'create'])->name('states.create');
+    Route::post('states', [StateController::class, 'store'])->name('states.store');
+    Route::get('states/{state}', [StateController::class, 'show'])->name('states.show');
+    Route::get('states/{state}/edit', [StateController::class, 'edit'])->name('states.edit');
+    Route::put('states/{state}', [StateController::class, 'update'])->name('states.update');
+    Route::delete('states/{state}', [StateController::class, 'destroy'])->name('states.destroy');
 });
 
 require __DIR__ . '/auth.php';
