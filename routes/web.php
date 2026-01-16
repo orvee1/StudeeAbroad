@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\ProfileController;
@@ -42,6 +43,17 @@ Route::middleware(['web', 'auth'])->prefix('admin')->group(function () {
     Route::get('states/{state}/edit', [StateController::class, 'edit'])->name('states.edit');
     Route::put('states/{state}', [StateController::class, 'update'])->name('states.update');
     Route::delete('states/{state}', [StateController::class, 'destroy'])->name('states.destroy');
+
+    // City Routes
+    Route::get('cities', [CityController::class, 'index'])->name('cities.index');
+    Route::get('cities/create', [CityController::class, 'create'])->name('cities.create');
+    Route::post('cities', [CityController::class, 'store'])->name('cities.store');
+    Route::get('cities/{city}', [CityController::class, 'show'])->name('cities.show');
+    Route::get('cities/{city}/edit', [CityController::class, 'edit'])->name('cities.edit');
+    Route::put('cities/{city}', [CityController::class, 'update'])->name('cities.update');
+    Route::delete('cities/{city}', [CityController::class, 'destroy'])->name('cities.destroy');
+    // Dependent API for state dropdown (country -> states)
+    Route::get('api/states-by-country', [CityController::class, 'statesByCountry'])->name('api.statesByCountry');
 });
 
 require __DIR__ . '/auth.php';
