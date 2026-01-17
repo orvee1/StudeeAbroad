@@ -20,6 +20,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
+        'role',
+        'is_active',
         'password',
     ];
 
@@ -41,5 +44,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_active' => 'boolean',
     ];
+
+    public function isAdmin(): bool
+    {
+        return ($this->role ?? 'student') === 'admin';
+    }
+
+    public function isStudent(): bool
+    {
+        return ($this->role ?? 'student') === 'student';
+    }
 }
