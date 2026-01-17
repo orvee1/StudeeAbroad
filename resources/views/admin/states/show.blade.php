@@ -52,11 +52,11 @@
                 </div>
 
                 <div class="p-5 border-t border-slate-200 flex items-center gap-2">
-                    <a href="{{ route('admin.states.edit', $state) }}"
+                    <a href="{{ route('states.edit', $state) }}"
                         class="px-4 py-2 rounded-xl border border-slate-200 text-sm hover:bg-slate-50">
                         Edit
                     </a>
-                    <a href="{{ route('admin.states.index') }}"
+                    <a href="{{ route('states.index') }}"
                         class="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm hover:opacity-90">
                         Back
                     </a>

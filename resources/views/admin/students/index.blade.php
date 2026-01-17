@@ -16,7 +16,7 @@
         </div>
 
         <div class="p-4 lg:p-6 border-b border-slate-200">
-            <form class="grid grid-cols-1 md:grid-cols-4 gap-3" method="GET" action="{{ route('admin.students.index') }}">
+            <form class="grid grid-cols-1 md:grid-cols-4 gap-3" method="GET" action="{{ route('students.index') }}">
                 <div class="md:col-span-2">
                     <label class="text-xs text-slate-500">Search</label>
                     <input name="q" value="{{ $q ?? '' }}" placeholder="name / email / phone..."
@@ -35,7 +35,7 @@
 
                 <div class="flex items-end gap-2">
                     <button class="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm hover:opacity-90">Filter</button>
-                    <a href="{{ route('admin.students.index') }}"
+                    <a href="{{ route('students.index') }}"
                         class="px-4 py-2 rounded-xl border border-slate-200 text-sm hover:bg-slate-50">Reset</a>
                 </div>
             </form>

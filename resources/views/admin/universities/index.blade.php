@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('page_title', 'Universities')
 @section('breadcrumb', 'Admin / Universities')

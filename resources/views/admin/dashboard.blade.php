@@ -11,22 +11,22 @@
                 [
                     'label' => 'Countries',
                     'value' => $stats['countries'] ?? 0,
-                    'route' => route('admin.countries.index'),
+                    'route' => route('countries.index'),
                 ],
-                ['label' => 'States', 'value' => $stats['states'] ?? 0, 'route' => route('admin.states.index')],
-                ['label' => 'Cities', 'value' => $stats['cities'] ?? 0, 'route' => route('admin.cities.index')],
+                ['label' => 'States', 'value' => $stats['states'] ?? 0, 'route' => route('states.index')],
+                ['label' => 'Cities', 'value' => $stats['cities'] ?? 0, 'route' => route('cities.index')],
                 [
                     'label' => 'Universities',
                     'value' => $stats['universities'] ?? 0,
-                    'route' => route('admin.universities.index'),
+                    'route' => route('universities.index'),
                 ],
                 [
                     'label' => 'Programs',
                     'value' => $stats['programs'] ?? 0,
-                    'route' => route('admin.universities.index'),
+                    'route' => route('universities.index'),
                 ],
-                ['label' => 'Media', 'value' => $stats['media'] ?? 0, 'route' => route('admin.universities.index')],
-                ['label' => 'Students', 'value' => $stats['students'] ?? 0, 'route' => route('admin.students.index')],
+                ['label' => 'Media', 'value' => $stats['media'] ?? 0, 'route' => route('universities.index')],
+                ['label' => 'Students', 'value' => $stats['students'] ?? 0, 'route' => route('students.index')],
             ];
         @endphp
 
@@ -46,7 +46,7 @@
                     <div class="text-sm text-slate-500">Latest</div>
                     <div class="text-lg font-semibold">Registered Students</div>
                 </div>
-                <a href="{{ route('admin.students.index') }}"
+                <a href="{{ route('students.index') }}"
                     class="text-sm px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50">All Students</a>
             </div>
 
@@ -79,13 +79,13 @@
                     <div class="text-sm text-slate-500">Highlight</div>
                     <div class="text-lg font-semibold">Featured Universities</div>
                 </div>
-                <a href="{{ route('admin.universities.index') }}"
+                <a href="{{ route('universities.index') }}"
                     class="text-sm px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50">Manage</a>
             </div>
 
             <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 @forelse($featuredUniversities as $u)
-                    <a href="{{ route('admin.universities.show', $u) }}"
+                    <a href="{{ route('universities.show', $u) }}"
                         class="border border-slate-200 rounded-2xl p-4 hover:bg-slate-50">
                         <div class="flex items-center gap-3">
                             <div class="h-10 w-10 rounded-xl bg-slate-100 overflow-hidden flex items-center justify-center">
