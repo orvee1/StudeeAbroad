@@ -11,7 +11,7 @@
                 <div class="text-sm text-slate-500">Add a new country for your study abroad platform.</div>
             </div>
 
-            <form class="p-5 space-y-5" method="POST" action="{{ route('admin.countries.store') }}"
+            <form class="p-5 space-y-5" method="POST" action="{{ route('countries.store') }}"
                 enctype="multipart/form-data">
                 @csrf
                 @include('admin.countries.partials.form', ['country' => null])

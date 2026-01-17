@@ -14,7 +14,13 @@ use App\Http\Controllers\Student\StudentDashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    if (auth()->check()) {
+        if (auth()->user()->isAdmin()) {
+            return redirect()->route('dashboard');
+        }
+        return redirect()->route('student.dashboard');
+    }
+    return view('client.home');
 })->name('home');
 
 Route::middleware(['auth'])->group(function () {
@@ -31,9 +37,9 @@ Route::middleware('guest')->group(function () {
     Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.store');
 });
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', function () {
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('dashboard');
     })->name('home');
 
     Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
