@@ -25,6 +25,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
+        if (auth()->user()->isAdmin()) {
+            return redirect()->route('dashboard');
+        }
         return redirect()->route('student.dashboard');
     })->name('dashboard');
 

@@ -131,7 +131,7 @@ class CountryController extends Controller
         $country->update($data);
 
         return redirect()
-            ->route('admin.countries.index')
+            ->route('countries.index')
             ->with('success', 'Country updated successfully.');
     }
 
@@ -140,7 +140,7 @@ class CountryController extends Controller
         $country->delete();
 
         return redirect()
-            ->route('admin.countries.index')
+            ->route('countries.index')
             ->with('success', 'Country moved to trash.');
     }
 }
