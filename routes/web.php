@@ -1,33 +1,49 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\StateController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\UniversityController;
 use App\Http\Controllers\Admin\UniversityMediaController;
 use App\Http\Controllers\Admin\UniversityProgramController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Student\StudentDashboardController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return redirect()->route('student.dashboard');
+    })->name('dashboard');
 
-Route::middleware(['web', 'auth'])->prefix('admin')->group(function () {
+    Route::get('/student/dashboard', StudentDashboardController::class)->name('student.dashboard');
+});
+
+// Admin Login (separate URL)
+Route::middleware('guest')->group(function () {
+    Route::get('/admin/login', [AdminAuthController::class, 'showLogin'])->name('admin.login');
+    Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.store');
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('admin.dashboard');
+    })->name('home');
+
+    Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Students
+    Route::get('students', [StudentController::class, 'index'])->name('students.index');
 
     // Country Routes
     Route::get('countries', [CountryController::class, 'index'])->name('countries.index');
@@ -55,7 +71,6 @@ Route::middleware(['web', 'auth'])->prefix('admin')->group(function () {
     Route::get('cities/{city}/edit', [CityController::class, 'edit'])->name('cities.edit');
     Route::put('cities/{city}', [CityController::class, 'update'])->name('cities.update');
     Route::delete('cities/{city}', [CityController::class, 'destroy'])->name('cities.destroy');
-    // Dependent API for state dropdown (country -> states)
     Route::get('api/states-by-country', [CityController::class, 'statesByCountry'])->name('api.statesByCountry');
 
     // University Routes
@@ -66,10 +81,9 @@ Route::middleware(['web', 'auth'])->prefix('admin')->group(function () {
     Route::get('universities/{university}/edit', [UniversityController::class, 'edit'])->name('universities.edit');
     Route::put('universities/{university}', [UniversityController::class, 'update'])->name('universities.update');
     Route::delete('universities/{university}', [UniversityController::class, 'destroy'])->name('universities.destroy');
-    // Dependent API (state -> cities)
     Route::get('api/cities-by-state', [UniversityController::class, 'citiesByState'])->name('api.citiesByState');
 
-    // University Programs Routes
+    // University Programs
     Route::get('universities/{university}/programs', [UniversityProgramController::class, 'index'])->name('universities.programs.index');
     Route::get('universities/{university}/programs/create', [UniversityProgramController::class, 'create'])->name('universities.programs.create');
     Route::post('universities/{university}/programs', [UniversityProgramController::class, 'store'])->name('universities.programs.store');
@@ -77,7 +91,7 @@ Route::middleware(['web', 'auth'])->prefix('admin')->group(function () {
     Route::put('universities/{university}/programs/{program}', [UniversityProgramController::class, 'update'])->name('universities.programs.update');
     Route::delete('universities/{university}/programs/{program}', [UniversityProgramController::class, 'destroy'])->name('universities.programs.destroy');
 
-    // University Media Routes
+    // University Media
     Route::get('universities/{university}/media', [UniversityMediaController::class, 'index'])->name('universities.media.index');
     Route::get('universities/{university}/media/create', [UniversityMediaController::class, 'create'])->name('universities.media.create');
     Route::post('universities/{university}/media', [UniversityMediaController::class, 'store'])->name('universities.media.store');
