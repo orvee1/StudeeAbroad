@@ -435,6 +435,148 @@
             </div>
         </div>
     </section>
+    
+    {{-- Testimonials / Success Stories --}}
+    <section id="testimonials" class="border-t border-slate-200 bg-white">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14">
+            <div class="flex items-end justify-between gap-4">
+                <div>
+                    <div class="text-sm text-slate-500">Success stories</div>
+                    <h2 class="text-2xl lg:text-3xl font-bold mt-2 text-slate-900">
+                        Students who reached their dream universities
+                    </h2>
+                    <p class="text-slate-600 mt-2 text-sm max-w-2xl">
+                        Demo testimonials (static). Later you can make this dynamic from DB or CMS.
+                    </p>
+                </div>
+
+                <a href="{{ route('register') }}"
+                    class="hidden sm:inline-flex px-4 py-2 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
+                    Start your journey
+                </a>
+            </div>
+
+            @php
+                $testimonials = [
+                    [
+                        'name' => 'Ayesha Rahman',
+                        'from' => 'Dhaka, Bangladesh',
+                        'to' => 'Canada • University of Toronto',
+                        'text' =>
+                            'Shortlisting was super easy. The tuition & living cost ranges helped me decide quickly, and I stayed on track with the checklist.',
+                        'badge' => 'Admitted',
+                        'year' => '2025',
+                        'score' => 'IELTS 7.0',
+                    ],
+                    [
+                        'name' => 'Sabbir Hossain',
+                        'from' => 'Chattogram, Bangladesh',
+                        'to' => 'UK • University of Manchester',
+                        'text' =>
+                            'I loved the clear program filters. I found a 1-year Masters option that matched my budget and timeline.',
+                        'badge' => 'Offer Received',
+                        'year' => '2025',
+                        'score' => 'IELTS 6.5',
+                    ],
+                    [
+                        'name' => 'Nusrat Jahan',
+                        'from' => 'Sylhet, Bangladesh',
+                        'to' => 'Germany • LMU Munich',
+                        'text' =>
+                            'The platform made it simple to compare universities by city and tuition. I felt confident before submitting my documents.',
+                        'badge' => 'Visa Approved',
+                        'year' => '2024',
+                        'score' => 'German A2',
+                    ],
+                    [
+                        'name' => 'Tahmid Hasan',
+                        'from' => 'Rajshahi, Bangladesh',
+                        'to' => 'Australia • University of Melbourne',
+                        'text' =>
+                            'Great for quick comparisons. I saved my shortlist and revisited it with my family before finalizing the decision.',
+                        'badge' => 'Admitted',
+                        'year' => '2024',
+                        'score' => 'IELTS 7.5',
+                    ],
+                ];
+
+                $badgeStyle = function ($badge) {
+                    return match ($badge) {
+                        'Admitted' => 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                        'Offer Received' => 'bg-indigo-50 text-indigo-700 border-indigo-200',
+                        'Visa Approved' => 'bg-amber-50 text-amber-700 border-amber-200',
+                        default => 'bg-slate-50 text-slate-700 border-slate-200',
+                    };
+                };
+            @endphp
+
+            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                @foreach ($testimonials as $t)
+                    <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 hover:bg-slate-100/60 transition">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                                <div class="font-semibold text-slate-900 truncate">{{ $t['name'] }}</div>
+                                <div class="text-xs text-slate-500 mt-1 truncate">{{ $t['from'] }}</div>
+                            </div>
+
+                            <span
+                                class="shrink-0 text-[11px] px-2.5 py-1 rounded-full border {{ $badgeStyle($t['badge']) }}">
+                                {{ $t['badge'] }}
+                            </span>
+                        </div>
+
+                        <div class="mt-3 text-sm text-slate-700 font-medium">
+                            {{ $t['to'] }}
+                        </div>
+
+                        <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                            “{{ $t['text'] }}”
+                        </p>
+
+                        <div class="mt-4 flex items-center justify-between text-xs text-slate-500">
+                            <div class="inline-flex items-center gap-2">
+                                <span class="px-2 py-1 rounded-full border border-slate-200 bg-white">📅
+                                    {{ $t['year'] }}</span>
+                                <span class="px-2 py-1 rounded-full border border-slate-200 bg-white">🏅
+                                    {{ $t['score'] }}</span>
+                            </div>
+
+                            <div class="flex -space-x-2">
+                                <div class="h-8 w-8 rounded-full border border-white bg-slate-900"></div>
+                                <div class="h-8 w-8 rounded-full border border-white bg-slate-700"></div>
+                                <div class="h-8 w-8 rounded-full border border-white bg-slate-500"></div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            {{-- Bottom CTA --}}
+            <div
+                class="mt-10 rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+                <div>
+                    <div class="text-sm text-slate-500">Ready to start?</div>
+                    <div class="text-lg font-semibold text-slate-900 mt-1">
+                        Create your free account and build your shortlist today.
+                    </div>
+                    <div class="text-sm text-slate-600 mt-1">
+                        It only takes a minute — no payment required.
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <a href="{{ route('register') }}"
+                        class="px-5 py-3 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
+                        Create Free Account
+                    </a>
+                    <a href="{{ route('login') }}"
+                        class="px-5 py-3 rounded-2xl border border-slate-200 bg-white text-sm hover:bg-slate-50 transition">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     {{-- Contact --}}
     <section id="contact" class="border-t border-slate-200 bg-white">
