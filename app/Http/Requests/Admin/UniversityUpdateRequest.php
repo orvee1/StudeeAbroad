@@ -45,8 +45,6 @@ class UniversityUpdateRequest extends FormRequest
 
             'address'               => ['nullable', 'string', 'max:255'],
             'website_url'           => ['nullable', 'string', 'max:255'],
-            'email'                 => ['nullable', 'email', 'max:255'],
-            'phone'                 => ['nullable', 'string', 'max:50'],
 
             'short_description'     => ['nullable', 'string'],
             'description'           => ['nullable', 'string'],

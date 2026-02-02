@@ -23,6 +23,6 @@ class UniversityProgram extends Model
 
     public function university()
     {
-        return $this->belongsTo(University::class);
+        return $this->belongsTo(University::class, 'university_id');
     }
 }

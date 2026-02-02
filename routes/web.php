@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\UniversityController;
 use App\Http\Controllers\Admin\UniversityMediaController;
 use App\Http\Controllers\Admin\UniversityProgramController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Student\SearchController;
 use App\Http\Controllers\Student\StudentDashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -108,5 +109,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::put('universities/{university}/media/{media}', [UniversityMediaController::class, 'update'])->name('universities.media.update');
     Route::delete('universities/{university}/media/{media}', [UniversityMediaController::class, 'destroy'])->name('universities.media.destroy');
 });
+
+Route::get('/search', [SearchController::class, 'index'])->name('search');
+Route::get('/api/states', [SearchController::class, 'states'])->name('api.states');   
+Route::get('/api/cities', [SearchController::class, 'cities'])->name('api.cities');
 
 require __DIR__ . '/auth.php';

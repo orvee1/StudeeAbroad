@@ -137,20 +137,6 @@
     </div>
 
     <div>
-        <label class="text-sm font-medium">Email</label>
-        <input name="email" value="{{ $v('email') }}"
-            class="mt-1 w-full rounded-xl border-slate-200 focus:border-slate-400 focus:ring-slate-200"
-            placeholder="info@example.edu" />
-    </div>
-
-    <div>
-        <label class="text-sm font-medium">Phone</label>
-        <input name="phone" value="{{ $v('phone') }}"
-            class="mt-1 w-full rounded-xl border-slate-200 focus:border-slate-400 focus:ring-slate-200"
-            placeholder="+1..." />
-    </div>
-
-    <div>
         <label class="text-sm font-medium">Address</label>
         <input name="address" value="{{ $v('address') }}"
             class="mt-1 w-full rounded-xl border-slate-200 focus:border-slate-400 focus:ring-slate-200" />

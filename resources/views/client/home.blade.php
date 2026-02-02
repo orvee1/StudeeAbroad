@@ -146,8 +146,8 @@
         <div class="absolute inset-0 -z-10">
             <div class="absolute inset-x-0 top-0 h-[520px] bg-gradient-to-b from-indigo-50 via-white to-transparent">
             </div>
-            <div class="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-indigo-100 blur-3xl opacity-70"></div>
-            <div class="absolute -bottom-28 -left-28 h-96 w-96 rounded-full bg-sky-100 blur-3xl opacity-70"></div>
+            <div class="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-indigo-400 blur-3xl opacity-100"></div>
+            <div class="absolute -bottom-28 -left-28 h-96 w-96 rounded-full bg-sky-400 blur-3xl opacity-100"></div>
         </div>
 
         <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14 lg:py-20">
@@ -170,29 +170,60 @@
                     </p>
 
                     {{-- Search (UI only) --}}
-                    <div class="mt-7 rounded-3xl border border-slate-200 bg-white p-3 shadow-sm">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <form action="{{ route('search') }}" method="GET"
+                        class="mt-7 rounded-3xl border border-slate-200 bg-white p-3 shadow-sm">
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
                             <div>
                                 <label class="text-xs text-slate-500">Country</label>
-                                <input type="text" placeholder="e.g. Canada"
+                                <select name="country_id" id="country_id"
                                     class="mt-1 w-full rounded-2xl border-slate-200 focus:border-indigo-400 focus:ring-indigo-200">
+                                    <option value="">Any</option>
+                                    @foreach ($topCountries as $c)
+                                        {{-- demo only: later use $countries from DB --}}
+                                        <option value="">{{ $c['name'] }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="text-[11px] text-slate-400 mt-1">Demo dropdown (DB later)</div>
                             </div>
+
+                            <div>
+                                <label class="text-xs text-slate-500">State</label>
+                                <select name="state_id" id="state_id"
+                                    class="mt-1 w-full rounded-2xl border-slate-200 focus:border-indigo-400 focus:ring-indigo-200">
+                                    <option value="">Any</option>
+                                </select>
+                            </div>
+
                             <div>
                                 <label class="text-xs text-slate-500">City</label>
-                                <input type="text" placeholder="e.g. Toronto"
+                                <select name="city_id" id="city_id"
                                     class="mt-1 w-full rounded-2xl border-slate-200 focus:border-indigo-400 focus:ring-indigo-200">
+                                    <option value="">Any</option>
+                                </select>
                             </div>
+
+                            <div>
+                                <label class="text-xs text-slate-500">Tuition Range</label>
+                                <div class="mt-1 grid grid-cols-2 gap-2">
+                                    <input type="number" name="tuition_min" placeholder="Min"
+                                        class="w-full rounded-2xl border-slate-200 focus:border-indigo-400 focus:ring-indigo-200">
+                                    <input type="number" name="tuition_max" placeholder="Max"
+                                        class="w-full rounded-2xl border-slate-200 focus:border-indigo-400 focus:ring-indigo-200">
+                                </div>
+                            </div>
+
                             <div class="flex items-end">
-                                <button type="button"
+                                <button type="submit"
                                     class="w-full px-5 py-3 rounded-2xl bg-slate-900 text-white font-semibold text-sm hover:opacity-90 transition">
-                                    Search (Coming Soon)
+                                    Search
                                 </button>
                             </div>
                         </div>
+
                         <div class="mt-2 text-xs text-slate-500 px-1">
-                            Later we’ll connect this to public listing pages.
+                            More filters (intake, level, keyword) are available on the results page.
                         </div>
-                    </div>
+                    </form>
 
                     <div class="mt-7 flex flex-wrap gap-2">
                         @guest
@@ -435,7 +466,7 @@
             </div>
         </div>
     </section>
-    
+
     {{-- Testimonials / Success Stories --}}
     <section id="testimonials" class="border-t border-slate-200 bg-white">
         <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14">

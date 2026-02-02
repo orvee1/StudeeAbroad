@@ -56,6 +56,6 @@ class University extends Model
 
     public function programs()
     {
-        return $this->hasMany(UniversityProgram::class);
+        return $this->hasMany(UniversityProgram::class, 'university_id');
     }
 }
