@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
@@ -13,7 +12,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        \App\Models\SuccessStory::class => \App\Policies\SuccessStoryPolicy::class,
     ];
 
     /**
