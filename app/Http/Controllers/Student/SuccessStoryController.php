@@ -33,7 +33,7 @@ class SuccessStoryController extends Controller
             'score'       => ['nullable', 'string', 'max:50'],
             'year'        => ['nullable', 'string', 'max:10'],
             'story'       => ['required', 'string'],
-            'photo'       => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'photo_path'       => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
         $data['user_id'] = auth()->id();
@@ -69,7 +69,7 @@ class SuccessStoryController extends Controller
             'score'       => ['nullable', 'string', 'max:50'],
             'year'        => ['nullable', 'string', 'max:10'],
             'story'       => ['required', 'string'],
-            'photo'       => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'photo_path'       => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
         $data['is_active'] = false;

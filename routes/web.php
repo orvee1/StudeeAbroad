@@ -118,8 +118,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     // Success Stories
     Route::get('success-stories', [AdminSuccessStoryController::class, 'index'])->name('success_stories.index');
-    Route::put('success-stories/{success_story}', [SuccessStoryController::class, 'update'])->name('success_stories.update');
-    Route::delete('success-stories/{success_story}', [SuccessStoryController::class, 'destroy'])->name('success_stories.destroy');
+    Route::put('success-stories/{success_story}', [AdminSuccessStoryController::class, 'update'])->name('success_stories.update');
+    Route::delete('success-stories/{success_story}', [AdminSuccessStoryController::class, 'destroy'])->name('success_stories.destroy');
 });
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');

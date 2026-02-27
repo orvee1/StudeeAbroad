@@ -10,7 +10,7 @@
                 <div class="text-xl font-semibold text-slate-900">Add Success Story</div>
             </div>
             <a href="{{ route('student.success_stories.index') }}"
-                class="px-4 py-2 rounded-2xl border border-slate-200 bg-white text-sm hover:bg-slate-50">
+                class="px-4 py-2 rounded-2xl border border-slate-200 bg-cyan-600 text-white text-sm hover:bg-blue-700">
                 Back
             </a>
         </div>

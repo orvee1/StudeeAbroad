@@ -64,7 +64,11 @@
                     <span class="h-2 w-2 rounded-full bg-slate-300"></span>
                     <span>Registered Students</span>
                 </a>
-
+                <a href="{{ route('success_stories.index') }}"
+                    class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-50">
+                    <span class="h-2 w-2 rounded-full bg-slate-300"></span>
+                    <span>Success Stories</span>
+                </a>
                 <div class="pt-3 pb-1 text-xs font-semibold text-slate-500 px-3">ACCOUNT</div>
                 <a href="{{ route('profile.edit') }}"
                     class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-50">

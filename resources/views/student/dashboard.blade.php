@@ -3,6 +3,12 @@
 @section('page_title', 'Student Dashboard')
 
 @section('content')
+    @php
+        $quickStats = $quickStats ?? ['countries' => 0, 'universities' => 0, 'featured_universities' => 0];
+        $topCountries = $topCountries ?? collect();
+        $featuredUniversities = $featuredUniversities ?? collect();
+    @endphp
+
     <div class="space-y-8">
 
         {{-- Hero --}}
@@ -14,9 +20,11 @@
                             class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs border border-slate-200 bg-slate-50 text-slate-600">
                             ✨ Welcome, {{ auth()->user()->name }}
                         </div>
+
                         <h1 class="mt-4 text-2xl lg:text-4xl font-bold text-slate-900 leading-tight">
                             Find the right university, the right city, and your next big opportunity.
                         </h1>
+
                         <p class="mt-3 text-slate-600">
                             Explore featured universities, compare costs, and shortlist the best options for your study
                             abroad journey.
@@ -52,7 +60,8 @@
                         </div>
                     </div>
 
-                    <div class="w-full lg:w-[420px]">
+                    <div class="w-full lg:w-[420px] space-y-4">
+                        {{-- Quick Tips --}}
                         <div class="rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-6">
                             <div class="text-sm font-semibold text-slate-900">Quick Tips</div>
                             <ul class="mt-3 space-y-3 text-sm text-slate-600">
@@ -82,10 +91,70 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Success Story CTA (New) --}}
+                        <div class="rounded-3xl border border-slate-200 bg-white p-6">
+                            <div class="text-sm text-slate-500">Inspire others</div>
+                            <div class="text-lg font-semibold text-slate-900 mt-1">Share your success story</div>
+                            <p class="text-sm text-slate-600 mt-2">
+                                If you received an offer/visa, submit your story. After admin approval, it will appear on
+                                the home page.
+                            </p>
+
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <a href="{{ route('student.success_stories.create') }}"
+                                    class="px-4 py-2.5 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90">
+                                    Submit Story
+                                </a>
+                                <a href="{{ route('student.success_stories.index') }}"
+                                    class="px-4 py-2.5 rounded-2xl border border-slate-200 text-sm hover:bg-slate-50">
+                                    My Stories
+                                </a>
+                            </div>
+
+                            <div class="mt-3 text-xs text-slate-500">
+                                Tip: Keep it short, clear, and honest—no sensitive info.
+                            </div>
+                        </div>
                     </div>
 
                 </div>
             </div>
+        </div>
+
+        {{-- Optional: Search universities (direct to public search) --}}
+        <div class="bg-white border border-slate-200 rounded-3xl p-6">
+            <div class="flex items-end justify-between gap-3">
+                <div>
+                    <div class="text-sm text-slate-500">Quick Search</div>
+                    <div class="text-xl font-semibold text-slate-900">Find universities fast</div>
+                </div>
+                <a href="{{ route('search') }}"
+                    class="text-sm px-4 py-2 rounded-2xl border border-slate-200 hover:bg-slate-50">
+                    Advanced Search
+                </a>
+            </div>
+
+            <form class="mt-5 grid grid-cols-1 md:grid-cols-4 gap-3" method="GET" action="{{ route('search') }}">
+                <div class="md:col-span-2">
+                    <label class="text-xs text-slate-500">Keyword</label>
+                    <input name="q" placeholder="University name, program, city..."
+                        class="mt-1 w-full rounded-2xl border-slate-200 focus:border-indigo-400 focus:ring-indigo-200" />
+                </div>
+
+                <div>
+                    <label class="text-xs text-slate-500">Tuition Min</label>
+                    <input type="number" name="tuition_min" placeholder="0"
+                        class="mt-1 w-full rounded-2xl border-slate-200 focus:border-indigo-400 focus:ring-indigo-200" />
+                </div>
+
+                <div class="flex items-end">
+                    <button
+                        class="w-full px-5 py-3 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90">
+                        Search
+                    </button>
+                </div>
+            </form>
         </div>
 
         {{-- Top Countries --}}
@@ -112,19 +181,19 @@
                             </div>
                             <div class="min-w-0">
                                 <div class="font-semibold text-slate-900 truncate">{{ $c->name }}</div>
-                                <div class="text-xs text-slate-500 truncate">{{ $c->slug }}</div>
+                                <div class="text-xs text-slate-500 truncate">{{ $c->slug ?? '' }}</div>
                             </div>
                         </div>
 
                         <div class="mt-4 text-sm text-slate-600">
-                            Popular universities, cities and programs. (Public pages can link here later.)
+                            Popular universities, cities and programs.
                         </div>
 
                         <div class="mt-4">
-                            <button type="button"
-                                class="px-4 py-2 rounded-2xl border border-slate-200 text-sm hover:bg-white">
-                                Explore (Coming Soon)
-                            </button>
+                            <a href="{{ route('search', ['country_id' => $c->id]) }}"
+                                class="inline-flex px-4 py-2 rounded-2xl border border-slate-200 text-sm hover:bg-white">
+                                Explore
+                            </a>
                         </div>
                     </div>
                 @empty
@@ -208,17 +277,17 @@
                                         #{{ $u->world_ranking }}</span>
                                 @endif
                                 @if ($u->acceptance_rate !== null)
-                                    <span
-                                        class="px-3 py-1 rounded-full text-xs border border-slate-200 bg-white">{{ $u->acceptance_rate }}%
-                                        acceptance</span>
+                                    <span class="px-3 py-1 rounded-full text-xs border border-slate-200 bg-white">
+                                        {{ $u->acceptance_rate }}% acceptance
+                                    </span>
                                 @endif
                             </div>
 
                             <div class="mt-5">
-                                <button type="button"
-                                    class="w-full px-4 py-2.5 rounded-2xl bg-slate-900 text-white text-sm hover:opacity-90">
-                                    View Details (Coming Soon)
-                                </button>
+                                <a href="{{ route('search', ['q' => $u->name]) }}"
+                                    class="w-full inline-flex justify-center px-4 py-2.5 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90">
+                                    View (Next)
+                                </a>
                                 <div class="text-xs text-slate-500 mt-2 text-center">
                                     Public university page can be linked later.
                                 </div>
@@ -238,8 +307,9 @@
             <div class="p-6 lg:p-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
                 <div class="max-w-2xl">
                     <div class="text-sm text-slate-200">Ready to shortlist?</div>
-                    <div class="text-2xl lg:text-3xl font-bold mt-2">Save your favorite universities and apply with
-                        confidence.</div>
+                    <div class="text-2xl lg:text-3xl font-bold mt-2">
+                        Save your favorite universities and apply with confidence.
+                    </div>
                     <p class="text-slate-200 mt-2">
                         Next we can add Wishlist + Inquiry/Apply form so you can contact the team with one click.
                     </p>
