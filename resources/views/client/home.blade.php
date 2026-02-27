@@ -16,52 +16,19 @@
 </head>
 
 <body class="bg-slate-50 text-slate-900">
-    @php
-        // Demo (static) data — later replace with DB
-        $topCountries = [
-            [
-                'name' => 'Canada',
-                'tag' => 'Best for PR',
-                'desc' => 'Top universities • part-time work • strong job market',
-            ],
-            ['name' => 'USA', 'tag' => 'Top Rankings', 'desc' => 'World-class programs • research • scholarships'],
-            ['name' => 'UK', 'tag' => '1-Year Masters', 'desc' => 'Shorter degree time • global recognition'],
-            ['name' => 'Australia', 'tag' => 'Work + Study', 'desc' => 'Great student lifestyle • post-study work'],
-            ['name' => 'Germany', 'tag' => 'Low Tuition', 'desc' => 'Affordable education • strong engineering'],
-            ['name' => 'Japan', 'tag' => 'Innovation', 'desc' => 'Tech research • scholarships • unique culture'],
-            ['name' => 'Sweden', 'tag' => 'Quality Living', 'desc' => 'Student-friendly cities • innovation'],
-            ['name' => 'Malaysia', 'tag' => 'Affordable', 'desc' => 'Lower living cost • international campuses'],
-        ];
 
-        $featuredUniversities = [
-            [
-                'name' => 'University of Toronto',
-                'location' => 'Toronto, Canada',
-                'chips' => ['Ranked', 'Scholarship'],
-                'tuition' => 'CAD 30k - 55k',
-                'living' => 'CAD 12k - 20k',
-            ],
-            [
-                'name' => 'University of Melbourne',
-                'location' => 'Melbourne, Australia',
-                'chips' => ['Popular', 'Work Options'],
-                'tuition' => 'AUD 28k - 48k',
-                'living' => 'AUD 15k - 24k',
-            ],
-            [
-                'name' => 'LMU Munich',
-                'location' => 'Munich, Germany',
-                'chips' => ['Low Tuition', 'Research'],
-                'tuition' => '€ 0 - 6k',
-                'living' => '€ 10k - 16k',
-            ],
-            [
-                'name' => 'University of Tokyo',
-                'location' => 'Tokyo, Japan',
-                'chips' => ['Top', 'Innovation'],
-                'tuition' => '¥ 500k - 900k',
-                'living' => '¥ 900k - 1.5M',
-            ],
+    @php
+        // expected from controller:
+        // $stats = ['countries'=>..., 'universities'=>..., 'programs'=>..., 'support'=>...]
+        // $countries = Country::active() list for search dropdown
+        // $topCountries = Country::withCount('universities') ... for top countries cards
+        // $featuredUniversities = University::with(['country','state','city'])->withCount('programs') ... featured cards
+
+        $stats = $stats ?? [
+            'countries' => 0,
+            'universities' => 0,
+            'programs' => 0,
+            'support' => '1:1',
         ];
     @endphp
 
@@ -122,6 +89,7 @@
                 <a href="#features" class="hover:text-slate-900 transition">Features</a>
                 <a href="#countries" class="hover:text-slate-900 transition">Countries</a>
                 <a href="#universities" class="hover:text-slate-900 transition">Universities</a>
+                <a href="#testimonials" class="hover:text-slate-900 transition">Success</a>
                 <a href="#contact" class="hover:text-slate-900 transition">Contact</a>
             </nav>
 
@@ -146,8 +114,8 @@
         <div class="absolute inset-0 -z-10">
             <div class="absolute inset-x-0 top-0 h-[520px] bg-gradient-to-b from-indigo-50 via-white to-transparent">
             </div>
-            <div class="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-indigo-400 blur-3xl opacity-100"></div>
-            <div class="absolute -bottom-28 -left-28 h-96 w-96 rounded-full bg-sky-400 blur-3xl opacity-100"></div>
+            <div class="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-indigo-100 blur-3xl opacity-70"></div>
+            <div class="absolute -bottom-28 -left-28 h-96 w-96 rounded-full bg-sky-100 blur-3xl opacity-70"></div>
         </div>
 
         <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14 lg:py-20">
@@ -169,7 +137,7 @@
                         Build a shortlist and move faster.
                     </p>
 
-                    {{-- Search (UI only) --}}
+                    {{-- REAL Search (GET) --}}
                     <form action="{{ route('search') }}" method="GET"
                         class="mt-7 rounded-3xl border border-slate-200 bg-white p-3 shadow-sm">
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
@@ -178,12 +146,10 @@
                                 <select name="country_id" id="country_id"
                                     class="mt-1 w-full rounded-2xl border-slate-200 focus:border-indigo-400 focus:ring-indigo-200">
                                     <option value="">Any</option>
-                                    @foreach ($topCountries as $c)
-                                        {{-- demo only: later use $countries from DB --}}
-                                        <option value="">{{ $c['name'] }}</option>
+                                    @foreach ($countries ?? [] as $c)
+                                        <option value="{{ $c->id }}">{{ $c->name }}</option>
                                     @endforeach
                                 </select>
-                                <div class="text-[11px] text-slate-400 mt-1">Demo dropdown (DB later)</div>
                             </div>
 
                             <div>
@@ -225,42 +191,30 @@
                         </div>
                     </form>
 
-                    <div class="mt-7 flex flex-wrap gap-2">
-                        @guest
-                            <a href="{{ route('register') }}"
-                                class="px-5 py-3 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
-                                Create Free Account
-                            </a>
-                            <a href="{{ route('login') }}"
-                                class="px-5 py-3 rounded-2xl border border-slate-200 bg-white text-sm hover:bg-slate-50 transition">
-                                I already have an account
-                            </a>
-                        @else
-                            @if (auth()->user()->isAdmin())
-                                <a href="{{ route('dashboard') }}"
-                                    class="px-5 py-3 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
-                                    Go to Admin Dashboard
-                                </a>
-                            @else
-                                <a href="{{ route('student.dashboard') }}"
-                                    class="px-5 py-3 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
-                                    Go to My Dashboard
-                                </a>
-                            @endif
-                        @endauth
-                    </div>
-
                     <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        @foreach ([['t' => 'Countries', 'v' => '50+'], ['t' => 'Universities', 'v' => '500+'], ['t' => 'Programs', 'v' => '2000+'], ['t' => 'Support', 'v' => '1:1']] as $s)
-                            <div class="rounded-2xl border border-slate-200 bg-white p-4">
-                                <div class="text-xs text-slate-500">{{ $s['t'] }}</div>
-                                <div class="text-xl font-bold mt-1 text-slate-900">{{ $s['v'] }}</div>
-                            </div>
-                        @endforeach
+                        <div class="rounded-2xl border border-slate-200 bg-white p-4">
+                            <div class="text-xs text-slate-500">Countries</div>
+                            <div class="text-xl font-bold mt-1 text-slate-900">
+                                {{ number_format((int) ($stats['countries'] ?? 0)) }}</div>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200 bg-white p-4">
+                            <div class="text-xs text-slate-500">Universities</div>
+                            <div class="text-xl font-bold mt-1 text-slate-900">
+                                {{ number_format((int) ($stats['universities'] ?? 0)) }}</div>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200 bg-white p-4">
+                            <div class="text-xs text-slate-500">Programs</div>
+                            <div class="text-xl font-bold mt-1 text-slate-900">
+                                {{ number_format((int) ($stats['programs'] ?? 0)) }}</div>
+                        </div>
+                        <div class="rounded-2xl border border-slate-200 bg-white p-4">
+                            <div class="text-xs text-slate-500">Support</div>
+                            <div class="text-xl font-bold mt-1 text-slate-900">{{ $stats['support'] ?? '1:1' }}</div>
+                        </div>
                     </div>
                 </div>
 
-                {{-- Right card --}}
+                {{-- Right info card --}}
                 <div class="lg:pl-10">
                     <div class="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
                         <div class="p-6 border-b border-slate-200">
@@ -358,14 +312,15 @@
         </div>
     </section>
 
-    {{-- Countries --}}
+    {{-- Top Countries (DB) --}}
     <section id="countries" class="border-t border-slate-200 bg-white">
         <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14">
             <div class="flex items-end justify-between gap-3">
                 <div>
                     <div class="text-sm text-slate-500">Popular destinations</div>
                     <h2 class="text-2xl lg:text-3xl font-bold mt-2 text-slate-900">Top Countries</h2>
-                    <p class="text-slate-600 mt-2 text-sm">Demo data (static). Later we’ll load from database.</p>
+                    <p class="text-slate-600 mt-2 text-sm">Powered by your database (active countries + university
+                        count).</p>
                 </div>
                 <a href="{{ route('register') }}"
                     class="hidden sm:inline-flex px-4 py-2 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-sm transition">
@@ -374,47 +329,67 @@
             </div>
 
             <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                @foreach ($topCountries as $c)
+                @forelse(($topCountries ?? []) as $c)
                     <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 hover:bg-slate-100/60 transition">
                         <div class="flex items-start justify-between gap-3">
-                            <div>
-                                <div class="font-semibold text-slate-900 text-lg">{{ $c['name'] }}</div>
-                                <div class="text-xs text-slate-500 mt-1">{{ $c['tag'] }}</div>
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div
+                                    class="h-12 w-12 rounded-2xl bg-white border border-slate-200 overflow-hidden flex items-center justify-center shrink-0">
+                                    @if (!empty($c->flag_path))
+                                        <img src="{{ asset('storage/' . $c->flag_path) }}"
+                                            class="h-12 w-12 object-cover" alt="">
+                                    @else
+                                        <span class="text-[10px] text-slate-500">FLAG</span>
+                                    @endif
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="font-semibold text-slate-900 text-lg truncate">{{ $c->name }}
+                                    </div>
+                                    <div class="text-xs text-slate-500 mt-1 truncate">
+                                        {{ $c->universities_count ?? 0 }} universities
+                                    </div>
+                                </div>
                             </div>
+
                             <span
-                                class="text-[11px] px-2.5 py-1 rounded-full border border-slate-200 bg-white text-slate-700">
+                                class="text-[11px] px-2.5 py-1 rounded-full border border-slate-200 bg-white text-slate-700 shrink-0">
                                 Popular
                             </span>
                         </div>
 
                         <div class="mt-3 text-sm text-slate-600">
-                            {{ $c['desc'] }}
+                            Explore universities, cities and programs.
                         </div>
 
                         <div class="mt-5 flex items-center gap-2">
-                            <button type="button"
+                            <a href="{{ route('search', ['country_id' => $c->id]) }}"
                                 class="px-4 py-2 rounded-2xl border border-slate-200 bg-white text-sm hover:bg-slate-50 transition">
-                                Explore (Coming Soon)
-                            </button>
-                            <button type="button"
+                                Explore
+                            </a>
+                            <a href="{{ route('register') }}"
                                 class="px-4 py-2 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
-                                Shortlist (Next)
-                            </button>
+                                Shortlist
+                            </a>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div
+                        class="rounded-3xl border border-slate-200 bg-white p-10 text-center text-slate-600 col-span-4">
+                        No countries found yet. Add countries from admin panel.
+                    </div>
+                @endforelse
             </div>
         </div>
     </section>
 
-    {{-- Universities --}}
+    {{-- Featured Universities (DB) --}}
     <section id="universities" class="border-t border-slate-200 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14">
             <div class="flex items-end justify-between gap-3">
                 <div>
                     <div class="text-sm text-slate-500">Hand-picked</div>
                     <h2 class="text-2xl lg:text-3xl font-bold mt-2 text-slate-900">Featured Universities</h2>
-                    <p class="text-slate-600 mt-2 text-sm">Demo data (static). Later we’ll load from database.</p>
+                    <p class="text-slate-600 mt-2 text-sm">Pulled from universities where featured + active.</p>
                 </div>
                 <a href="{{ route('register') }}"
                     class="hidden sm:inline-flex px-4 py-2 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
@@ -423,46 +398,91 @@
             </div>
 
             <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                @foreach ($featuredUniversities as $u)
+                @forelse(($featuredUniversities ?? []) as $u)
                     <div class="rounded-3xl border border-slate-200 bg-white p-6 hover:bg-slate-50 transition">
                         <div class="flex items-start justify-between gap-3">
                             <div class="min-w-0">
-                                <div class="font-semibold text-slate-900 truncate">{{ $u['name'] }}</div>
-                                <div class="text-sm text-slate-600 mt-1 truncate">{{ $u['location'] }}</div>
+                                <div class="font-semibold text-slate-900 truncate">{{ $u->name }}</div>
+                                <div class="text-sm text-slate-600 mt-1 truncate">
+                                    {{ $u->city?->name ?? '—' }}, {{ $u->state?->name ?? '—' }}
+                                </div>
+                                <div class="text-xs text-slate-500 truncate">
+                                    {{ $u->country?->name ?? '—' }}
+                                </div>
                             </div>
-                            <div class="h-10 w-10 rounded-2xl bg-slate-900"></div>
+
+                            <div
+                                class="h-10 w-10 rounded-2xl bg-slate-50 border border-slate-200 overflow-hidden flex items-center justify-center shrink-0">
+                                @if (!empty($u->logo_path))
+                                    <img src="{{ asset('storage/' . $u->logo_path) }}" class="h-10 w-10 object-cover"
+                                        alt="">
+                                @else
+                                    <span class="text-[10px] text-slate-500">LOGO</span>
+                                @endif
+                            </div>
                         </div>
 
                         <div class="mt-4 flex flex-wrap gap-2">
-                            @foreach ($u['chips'] as $chip)
+                            @if ($u->scholarship_available)
                                 <span
                                     class="text-[11px] px-2.5 py-1 rounded-full border border-slate-200 bg-slate-50 text-slate-700">
-                                    {{ $chip }}
+                                    Scholarship
                                 </span>
-                            @endforeach
+                            @endif
+                            @if (!empty($u->world_ranking))
+                                <span
+                                    class="text-[11px] px-2.5 py-1 rounded-full border border-slate-200 bg-slate-50 text-slate-700">
+                                    Rank #{{ $u->world_ranking }}
+                                </span>
+                            @endif
+                            <span
+                                class="text-[11px] px-2.5 py-1 rounded-full border border-slate-200 bg-slate-50 text-slate-700">
+                                Programs: {{ $u->programs_count ?? 0 }}
+                            </span>
                         </div>
 
                         <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
                             <div class="rounded-2xl border border-slate-200 bg-slate-50 p-3">
                                 <div class="text-xs text-slate-500">Tuition</div>
-                                <div class="font-semibold mt-1 text-slate-900">{{ $u['tuition'] }}</div>
+                                <div class="font-semibold mt-1 text-slate-900">
+                                    @if ($u->tuition_min !== null || $u->tuition_max !== null)
+                                        {{ $u->tuition_min !== null ? number_format($u->tuition_min) : '—' }}
+                                        -
+                                        {{ $u->tuition_max !== null ? number_format($u->tuition_max) : '—' }}
+                                    @else
+                                        —
+                                    @endif
+                                </div>
                             </div>
                             <div class="rounded-2xl border border-slate-200 bg-slate-50 p-3">
                                 <div class="text-xs text-slate-500">Living</div>
-                                <div class="font-semibold mt-1 text-slate-900">{{ $u['living'] }}</div>
+                                <div class="font-semibold mt-1 text-slate-900">
+                                    @if ($u->living_cost_min !== null || $u->living_cost_max !== null)
+                                        {{ $u->living_cost_min !== null ? number_format($u->living_cost_min) : '—' }}
+                                        -
+                                        {{ $u->living_cost_max !== null ? number_format($u->living_cost_max) : '—' }}
+                                    @else
+                                        —
+                                    @endif
+                                </div>
                             </div>
                         </div>
 
-                        <button type="button"
-                            class="mt-5 w-full px-4 py-2.5 rounded-2xl bg-slate-900 text-white font-semibold text-sm hover:opacity-90 transition">
-                            View Details (Coming Soon)
-                        </button>
+                        <a href="{{ route('search', ['q' => $u->name]) }}"
+                            class="mt-5 w-full inline-flex justify-center px-4 py-2.5 rounded-2xl bg-slate-900 text-white font-semibold text-sm hover:opacity-90 transition">
+                            View (Next)
+                        </a>
 
                         <div class="mt-2 text-xs text-slate-500 text-center">
-                            Later this will open public university page.
+                            Public university page can be linked later.
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div
+                        class="rounded-3xl border border-slate-200 bg-white p-10 text-center text-slate-600 col-span-4">
+                        No featured universities found. Mark some universities as featured from admin panel.
+                    </div>
+                @endforelse
             </div>
         </div>
     </section>
@@ -477,7 +497,7 @@
                         Students who reached their dream universities
                     </h2>
                     <p class="text-slate-600 mt-2 text-sm max-w-2xl">
-                        Demo testimonials (static). Later you can make this dynamic from DB or CMS.
+                        Real stories submitted by students (only approved ones are shown here).
                     </p>
                 </div>
 
@@ -488,49 +508,6 @@
             </div>
 
             @php
-                $testimonials = [
-                    [
-                        'name' => 'Ayesha Rahman',
-                        'from' => 'Dhaka, Bangladesh',
-                        'to' => 'Canada • University of Toronto',
-                        'text' =>
-                            'Shortlisting was super easy. The tuition & living cost ranges helped me decide quickly, and I stayed on track with the checklist.',
-                        'badge' => 'Admitted',
-                        'year' => '2025',
-                        'score' => 'IELTS 7.0',
-                    ],
-                    [
-                        'name' => 'Sabbir Hossain',
-                        'from' => 'Chattogram, Bangladesh',
-                        'to' => 'UK • University of Manchester',
-                        'text' =>
-                            'I loved the clear program filters. I found a 1-year Masters option that matched my budget and timeline.',
-                        'badge' => 'Offer Received',
-                        'year' => '2025',
-                        'score' => 'IELTS 6.5',
-                    ],
-                    [
-                        'name' => 'Nusrat Jahan',
-                        'from' => 'Sylhet, Bangladesh',
-                        'to' => 'Germany • LMU Munich',
-                        'text' =>
-                            'The platform made it simple to compare universities by city and tuition. I felt confident before submitting my documents.',
-                        'badge' => 'Visa Approved',
-                        'year' => '2024',
-                        'score' => 'German A2',
-                    ],
-                    [
-                        'name' => 'Tahmid Hasan',
-                        'from' => 'Rajshahi, Bangladesh',
-                        'to' => 'Australia • University of Melbourne',
-                        'text' =>
-                            'Great for quick comparisons. I saved my shortlist and revisited it with my family before finalizing the decision.',
-                        'badge' => 'Admitted',
-                        'year' => '2024',
-                        'score' => 'IELTS 7.5',
-                    ],
-                ];
-
                 $badgeStyle = function ($badge) {
                     return match ($badge) {
                         'Admitted' => 'bg-emerald-50 text-emerald-700 border-emerald-200',
@@ -540,58 +517,82 @@
                     };
                 };
             @endphp
-
+            @php
+                $successStories = $successStories ?? collect();
+            @endphp
             <div class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                @foreach ($testimonials as $t)
+                @forelse($successStories as $t)
                     <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 hover:bg-slate-100/60 transition">
                         <div class="flex items-start justify-between gap-3">
-                            <div class="min-w-0">
-                                <div class="font-semibold text-slate-900 truncate">{{ $t['name'] }}</div>
-                                <div class="text-xs text-slate-500 mt-1 truncate">{{ $t['from'] }}</div>
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div
+                                    class="h-10 w-10 rounded-2xl bg-white border border-slate-200 overflow-hidden flex items-center justify-center shrink-0">
+                                    @if ($t->photo_path)
+                                        <img src="{{ asset('storage/' . $t->photo_path) }}"
+                                            class="h-10 w-10 object-cover" alt="">
+                                    @else
+                                        <span class="text-[10px] text-slate-500">Photo</span>
+                                    @endif
+                                </div>
+
+                                <div class="min-w-0">
+                                    <div class="font-semibold text-slate-900 truncate">{{ $t->name }}</div>
+                                    <div class="text-xs text-slate-500 truncate">{{ $t->from ?? '—' }}</div>
+                                </div>
                             </div>
 
-                            <span
-                                class="shrink-0 text-[11px] px-2.5 py-1 rounded-full border {{ $badgeStyle($t['badge']) }}">
-                                {{ $t['badge'] }}
-                            </span>
+                            @if ($t->badge)
+                                <span
+                                    class="shrink-0 text-[11px] px-2.5 py-1 rounded-full border {{ $badgeStyle($t->badge) }}">
+                                    {{ $t->badge }}
+                                </span>
+                            @endif
                         </div>
 
-                        <div class="mt-3 text-sm text-slate-700 font-medium">
-                            {{ $t['to'] }}
-                        </div>
+                        @if ($t->destination)
+                            <div class="mt-3 text-sm text-slate-700 font-medium">
+                                {{ $t->destination }}
+                            </div>
+                        @endif
 
-                        <p class="mt-3 text-sm text-slate-600 leading-relaxed">
-                            “{{ $t['text'] }}”
+                        <p class="mt-3 text-sm text-slate-600 leading-relaxed line-clamp-5">
+                            “{{ $t->story }}”
                         </p>
 
                         <div class="mt-4 flex items-center justify-between text-xs text-slate-500">
                             <div class="inline-flex items-center gap-2">
-                                <span class="px-2 py-1 rounded-full border border-slate-200 bg-white">📅
-                                    {{ $t['year'] }}</span>
-                                <span class="px-2 py-1 rounded-full border border-slate-200 bg-white">🏅
-                                    {{ $t['score'] }}</span>
+                                @if ($t->year)
+                                    <span class="px-2 py-1 rounded-full border border-slate-200 bg-white">📅
+                                        {{ $t->year }}</span>
+                                @endif
+                                @if ($t->score)
+                                    <span class="px-2 py-1 rounded-full border border-slate-200 bg-white">🏅
+                                        {{ $t->score }}</span>
+                                @endif
                             </div>
 
-                            <div class="flex -space-x-2">
-                                <div class="h-8 w-8 rounded-full border border-white bg-slate-900"></div>
-                                <div class="h-8 w-8 rounded-full border border-white bg-slate-700"></div>
-                                <div class="h-8 w-8 rounded-full border border-white bg-slate-500"></div>
+                            <div class="text-xs text-slate-500">
+                                {{ $t->created_at?->format('d M, Y') }}
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div
+                        class="col-span-4 rounded-3xl border border-dashed border-slate-200 bg-white p-10 text-center text-slate-600">
+                        No approved success stories yet.
+                    </div>
+                @endforelse
             </div>
 
-            {{-- Bottom CTA --}}
             <div
                 class="mt-10 rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
                 <div>
-                    <div class="text-sm text-slate-500">Ready to start?</div>
+                    <div class="text-sm text-slate-500">Want to share your story?</div>
                     <div class="text-lg font-semibold text-slate-900 mt-1">
-                        Create your free account and build your shortlist today.
+                        Register and submit your success story.
                     </div>
                     <div class="text-sm text-slate-600 mt-1">
-                        It only takes a minute — no payment required.
+                        Admin approval is required before it appears publicly.
                     </div>
                 </div>
 
@@ -668,6 +669,54 @@
             </div>
         </div>
     </section>
+
+    {{-- Dependent dropdown JS (country -> states -> cities) --}}
+    <script>
+        (function() {
+            const country = document.getElementById('country_id');
+            const state = document.getElementById('state_id');
+            const city = document.getElementById('city_id');
+
+            async function loadStates(countryId) {
+                if (!state) return;
+                state.innerHTML = `<option value="">Any</option>`;
+                city.innerHTML = `<option value="">Any</option>`;
+                if (!countryId) return;
+
+                const res = await fetch(`{{ route('api.states') }}?country_id=${countryId}`);
+                const data = await res.json();
+                data.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s.id;
+                    opt.textContent = s.name;
+                    state.appendChild(opt);
+                });
+            }
+
+            async function loadCities(stateId) {
+                if (!city) return;
+                city.innerHTML = `<option value="">Any</option>`;
+                if (!stateId) return;
+
+                const res = await fetch(`{{ route('api.cities') }}?state_id=${stateId}`);
+                const data = await res.json();
+                data.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.textContent = c.name;
+                    city.appendChild(opt);
+                });
+            }
+
+            if (country) {
+                country.addEventListener('change', e => loadStates(e.target.value));
+            }
+            if (state) {
+                state.addEventListener('change', e => loadCities(e.target.value));
+            }
+        })();
+    </script>
+
 </body>
 
 </html>
