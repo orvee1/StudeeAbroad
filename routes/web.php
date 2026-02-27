@@ -6,12 +6,14 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\SuccessStoryController as AdminSuccessStoryController;
 use App\Http\Controllers\Admin\UniversityController;
 use App\Http\Controllers\Admin\UniversityMediaController;
 use App\Http\Controllers\Admin\UniversityProgramController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\SearchController;
 use App\Http\Controllers\Student\StudentDashboardController;
+use App\Http\Controllers\Student\SuccessStoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -33,6 +35,11 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
     Route::get('/student/dashboard', StudentDashboardController::class)->name('student.dashboard');
+    Route::get('/student/success-stories', [SuccessStoryController::class, 'index'])->name('student.success_stories.index');
+    Route::get('/student/success-stories/create', [SuccessStoryController::class, 'create'])->name('student.success_stories.create');
+    Route::post('/student/success-stories', [SuccessStoryController::class, 'store'])->name('student.success_stories.store');
+    Route::get('/student/success-stories/{success_story}/edit', [SuccessStoryController::class, 'edit'])->name('student.success_stories.edit');
+    Route::put('/student/success-stories/{success_story}', [SuccessStoryController::class, 'update'])->name('student.success_stories.update');
 });
 
 // Admin Login (separate URL)
@@ -108,10 +115,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('universities/{university}/media/{media}/edit', [UniversityMediaController::class, 'edit'])->name('universities.media.edit');
     Route::put('universities/{university}/media/{media}', [UniversityMediaController::class, 'update'])->name('universities.media.update');
     Route::delete('universities/{university}/media/{media}', [UniversityMediaController::class, 'destroy'])->name('universities.media.destroy');
+
+    // Success Stories
+    Route::get('success-stories', [AdminSuccessStoryController::class, 'index'])->name('success_stories.index');
+    Route::put('success-stories/{success_story}', [SuccessStoryController::class, 'update'])->name('success_stories.update');
+    Route::delete('success-stories/{success_story}', [SuccessStoryController::class, 'destroy'])->name('success_stories.destroy');
 });
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
-Route::get('/api/states', [SearchController::class, 'states'])->name('api.states');   
+Route::get('/api/states', [SearchController::class, 'states'])->name('api.states');
 Route::get('/api/cities', [SearchController::class, 'cities'])->name('api.cities');
 
 require __DIR__ . '/auth.php';
