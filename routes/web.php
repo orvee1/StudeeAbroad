@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SuccessStoryController as AdminSuccessStoryContro
 use App\Http\Controllers\Admin\UniversityController;
 use App\Http\Controllers\Admin\UniversityMediaController;
 use App\Http\Controllers\Admin\UniversityProgramController;
+use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\SearchController;
 use App\Http\Controllers\Student\StudentDashboardController;
@@ -23,7 +24,8 @@ Route::get('/', function () {
         }
         return redirect()->route('student.dashboard');
     }
-    return view('client.home');
+
+    return app(HomeController::class)();
 })->name('home');
 
 Route::middleware(['auth'])->group(function () {
