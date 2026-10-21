@@ -1,19 +1,15 @@
 <?php
+
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         $this->call([
             AdminUserSeeder::class,
-
             StudentUserSeeder::class,
 
             CountrySeeder::class,
@@ -21,9 +17,17 @@ class DatabaseSeeder extends Seeder
             CitySeeder::class,
 
             UniversitySeeder::class,
-            UniversityProgramSeeder::class,
-            UniversityMediaSeeder::class,
+        ]);
 
+        // Demo data only in local development.
+        if (app()->environment('local')) {
+            $this->call([
+                UniversityProgramSeeder::class,
+                UniversityMediaSeeder::class,
+            ]);
+        }
+
+        $this->call([
             LeadSeeder::class,
             SuccessStorySeeder::class,
         ]);
