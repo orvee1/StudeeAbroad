@@ -125,6 +125,7 @@ class UniversityController extends Controller
         if ($request->hasFile('cover')) {
             $data['cover_path'] = $request->file('cover')->store('universities/covers', 'public');
         }
+        unset($data['logo'], $data['cover']);
 
         University::create($data);
 
@@ -183,6 +184,7 @@ class UniversityController extends Controller
             }
             $data['cover_path'] = $request->file('cover')->store('universities/covers', 'public');
         }
+        unset($data['logo'], $data['cover']);
 
         $university->update($data);
 

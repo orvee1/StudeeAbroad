@@ -64,6 +64,7 @@ class CountryController extends Controller
         if ($request->hasFile('flag')) {
             $data['flag_path'] = $request->file('flag')->store('countries/flags', 'public');
         }
+        unset($data['flag']);
 
         Country::create($data);
 
@@ -127,6 +128,7 @@ class CountryController extends Controller
             }
             $data['flag_path'] = $request->file('flag')->store('countries/flags', 'public');
         }
+        unset($data['flag']);
 
         $country->update($data);
 
