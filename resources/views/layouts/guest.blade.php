@@ -9,7 +9,7 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-[#fbf9f4] font-sans text-[#183b36] antialiased">
+<body class="brand-theme min-h-screen bg-[#fbf9f4] font-sans text-[#183b36] antialiased">
     <div class="flex min-h-screen flex-col">
         <header class="border-b border-[#e8e5db] bg-white">
             <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">

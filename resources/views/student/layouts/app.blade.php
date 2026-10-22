@@ -10,7 +10,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>[x-cloak] { display: none !important; }</style>
 </head>
-<body class="min-h-screen bg-[#fffaf5] font-sans text-[#133f39] antialiased">
+<body class="brand-theme min-h-screen bg-[#fffaf5] font-sans text-[#133f39] antialiased">
     <header x-data="{ open: false }" class="sticky top-0 z-30 border-b border-[#ebe4d9] bg-white/90 shadow-[0_4px_18px_rgba(19,63,57,0.04)] backdrop-blur">
         <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
             <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-3" aria-label="{{ config('app.name', 'Studee Abroad') }} home">

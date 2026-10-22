@@ -9,7 +9,7 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body id="top" class="min-h-screen bg-slate-50 text-slate-900 antialiased">
+<body id="top" class="brand-theme min-h-screen bg-slate-50 text-slate-900 antialiased">
     <header class="sticky top-0 z-30 border-b border-slate-200/80 bg-white/95 backdrop-blur">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
             <a href="{{ route('home') }}" class="flex items-center gap-3" aria-label="{{ config('app.name') }} home">

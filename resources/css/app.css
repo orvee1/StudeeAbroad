@@ -1,3 +1,262 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*
+ * Non-admin brand theme
+ *
+ * The public and student areas share the colours from the StudeeAbroad mark:
+ * royal blue and cyan for trust and discovery, orange for action, and green
+ * and magenta for supporting accents. The scope keeps the admin workspace
+ * unchanged while allowing older non-admin templates to converge visually.
+ */
+.brand-theme {
+    --brand-ink: #142b4a;
+    --brand-primary: #0757a6;
+    --brand-primary-dark: #06346e;
+    --brand-cyan: #0aa9cf;
+    --brand-orange: #ef8b22;
+    --brand-orange-dark: #d96a18;
+    --brand-green: #198b54;
+    --brand-magenta: #c52b86;
+    --brand-surface: #fffdf9;
+    --brand-soft-blue: #eef7ff;
+    --brand-soft-cyan: #e8faff;
+    --brand-soft-green: #e9f8ef;
+    --brand-line: #dce8f1;
+}
+
+/* The primary colours used by the existing public/student templates. */
+.brand-theme [class~="bg-[#174f46]"],
+.brand-theme [class~="bg-[#0b6158]"],
+.brand-theme [class~="bg-cyan-600"],
+.brand-theme [class~="bg-slate-900"] {
+    background-color: var(--brand-primary) !important;
+}
+
+.brand-theme [class~="bg-[#083f3a]"],
+.brand-theme [class~="bg-[#103e37]"],
+.brand-theme [class~="bg-[#0d352f]"],
+.brand-theme [class~="hover:bg-[#103e37]"]:hover,
+.brand-theme [class~="focus:bg-[#103e37]"]:focus,
+.brand-theme [class~="active:bg-[#0d352f]"]:active,
+.brand-theme [class~="hover:bg-blue-700"]:hover {
+    background-color: var(--brand-primary-dark) !important;
+}
+
+.brand-theme [class~="bg-[#0a453f]"],
+.brand-theme [class~="bg-[#143f38]"] {
+    background-color: #062d61 !important;
+}
+
+.brand-theme [class~="bg-[#0f6b60]"],
+.brand-theme [class~="bg-[#2b7569]"],
+.brand-theme [class~="bg-[#428b7e]"] {
+    background-color: var(--brand-cyan) !important;
+}
+
+.brand-theme [class~="bg-[#f0b08b]"],
+.brand-theme [class~="bg-[#ff9e76]"],
+.brand-theme [class~="bg-[#ffb08f]"],
+.brand-theme [class~="bg-[#ffb18e]"] {
+    background-color: var(--brand-orange) !important;
+}
+
+.brand-theme [class~="hover:bg-[#f5c4a6]"]:hover,
+.brand-theme [class~="hover:bg-[#ffb18e]"]:hover,
+.brand-theme [class~="hover:bg-[#ffc1a4]"]:hover {
+    background-color: #f5a84e !important;
+}
+
+/* Text and interaction colours. */
+.brand-theme [class~="text-[#183b36]"],
+.brand-theme [class~="text-[#133f39]"],
+.brand-theme [class~="text-slate-950"],
+.brand-theme [class~="text-slate-900"] {
+    color: var(--brand-ink) !important;
+}
+
+.brand-theme [class~="text-[#174f46]"],
+.brand-theme [class~="text-[#0b6158]"],
+.brand-theme [class~="text-[#2b776b]"],
+.brand-theme [class~="text-[#38665a]"],
+.brand-theme [class~="text-cyan-600"],
+.brand-theme [class~="text-emerald-800"],
+.brand-theme [class~="text-emerald-700"] {
+    color: var(--brand-primary) !important;
+}
+
+.brand-theme [class~="text-[#f0b08b]"],
+.brand-theme [class~="text-[#ff9e76]"],
+.brand-theme [class~="text-[#ffb08f]"],
+.brand-theme [class~="text-[#d96545]"],
+.brand-theme [class~="text-[#b96748]"],
+.brand-theme [class~="text-[#c46545]"],
+.brand-theme [class~="text-[#a65e41]"],
+.brand-theme [class~="text-amber-700"],
+.brand-theme [class~="text-amber-800"] {
+    color: var(--brand-orange-dark) !important;
+}
+
+.brand-theme [class~="text-[#b24b43]"],
+.brand-theme [class~="text-rose-500"],
+.brand-theme [class~="text-rose-800"] {
+    color: var(--brand-magenta) !important;
+}
+
+.brand-theme [class~="text-slate-700"],
+.brand-theme [class~="text-slate-600"],
+.brand-theme [class~="text-slate-500"],
+.brand-theme [class~="text-gray-700"],
+.brand-theme [class~="text-gray-600"],
+.brand-theme [class~="text-gray-500"],
+.brand-theme [class~="text-gray-400"],
+.brand-theme [class~="text-[#52665f]"],
+.brand-theme [class~="text-[#536b64]"],
+.brand-theme [class~="text-[#687871]"],
+.brand-theme [class~="text-[#71817a]"],
+.brand-theme [class~="text-[#819087]"],
+.brand-theme [class~="text-[#778880]"] {
+    color: #58718a !important;
+}
+
+.brand-theme [class~="text-gray-900"],
+.brand-theme [class~="text-gray-800"] {
+    color: var(--brand-ink) !important;
+}
+
+.brand-theme [class~="hover:text-[#174f46]"]:hover,
+.brand-theme [class~="hover:text-[#0b6158]"]:hover,
+.brand-theme [class~="hover:text-[#b96748]"]:hover,
+.brand-theme [class~="hover:text-[#c46545]"]:hover,
+.brand-theme [class~="hover:text-[#d96545]"]:hover,
+.brand-theme [class~="hover:text-slate-900"]:hover {
+    color: var(--brand-primary) !important;
+}
+
+/* Surfaces, borders and status chips. */
+.brand-theme [class~="bg-[#fbf9f4]"],
+.brand-theme [class~="bg-[#fffaf5]"],
+.brand-theme [class~="bg-[#fffaf8]"],
+.brand-theme [class~="bg-slate-50"] {
+    background-color: var(--brand-surface) !important;
+}
+
+.brand-theme [class~="bg-[#f3f8f2]"],
+.brand-theme [class~="bg-[#f7f8f3]"],
+.brand-theme [class~="bg-[#e4f5ec]"],
+.brand-theme [class~="bg-[#e3f4e8]"],
+.brand-theme [class~="bg-[#e7f3ea]"],
+.brand-theme [class~="bg-emerald-50"] {
+    background-color: var(--brand-soft-green) !important;
+}
+
+.brand-theme [class~="bg-[#eef2e9]"],
+.brand-theme [class~="bg-[#e9f4eb]"],
+.brand-theme [class~="bg-[#f2f0e8]"],
+.brand-theme [class~="bg-slate-100"],
+.brand-theme [class~="bg-gray-100"] {
+    background-color: var(--brand-soft-blue) !important;
+}
+
+.brand-theme [class~="bg-[#fff0e8]"],
+.brand-theme [class~="bg-[#f8efe8]"],
+.brand-theme [class~="bg-amber-50"] {
+    background-color: #fff3df !important;
+}
+
+.brand-theme [class~="bg-rose-50"] {
+    background-color: #fff0f8 !important;
+}
+
+.brand-theme [class~="border-[#174f46]"],
+.brand-theme [class~="border-[#23806f]"],
+.brand-theme [class~="border-[#1f675d]"],
+.brand-theme [class~="border-[#285b51]"] {
+    border-color: var(--brand-cyan) !important;
+}
+
+.brand-theme [class~="border-[#e8e5db]"],
+.brand-theme [class~="border-[#ebe4d9]"],
+.brand-theme [class~="border-[#e5e5dc]"],
+.brand-theme [class~="border-[#e6e5dc]"],
+.brand-theme [class~="border-[#e6e8df]"],
+.brand-theme [class~="border-slate-200"],
+.brand-theme [class~="border-[#dfe5df]"] {
+    border-color: var(--brand-line) !important;
+}
+
+.brand-theme [class~="border-[#dfe5df]"],
+.brand-theme [class~="border-[#cfe6d9]"],
+.brand-theme [class~="border-[#cbd7ce]"],
+.brand-theme [class~="border-gray-100"],
+.brand-theme [class~="border-gray-200"] {
+    border-color: #b9d8e9 !important;
+}
+
+.brand-theme [class~="border-emerald-200"] {
+    border-color: #a8dfc1 !important;
+}
+
+.brand-theme [class~="border-amber-200"] {
+    border-color: #f4cf91 !important;
+}
+
+.brand-theme [class~="border-rose-200"] {
+    border-color: #efb4d3 !important;
+}
+
+/* Replace the repeated teal gradients with the logo's blue/cyan blend. */
+.brand-theme [class~="bg-gradient-to-br"][class~="from-[#0b6158]"] {
+    background-image: linear-gradient(135deg, #0757a6 0%, #0aa9cf 52%, #062d61 100%) !important;
+}
+
+.brand-theme [class~="bg-gradient-to-br"][class~="from-slate-950"] {
+    background-image: linear-gradient(135deg, #142b4a 0%, #0757a6 52%, #0aa9cf 100%) !important;
+}
+
+.brand-theme [class~="bg-gradient-to-br"][class~="from-[#d9f0df]"] {
+    background-image: linear-gradient(135deg, #e8faff 0%, #fff3df 55%, #f8d8e9 100%) !important;
+}
+
+/* Buttons and fields from the Breeze templates. */
+.brand-theme [class~="focus:border-[#4e8273]"]:focus,
+.brand-theme [class~="focus:border-indigo-500"]:focus {
+    border-color: var(--brand-cyan) !important;
+}
+
+.brand-theme [class~="focus:ring-[#4e8273]"]:focus,
+.brand-theme [class~="focus:ring-indigo-500"]:focus,
+.brand-theme [class~="focus:ring-indigo-500"]:focus-visible {
+    --tw-ring-color: var(--brand-cyan) !important;
+}
+
+.brand-theme [class~="text-indigo-600"] {
+    color: var(--brand-primary) !important;
+}
+
+.brand-theme [class~="bg-indigo-50"] {
+    background-color: #edf0ff !important;
+}
+
+.brand-theme [class~="text-indigo-800"] {
+    color: #3f3a9d !important;
+}
+
+.brand-theme [class~="bg-slate-900"]:hover {
+    background-color: var(--brand-primary-dark) !important;
+}
+
+.brand-theme [class~="hover:bg-slate-50"]:hover {
+    background-color: var(--brand-soft-blue) !important;
+}
+
+.brand-theme [class~="hover:bg-gray-100"]:hover,
+.brand-theme [class~="focus:bg-gray-100"]:focus {
+    background-color: var(--brand-soft-blue) !important;
+}
+
+.brand-theme [class~="hover:text-gray-700"]:hover,
+.brand-theme [class~="focus:text-gray-500"]:focus {
+    color: var(--brand-primary) !important;
+}

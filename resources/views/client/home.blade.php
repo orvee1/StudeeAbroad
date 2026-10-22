@@ -11,7 +11,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>[x-cloak] { display: none !important; }</style>
 </head>
-<body id="top" class="bg-[#fffaf5] font-sans text-[#133f39] antialiased">
+<body id="top" class="brand-theme bg-[#fffaf5] font-sans text-[#133f39] antialiased">
     @php
         $stats = $stats ?? ['countries' => 0, 'universities' => 0, 'programs' => 0, 'support' => '1:1'];
         $topCountries = $topCountries ?? collect();

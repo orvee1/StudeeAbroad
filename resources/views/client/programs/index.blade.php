@@ -6,7 +6,7 @@
     <meta name="description" content="Search international university programs by destination, degree level, subject, tuition and intake.">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body id="top" class="bg-[#fbf9f4] font-sans text-[#183b36] antialiased">
+<body id="top" class="brand-theme bg-[#fbf9f4] font-sans text-[#183b36] antialiased">
     <header class="border-b border-[#e8e5db] bg-white"><div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"><a href="{{ route('home') }}" class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#174f46] text-xs font-bold text-white">SA</span><span><strong class="block text-sm">{{ config('app.name', 'Studee Abroad') }}</strong><span class="text-xs text-[#819087]">Your study-abroad guide</span></span></a><nav class="flex items-center gap-4 text-sm"><a href="{{ route('search') }}" class="hidden font-semibold text-[#52665f] sm:inline">Universities</a>@auth<a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student.dashboard') }}" class="rounded-xl bg-[#174f46] px-4 py-2.5 font-semibold text-white">Dashboard</a>@else<a href="{{ route('login') }}" class="font-semibold text-[#52665f]">Log in</a>@endauth</nav></div></header>
     <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <nav class="text-sm text-[#819087]" aria-label="Breadcrumb"><a href="{{ route('home') }}" class="hover:text-[#174f46]">Home</a><span class="mx-2">/</span><span>Programs</span></nav>
