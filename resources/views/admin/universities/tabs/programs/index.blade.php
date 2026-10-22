@@ -103,9 +103,15 @@
                             <td class="px-6 py-4">{{ $p->level }}</td>
 
                             <td class="px-6 py-4">
-                                {{ $p->tuition_per_year_min !== null ? number_format($p->tuition_per_year_min) : '—' }}
-                                -
-                                {{ $p->tuition_per_year_max !== null ? number_format($p->tuition_per_year_max) : '—' }}
+                                @if ($p->tuition_per_year_min !== null || $p->tuition_per_year_max !== null)
+                                    <div>{{ $university->country?->currency ? $university->country->currency . ' ' : '' }}Year: {{ $p->tuition_per_year_min !== null ? number_format($p->tuition_per_year_min) : '—' }}–{{ $p->tuition_per_year_max !== null ? number_format($p->tuition_per_year_max) : '—' }}</div>
+                                @endif
+                                @if ($p->tuition_per_semester_min !== null || $p->tuition_per_semester_max !== null)
+                                    <div class="mt-1">{{ $university->country?->currency ? $university->country->currency . ' ' : '' }}Semester: {{ $p->tuition_per_semester_min !== null ? number_format($p->tuition_per_semester_min) : '—' }}–{{ $p->tuition_per_semester_max !== null ? number_format($p->tuition_per_semester_max) : '—' }}<span class="block text-xs text-slate-500">{{ $p->semesters_per_year }} {{ Str::plural('semester', $p->semesters_per_year) }} / year</span></div>
+                                @endif
+                                @if ($p->tuition_per_year_min === null && $p->tuition_per_year_max === null && $p->tuition_per_semester_min === null && $p->tuition_per_semester_max === null)
+                                    —
+                                @endif
                             </td>
 
                             <td class="px-6 py-4">

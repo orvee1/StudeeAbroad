@@ -3,22 +3,22 @@
 @section('page_title', 'University Details')
 @section('breadcrumb', 'Admin / Universities / Details')
 
-<div class="mb-4 bg-white border border-slate-200 rounded-2xl p-3 flex flex-wrap gap-2">
-    <a href="{{ route('universities.show', $university) }}"
-       class="px-4 py-2 rounded-xl text-sm border border-slate-200 bg-slate-900 text-white">
-        Overview
-    </a>
-    <a href="{{ route('universities.programs.index', $university) }}"
-       class="px-4 py-2 rounded-xl text-sm border border-slate-200 hover:bg-slate-50">
-        Programs
-    </a>
-    <a href="{{ route('universities.media.index', $university) }}"
-       class="px-4 py-2 rounded-xl text-sm border border-slate-200 hover:bg-slate-50">
-        Media
-    </a>
-</div>
-
 @section('content')
+
+    <div class="mb-4 flex flex-wrap gap-2 rounded-2xl border border-slate-200 bg-white p-3">
+        <a href="{{ route('universities.show', $university) }}"
+            class="rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-900">
+            Overview
+        </a>
+        <a href="{{ route('universities.programs.index', $university) }}"
+            class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-900">
+            Programs
+        </a>
+        <a href="{{ route('universities.media.index', $university) }}"
+            class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-900">
+            Media
+        </a>
+    </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-1">

@@ -156,12 +156,29 @@
                                         </span>
                                     @endif
                                 </div>
+                                <form method="POST" action="{{ route('universities.featured', $u) }}" class="mt-2">
+                                    @csrf
+                                    @method('PATCH')
+                                    <label class="inline-flex cursor-pointer items-center gap-2 text-xs font-semibold text-slate-600">
+                                        <input type="checkbox" name="is_featured" value="1"
+                                            class="peer sr-only" @checked($u->is_featured)
+                                            onchange="this.form.submit()"
+                                            aria-label="{{ $u->is_featured ? 'Remove ' : 'Add ' }}{{ $u->name }} {{ $u->is_featured ? 'from' : 'to' }} featured universities">
+                                        <span class="relative h-5 w-9 rounded-full bg-slate-200 transition peer-checked:bg-emerald-700 peer-focus-visible:ring-2 peer-focus-visible:ring-emerald-600 peer-focus-visible:ring-offset-2 after:absolute after:left-0.5 after:top-0.5 after:h-4 after:w-4 after:rounded-full after:bg-white after:shadow-sm after:transition peer-checked:after:translate-x-4"></span>
+                                        <span>{{ $u->is_featured ? 'Featured' : 'Mark featured' }}</span>
+                                    </label>
+                                </form>
                             </td>
 
                             <td class="px-6 py-4">
                                 <div class="flex justify-end gap-2">
                                     <a href="{{ route('universities.show', $u) }}"
                                         class="px-3 py-2 rounded-xl border border-slate-200 text-sm hover:bg-slate-50">View</a>
+
+                                    <a href="{{ route('universities.programs.index', $u) }}"
+                                        class="px-3 py-2 rounded-xl bg-emerald-800 text-sm font-semibold text-white transition hover:bg-emerald-900">
+                                        Programs
+                                    </a>
 
                                     <a href="{{ route('universities.edit', $u) }}"
                                         class="px-3 py-2 rounded-xl border border-slate-200 text-sm hover:bg-slate-50">Edit</a>

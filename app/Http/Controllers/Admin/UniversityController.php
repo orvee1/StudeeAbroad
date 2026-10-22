@@ -191,6 +191,23 @@ class UniversityController extends Controller
             ->with('success', 'University updated successfully.');
     }
 
+    public function toggleFeatured(Request $request, University $university)
+    {
+        $data = $request->validate([
+            'is_featured' => ['nullable', 'boolean'],
+        ]);
+
+        $university->update([
+            'is_featured' => (bool) ($data['is_featured'] ?? false),
+        ]);
+
+        return redirect()
+            ->route('universities.index', $request->query())
+            ->with('success', $university->is_featured
+                ? $university->name . ' is now featured.'
+                : $university->name . ' was removed from featured universities.');
+    }
+
     public function destroy(University $university)
     {
         // optional: delete files on delete? (soft delete so keep files)

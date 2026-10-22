@@ -16,8 +16,8 @@
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
     <div>
-        <label class="text-sm font-medium">Title <span class="text-rose-500">*</span></label>
-        <input name="title" value="{{ $v('title') }}"
+        <label for="title" class="text-sm font-medium">Program name <span class="text-rose-500">*</span></label>
+        <input id="title" name="title" value="{{ $v('title') }}"
             class="mt-1 w-full rounded-xl border-slate-200 focus:border-slate-400 focus:ring-slate-200"
             placeholder="BSc in Computer Science" />
     </div>
@@ -37,8 +37,8 @@
     </div>
 
     <div>
-        <label class="text-sm font-medium">Field</label>
-        <input name="field" value="{{ $v('field') }}"
+        <label for="field" class="text-sm font-medium">Subject / field of study</label>
+        <input id="field" name="field" value="{{ $v('field') }}"
             class="mt-1 w-full rounded-xl border-slate-200 focus:border-slate-400 focus:ring-slate-200"
             placeholder="Engineering / Business" />
     </div>
@@ -74,18 +74,53 @@
     </div>
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<section class="space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 lg:p-5" aria-labelledby="annual-tuition-heading">
     <div>
-        <label class="text-sm font-medium">Tuition per year (min)</label>
-        <input type="number" name="tuition_per_year_min" value="{{ $v('tuition_per_year_min') }}"
+        <h3 id="annual-tuition-heading" class="font-semibold text-slate-900">Annual tuition</h3>
+        <p class="mt-1 text-xs text-slate-500">Enter amounts in {{ $university->country?->currency ?: 'the university currency' }}. Leave blank when tuition is not confirmed.</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div>
+        <label for="tuition_per_year_min" class="text-sm font-medium">Minimum per year</label>
+        <input id="tuition_per_year_min" type="number" min="0" step="1" name="tuition_per_year_min" value="{{ $v('tuition_per_year_min') }}"
             class="mt-1 w-full rounded-xl border-slate-200 focus:border-slate-400 focus:ring-slate-200" />
     </div>
     <div>
-        <label class="text-sm font-medium">Tuition per year (max)</label>
-        <input type="number" name="tuition_per_year_max" value="{{ $v('tuition_per_year_max') }}"
+        <label for="tuition_per_year_max" class="text-sm font-medium">Maximum per year</label>
+        <input id="tuition_per_year_max" type="number" min="0" step="1" name="tuition_per_year_max" value="{{ $v('tuition_per_year_max') }}"
             class="mt-1 w-full rounded-xl border-slate-200 focus:border-slate-400 focus:ring-slate-200" />
     </div>
 </div>
+</section>
+
+<section class="space-y-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 lg:p-5" aria-labelledby="semester-tuition-heading">
+    <div>
+        <h3 id="semester-tuition-heading" class="font-semibold text-slate-900">Semester tuition</h3>
+        <p class="mt-1 text-xs text-slate-500">Add a semester fee and the number of semesters in one academic year. Annual and semester fees can both be recorded.</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div>
+            <label for="tuition_per_semester_min" class="text-sm font-medium">Minimum per semester</label>
+            <input id="tuition_per_semester_min" type="number" min="0" step="1" name="tuition_per_semester_min" value="{{ $v('tuition_per_semester_min') }}"
+                class="mt-1 w-full rounded-xl border-slate-200 focus:border-slate-400 focus:ring-slate-200" />
+        </div>
+        <div>
+            <label for="tuition_per_semester_max" class="text-sm font-medium">Maximum per semester</label>
+            <input id="tuition_per_semester_max" type="number" min="0" step="1" name="tuition_per_semester_max" value="{{ $v('tuition_per_semester_max') }}"
+                class="mt-1 w-full rounded-xl border-slate-200 focus:border-slate-400 focus:ring-slate-200" />
+        </div>
+        <div>
+            <label for="semesters_per_year" class="text-sm font-medium">Semesters per year</label>
+            <select id="semesters_per_year" name="semesters_per_year"
+                class="mt-1 w-full rounded-xl border-slate-200 bg-white focus:border-slate-400 focus:ring-slate-200">
+                <option value="">Choose count</option>
+                @foreach (range(1, 4) as $count)
+                    <option value="{{ $count }}" @selected((string) $v('semesters_per_year') === (string) $count)>{{ $count }} {{ Str::plural('semester', $count) }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+</section>
 
 <div>
     <label class="text-sm font-medium">Intake Months</label>
