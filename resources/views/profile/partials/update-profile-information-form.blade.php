@@ -15,9 +15,23 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route($user->isAdmin() ? 'admin.profile.update' : 'profile.update') }}" class="{{ ($hideProfileSectionHeader ?? false) ? '' : 'mt-6' }} space-y-6">
+    <form method="post" action="{{ route($user->isAdmin() ? 'admin.profile.update' : 'profile.update') }}" enctype="multipart/form-data" class="{{ ($hideProfileSectionHeader ?? false) ? '' : 'mt-6' }} space-y-6">
         @csrf
         @method('patch')
+
+        <div class="flex items-center gap-4">
+            @if ($user->profile_photo_path)
+                <img src="{{ asset('storage/' . ltrim($user->profile_photo_path, '/')) }}" alt="{{ $user->name }} profile photo" class="h-16 w-16 rounded-2xl object-cover ring-2 ring-emerald-100">
+            @else
+                <span class="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-100 text-xl font-extrabold text-emerald-900">{{ mb_strtoupper(mb_substr($user->name ?: 'S', 0, 1)) }}</span>
+            @endif
+            <div class="min-w-0 flex-1">
+                <x-input-label for="profile_photo" :value="__('Profile photo')" />
+                <input id="profile_photo" name="profile_photo" type="file" accept="image/jpeg,image/png,image/webp" class="mt-1 block w-full text-sm text-slate-600 file:mr-3 file:rounded-lg file:border-0 file:bg-emerald-50 file:px-3 file:py-2 file:font-semibold file:text-emerald-800 hover:file:bg-emerald-100" />
+                <p class="mt-1 text-xs text-slate-500">JPG, PNG or WebP, maximum 2MB.</p>
+                <x-input-error class="mt-2" :messages="$errors->get('profile_photo')" />
+            </div>
+        </div>
 
         <div>
             <x-input-label for="name" :value="__('Name')" />

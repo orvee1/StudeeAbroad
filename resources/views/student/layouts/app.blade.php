@@ -24,6 +24,13 @@
                 <a href="{{ route('student.success_stories.index') }}" class="transition hover:text-[#174f46]">My stories</a>
             </nav>
             <div class="flex items-center gap-2">
+                <span class="hidden h-9 w-9 overflow-hidden rounded-xl bg-[#dff1e5] text-center text-sm font-bold leading-9 text-[#174f46] sm:block">
+                    @if(auth()->user()->profile_photo_path)
+                        <img src="{{ asset('storage/' . ltrim(auth()->user()->profile_photo_path, '/')) }}" alt="{{ auth()->user()->name }} profile photo" class="h-full w-full object-cover">
+                    @else
+                        {{ mb_strtoupper(mb_substr(auth()->user()->name ?: 'S', 0, 1)) }}
+                    @endif
+                </span>
                 <span class="hidden text-right sm:block"><strong class="block text-sm">{{ auth()->user()->name }}</strong><span class="block text-xs text-[#819087]">Student</span></span>
                 <a href="{{ route('profile.edit') }}" class="hidden rounded-xl border border-[#dfe5df] px-3 py-2 text-sm font-semibold text-[#174f46] hover:bg-[#f7f8f3] sm:inline-flex">Profile</a>
                 <form method="POST" action="{{ route('logout') }}" class="hidden sm:block">
