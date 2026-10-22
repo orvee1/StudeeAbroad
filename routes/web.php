@@ -11,24 +11,31 @@ use App\Http\Controllers\Admin\UniversityController;
 use App\Http\Controllers\Admin\UniversityMediaController;
 use App\Http\Controllers\Admin\UniversityProgramController;
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\Client\LeadController;
+use App\Http\Controllers\Client\ProgramSearchController;
+use App\Http\Controllers\Client\PublicCatalogController;
+use App\Http\Controllers\Admin\LeadController as AdminLeadController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\SearchController;
 use App\Http\Controllers\Student\StudentDashboardController;
 use App\Http\Controllers\Student\SuccessStoryController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    if (auth()->check()) {
-        if (auth()->user()->isAdmin()) {
-            return redirect()->route('dashboard');
-        }
-        return redirect()->route('student.dashboard');
-    }
+Route::get('/', HomeController::class)->name('home');
 
-    return app(HomeController::class)();
-})->name('home');
+Route::get('/destinations/{country:slug}', [PublicCatalogController::class, 'country'])->name('public.destinations.show');
+Route::get('/universities/{university:slug}', [PublicCatalogController::class, 'university'])->name('public.universities.show');
+Route::get('/universities/{university:slug}/programs/{program:slug}', [PublicCatalogController::class, 'program'])
+    ->scopeBindings()
+    ->name('public.programs.show');
+Route::get('/programs', [ProgramSearchController::class, 'index'])->name('public.programs.index');
+Route::post('/enquiries', [LeadController::class, 'store'])->middleware('throttle:5,1')->name('enquiries.store');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::get('/dashboard', function () {
         if (auth()->user()->isAdmin()) {
             return redirect()->route('dashboard');
@@ -37,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 
     Route::get('/student/dashboard', StudentDashboardController::class)->name('student.dashboard');
+    Route::get('/student/enquiries', [\App\Http\Controllers\Student\EnquiryController::class, 'index'])->name('student.enquiries.index');
     Route::get('/student/success-stories', [SuccessStoryController::class, 'index'])->name('student.success_stories.index');
     Route::get('/student/success-stories/create', [SuccessStoryController::class, 'create'])->name('student.success_stories.create');
     Route::post('/student/success-stories', [SuccessStoryController::class, 'store'])->name('student.success_stories.store');
@@ -53,13 +61,16 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/', function () {
         return redirect()->route('dashboard');
-    })->name('home');
+    })->name('admin.home');
 
     Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('admin.profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('admin.profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('admin.profile.destroy');
+
+    Route::get('/leads', [AdminLeadController::class, 'index'])->name('leads.index');
+    Route::patch('/leads/{lead}', [AdminLeadController::class, 'update'])->name('leads.update');
 
     // Students
     Route::get('students', [StudentController::class, 'index'])->name('students.index');
@@ -99,6 +110,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('universities/{university}', [UniversityController::class, 'show'])->name('universities.show');
     Route::get('universities/{university}/edit', [UniversityController::class, 'edit'])->name('universities.edit');
     Route::put('universities/{university}', [UniversityController::class, 'update'])->name('universities.update');
+    Route::patch('universities/{university}/featured', [UniversityController::class, 'toggleFeatured'])->name('universities.featured');
     Route::delete('universities/{university}', [UniversityController::class, 'destroy'])->name('universities.destroy');
     Route::get('api/cities-by-state', [UniversityController::class, 'citiesByState'])->name('api.citiesByState');
 

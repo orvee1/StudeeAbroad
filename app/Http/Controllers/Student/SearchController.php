@@ -96,7 +96,9 @@ class SearchController extends Controller
             $query->orderByDesc('is_featured')->orderBy('sort_order')->orderBy('name');
         }
 
-        $universities = $query->paginate($perPage)
+        $universities = $query->with(['country:id,name', 'state:id,name', 'city:id,name'])
+            ->withCount(['programs' => fn ($programs) => $programs->where('is_active', true)])
+            ->paginate($perPage)
             ->appends(request()->query());
 
         // For dropdowns

@@ -1,722 +1,284 @@
-{{-- resources/views/client/home.blade.php --}}
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Studee Abroad') }} — Study Abroad Made Simple</title>
-
+    <meta name="description" content="Explore universities and study destinations around the world. Compare tuition, rankings and programs to plan your next step.">
+    <title>{{ config('app.name', 'Studee Abroad') }} — Find your place to study</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>[x-cloak] { display: none !important; }</style>
 </head>
-
-<body class="bg-slate-50 text-slate-900">
-
+<body id="top" class="bg-[#fbf9f4] font-sans text-[#183b36] antialiased">
     @php
-        // expected from controller:
-        // $stats = ['countries'=>..., 'universities'=>..., 'programs'=>..., 'support'=>...]
-        // $countries = Country::active() list for search dropdown
-        // $topCountries = Country::withCount('universities') ... for top countries cards
-        // $featuredUniversities = University::with(['country','state','city'])->withCount('programs') ... featured cards
-
-        $stats = $stats ?? [
-            'countries' => 0,
-            'universities' => 0,
-            'programs' => 0,
-            'support' => '1:1',
-        ];
+        $stats = $stats ?? ['countries' => 0, 'universities' => 0, 'programs' => 0, 'support' => '1:1'];
+        $topCountries = $topCountries ?? collect();
+        $featuredUniversities = $featuredUniversities ?? collect();
+        $successStories = $successStories ?? collect();
+        $badgeStyle = fn ($badge) => match ($badge) {
+            'Admitted' => 'bg-emerald-50 text-emerald-800 ring-emerald-200',
+            'Offer Received' => 'bg-indigo-50 text-indigo-800 ring-indigo-200',
+            'Visa Approved' => 'bg-amber-50 text-amber-800 ring-amber-200',
+            default => 'bg-stone-100 text-stone-700 ring-stone-200',
+        };
     @endphp
 
-    {{-- Top thin bar --}}
-    <div class="border-b border-slate-200 bg-white">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8 py-2 flex items-center justify-between text-sm">
-            <div class="text-slate-600 flex items-center gap-2">
-                <span
-                    class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs">
-                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                    Guidance available
-                </span>
-                <span class="hidden sm:inline">Free guidance • Scholarship support • University shortlist</span>
-                <span class="sm:hidden">Study Abroad Support</span>
-            </div>
-
-            <div class="flex items-center gap-2">
-                @auth
-                    @if (auth()->user()->isAdmin())
-                        <a href="{{ route('dashboard') }}"
-                            class="px-3 py-1.5 rounded-xl bg-slate-900 text-white hover:opacity-90 transition">
-                            Admin Dashboard
-                        </a>
-                    @else
-                        <a href="{{ route('student.dashboard') }}"
-                            class="px-3 py-1.5 rounded-xl bg-slate-900 text-white hover:opacity-90 transition">
-                            My Dashboard
-                        </a>
-                    @endif
-                @else
-                    <a href="{{ route('login') }}"
-                        class="px-3 py-1.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition">
-                        Login
-                    </a>
-                    <a href="{{ route('register') }}"
-                        class="px-3 py-1.5 rounded-xl bg-slate-900 text-white hover:opacity-90 transition">
-                        Register
-                    </a>
-                @endauth
-            </div>
-        </div>
-    </div>
-
-    {{-- Header --}}
-    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8 py-4 flex items-center justify-between gap-4">
-            <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                <div class="h-10 w-10 rounded-2xl bg-slate-900"></div>
-                <div>
-                    <div class="text-sm font-semibold group-hover:opacity-90">{{ config('app.name', 'Studee Abroad') }}
-                    </div>
-                    <div class="text-xs text-slate-500">Study Abroad Platform</div>
-                </div>
+    <header x-data="{ open: false }" class="sticky top-0 z-40 border-b border-[#e8e5db] bg-[#fbf9f4]/95 backdrop-blur">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+            <a href="{{ route('home') }}" class="group flex shrink-0 items-center gap-3" aria-label="{{ config('app.name', 'Studee Abroad') }} home">
+                <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#174f46] text-sm font-bold tracking-tight text-white shadow-sm">SA</span>
+                <span><span class="block text-sm font-bold tracking-tight text-[#183b36]">{{ config('app.name', 'Studee Abroad') }}</span><span class="block text-xs text-[#71817a]">Your study-abroad guide</span></span>
             </a>
 
-            <nav class="hidden md:flex items-center gap-6 text-sm text-slate-700">
-                <a href="#how-it-works" class="hover:text-slate-900 transition">How it works</a>
-                <a href="#features" class="hover:text-slate-900 transition">Features</a>
-                <a href="#countries" class="hover:text-slate-900 transition">Countries</a>
-                <a href="#universities" class="hover:text-slate-900 transition">Universities</a>
-                <a href="#testimonials" class="hover:text-slate-900 transition">Success</a>
-                <a href="#contact" class="hover:text-slate-900 transition">Contact</a>
+            <nav class="hidden items-center gap-7 text-sm font-medium text-[#52665f] md:flex" aria-label="Main navigation">
+                <a href="#destinations" class="transition hover:text-[#174f46]">Destinations</a>
+                <a href="#universities" class="transition hover:text-[#174f46]">Universities</a>
+                <a href="{{ route('public.programs.index') }}" class="transition hover:text-[#174f46]">Programs</a>
+                <a href="#stories" class="transition hover:text-[#174f46]">Student stories</a>
+                <a href="#how-it-works" class="transition hover:text-[#174f46]">How it works</a>
             </nav>
 
-            <div class="flex items-center gap-2">
-                <a href="#contact"
-                    class="hidden sm:inline-flex px-4 py-2 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-sm transition">
-                    Talk to us
-                </a>
-
-                @guest
-                    <a href="{{ route('register') }}"
-                        class="px-4 py-2 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
-                        Start Free
-                    </a>
-                @endguest
+            <div class="hidden items-center gap-3 sm:flex">
+                @auth
+                    <a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student.dashboard') }}" class="rounded-xl bg-[#174f46] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#103e37]">{{ auth()->user()->isAdmin() ? 'Admin dashboard' : 'My dashboard' }}</a>
+                @else
+                    <a href="{{ route('login') }}" class="px-2 py-2 text-sm font-semibold text-[#52665f] transition hover:text-[#174f46]">Log in</a>
+                    <a href="{{ route('register') }}" class="rounded-xl bg-[#174f46] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#103e37]">Create account</a>
+                @endauth
             </div>
+
+            <button type="button" @click="open = !open" :aria-expanded="open.toString()" aria-controls="mobile-navigation" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#d9e0d8] text-[#174f46] sm:hidden" aria-label="Toggle navigation">
+                <svg x-show="!open" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+                <svg x-show="open" x-cloak class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" d="m6 6 12 12M18 6 6 18"/></svg>
+            </button>
+        </div>
+
+        <div id="mobile-navigation" x-show="open" x-cloak x-transition class="border-t border-[#e8e5db] bg-[#fbf9f4] px-4 py-4 sm:hidden">
+            <nav class="mx-auto flex max-w-7xl flex-col gap-1 text-sm font-medium" aria-label="Mobile navigation">
+                    <a @click="open = false" href="#destinations" class="rounded-lg px-3 py-2.5 hover:bg-white">Destinations</a>
+                    <a @click="open = false" href="#universities" class="rounded-lg px-3 py-2.5 hover:bg-white">Universities</a>
+                    <a @click="open = false" href="{{ route('public.programs.index') }}" class="rounded-lg px-3 py-2.5 hover:bg-white">Programs</a>
+                    <a @click="open = false" href="#stories" class="rounded-lg px-3 py-2.5 hover:bg-white">Student stories</a>
+                <a @click="open = false" href="#how-it-works" class="rounded-lg px-3 py-2.5 hover:bg-white">How it works</a>
+                <div class="mt-2 flex gap-3 border-t border-[#e8e5db] pt-3">
+                    @auth
+                        <a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student.dashboard') }}" class="w-full rounded-xl bg-[#174f46] px-4 py-3 text-center font-semibold text-white">{{ auth()->user()->isAdmin() ? 'Admin dashboard' : 'My dashboard' }}</a>
+                    @else
+                        <a href="{{ route('login') }}" class="flex-1 rounded-xl border border-[#cbd7ce] px-4 py-3 text-center font-semibold text-[#174f46]">Log in</a>
+                        <a href="{{ route('register') }}" class="flex-1 rounded-xl bg-[#174f46] px-4 py-3 text-center font-semibold text-white">Create account</a>
+                    @endauth
+                </div>
+            </nav>
         </div>
     </header>
 
-    {{-- Hero --}}
-    <section class="relative">
-        <div class="absolute inset-0 -z-10">
-            <div class="absolute inset-x-0 top-0 h-[520px] bg-gradient-to-b from-indigo-50 via-white to-transparent">
-            </div>
-            <div class="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-indigo-100 blur-3xl opacity-70"></div>
-            <div class="absolute -bottom-28 -left-28 h-96 w-96 rounded-full bg-sky-100 blur-3xl opacity-70"></div>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14 lg:py-20">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-                <div>
-                    <div
-                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs border border-slate-200 bg-white">
-                        <span class="h-2 w-2 rounded-full bg-indigo-500"></span>
-                        Trusted study abroad guidance
+    <main>
+        <section class="relative isolate overflow-hidden">
+            <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_10%_15%,rgba(220,235,221,.8),transparent_38%),radial-gradient(ellipse_at_92%_8%,rgba(249,224,205,.55),transparent_30%)]"></div>
+            <div class="mx-auto grid max-w-7xl items-center gap-12 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_.95fr] lg:px-8 lg:py-20">
+                <div class="max-w-2xl">
+                    <div class="inline-flex items-center gap-2 rounded-full border border-[#d6e1d5] bg-white/80 px-3.5 py-2 text-xs font-semibold tracking-wide text-[#38665a] shadow-sm">
+                        <span class="h-2 w-2 rounded-full bg-[#e58b67]"></span> Make your next move count
                     </div>
+                    <h1 class="mt-6 max-w-xl text-[2.65rem] font-semibold leading-[1.08] tracking-[-.045em] text-[#183b36] sm:text-5xl lg:text-[3.65rem]">A world of study. <span class="text-[#b96748]">A place for you.</span></h1>
+                    <p class="mt-5 max-w-xl text-base leading-7 text-[#5f716a] sm:text-lg">Explore universities, compare the details that matter and find a destination that feels right for your future.</p>
 
-                    <h1 class="mt-5 text-3xl lg:text-5xl font-bold leading-tight text-slate-900">
-                        Choose the right university with clarity — not confusion.
-                    </h1>
-
-                    <p class="mt-4 text-slate-600 text-lg">
-                        Explore countries → states → cities → universities. Compare tuition, living cost, rankings and
-                        programs.
-                        Build a shortlist and move faster.
-                    </p>
-
-                    {{-- REAL Search (GET) --}}
-                    <form action="{{ route('search') }}" method="GET"
-                        class="mt-7 rounded-3xl border border-slate-200 bg-white p-3 shadow-sm">
-                        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-                            <div>
-                                <label class="text-xs text-slate-500">Country</label>
-                                <select name="country_id" id="country_id"
-                                    class="mt-1 w-full rounded-2xl border-slate-200 focus:border-indigo-400 focus:ring-indigo-200">
-                                    <option value="">Any</option>
-                                    @foreach ($countries ?? [] as $c)
-                                        <option value="{{ $c->id }}">{{ $c->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="text-xs text-slate-500">State</label>
-                                <select name="state_id" id="state_id"
-                                    class="mt-1 w-full rounded-2xl border-slate-200 focus:border-indigo-400 focus:ring-indigo-200">
-                                    <option value="">Any</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="text-xs text-slate-500">City</label>
-                                <select name="city_id" id="city_id"
-                                    class="mt-1 w-full rounded-2xl border-slate-200 focus:border-indigo-400 focus:ring-indigo-200">
-                                    <option value="">Any</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="text-xs text-slate-500">Tuition Range</label>
-                                <div class="mt-1 grid grid-cols-2 gap-2">
-                                    <input type="number" name="tuition_min" placeholder="Min"
-                                        class="w-full rounded-2xl border-slate-200 focus:border-indigo-400 focus:ring-indigo-200">
-                                    <input type="number" name="tuition_max" placeholder="Max"
-                                        class="w-full rounded-2xl border-slate-200 focus:border-indigo-400 focus:ring-indigo-200">
-                                </div>
-                            </div>
-
-                            <div class="flex items-end">
-                                <button type="submit"
-                                    class="w-full px-5 py-3 rounded-2xl bg-slate-900 text-white font-semibold text-sm hover:opacity-90 transition">
-                                    Search
-                                </button>
-                            </div>
+                    <form action="{{ route('search') }}" method="GET" class="mt-8 rounded-[1.6rem] border border-[#e5e5dc] bg-white p-4 shadow-[0_22px_60px_-35px_rgba(24,59,54,.35)] sm:p-5">
+                        <div class="mb-4 flex items-center gap-2 text-sm font-bold text-[#183b36]"><span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#edf4eb] text-[#38665a]" aria-hidden="true">⌕</span>Start exploring</div>
+                        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                            <div class="sm:col-span-2"><label for="home_q" class="text-xs font-semibold text-[#687871]">University or keyword</label><input id="home_q" name="q" type="search" placeholder="e.g. business, Toronto, university name" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm placeholder:text-[#9aa69f] focus:border-[#4e8273] focus:ring-[#4e8273]"></div>
+                            <div><label for="country_id" class="text-xs font-semibold text-[#687871]">Study destination</label><select name="country_id" id="country_id" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm text-[#344e46] focus:border-[#4e8273] focus:ring-[#4e8273]"><option value="">Any country</option>@foreach ($countries ?? [] as $country)<option value="{{ $country->id }}">{{ $country->name }}</option>@endforeach</select></div>
+                            <div><label for="state_id" class="text-xs font-semibold text-[#687871]">State / region</label><select name="state_id" id="state_id" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm text-[#344e46] focus:border-[#4e8273] focus:ring-[#4e8273]"><option value="">Any region</option></select></div>
+                            <div><label for="city_id" class="text-xs font-semibold text-[#687871]">City</label><select name="city_id" id="city_id" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm text-[#344e46] focus:border-[#4e8273] focus:ring-[#4e8273]"><option value="">Any city</option></select></div>
+                            <div class="grid grid-cols-2 gap-2"><div><label for="tuition_min" class="text-xs font-semibold text-[#687871]">Tuition from</label><input id="tuition_min" name="tuition_min" type="number" min="0" placeholder="Min" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm focus:border-[#4e8273] focus:ring-[#4e8273]"></div><div><label for="tuition_max" class="text-xs font-semibold text-[#687871]">Tuition to</label><input id="tuition_max" name="tuition_max" type="number" min="0" placeholder="Max" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm focus:border-[#4e8273] focus:ring-[#4e8273]"></div></div>
                         </div>
-
-                        <div class="mt-2 text-xs text-slate-500 px-1">
-                            More filters (intake, level, keyword) are available on the results page.
-                        </div>
+                        <button type="submit" class="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#174f46] px-5 py-3.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#103e37] focus:outline-none focus:ring-2 focus:ring-[#4e8273] focus:ring-offset-2">Find universities <span aria-hidden="true">→</span></button>
+                        <p class="mt-3 text-center text-xs text-[#829088]">Adjust your search any time with more filters.</p>
                     </form>
-
-                    <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        <div class="rounded-2xl border border-slate-200 bg-white p-4">
-                            <div class="text-xs text-slate-500">Countries</div>
-                            <div class="text-xl font-bold mt-1 text-slate-900">
-                                {{ number_format((int) ($stats['countries'] ?? 0)) }}</div>
-                        </div>
-                        <div class="rounded-2xl border border-slate-200 bg-white p-4">
-                            <div class="text-xs text-slate-500">Universities</div>
-                            <div class="text-xl font-bold mt-1 text-slate-900">
-                                {{ number_format((int) ($stats['universities'] ?? 0)) }}</div>
-                        </div>
-                        <div class="rounded-2xl border border-slate-200 bg-white p-4">
-                            <div class="text-xs text-slate-500">Programs</div>
-                            <div class="text-xl font-bold mt-1 text-slate-900">
-                                {{ number_format((int) ($stats['programs'] ?? 0)) }}</div>
-                        </div>
-                        <div class="rounded-2xl border border-slate-200 bg-white p-4">
-                            <div class="text-xs text-slate-500">Support</div>
-                            <div class="text-xl font-bold mt-1 text-slate-900">{{ $stats['support'] ?? '1:1' }}</div>
-                        </div>
-                    </div>
                 </div>
 
-                {{-- Right info card --}}
-                <div class="lg:pl-10">
-                    <div class="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-                        <div class="p-6 border-b border-slate-200">
-                            <div class="text-sm text-slate-500">What you get</div>
-                            <div class="text-xl font-semibold mt-1 text-slate-900">A student-first experience</div>
-                        </div>
-
-                        <div class="p-6 space-y-3">
-                            @foreach ([['i' => '✅', 't' => 'Smart Shortlist', 'd' => 'Save and compare universities quickly.'], ['i' => '💰', 't' => 'Cost Insights', 'd' => 'Tuition & living cost range in one place.'], ['i' => '🎯', 't' => 'Program Finder', 'd' => 'Filter by level, field, intake and more.'], ['i' => '🧾', 't' => 'Clear Steps', 'd' => 'A simple flow from research to applying.']] as $b)
-                                <div class="flex gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                                    <div
-                                        class="h-10 w-10 rounded-2xl bg-white border border-slate-200 flex items-center justify-center">
-                                        {{ $b['i'] }}
-                                    </div>
-                                    <div>
-                                        <div class="font-semibold text-slate-900">{{ $b['t'] }}</div>
-                                        <div class="text-sm text-slate-600">{{ $b['d'] }}</div>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                            <div class="pt-2">
-                                <a href="{{ route('register') }}"
-                                    class="w-full inline-flex justify-center px-5 py-3 rounded-2xl bg-slate-900 text-white font-semibold text-sm hover:opacity-90 transition">
-                                    Start Free — Create Account
-                                </a>
-                                <div class="text-xs text-slate-500 text-center mt-2">
-                                    No payment required to register.
+                <div class="relative mx-auto w-full max-w-[31rem] lg:ml-auto">
+                    <div class="absolute -right-5 -top-5 h-28 w-28 rounded-full bg-[#e8b38f]/35 blur-xl"></div>
+                    <div class="absolute -bottom-8 -left-8 h-36 w-36 rounded-full bg-[#b8d2bd]/50 blur-xl"></div>
+                    <div class="relative overflow-hidden rounded-[2rem] border border-[#216257] bg-[#174f46] p-6 text-white shadow-[0_30px_70px_-30px_rgba(23,79,70,.65)] sm:p-8">
+                        <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full border border-white/10"></div><div class="absolute -right-10 -top-10 h-44 w-44 rounded-full border border-white/10"></div>
+                        <div class="relative flex min-h-[22rem] flex-col justify-between sm:min-h-[25rem]">
+                            <div class="flex items-start justify-between gap-4"><div><p class="text-xs font-semibold uppercase tracking-[.18em] text-[#b9d3c2]">Your journey, your pace</p><h2 class="mt-3 max-w-xs text-3xl font-semibold leading-tight tracking-tight">The right choice starts with a good search.</h2></div><span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#f0b08b] text-2xl text-[#174f46]" aria-hidden="true">✳</span></div>
+                            <div class="relative mt-8">
+                                <div class="absolute -left-3 top-4 h-24 w-24 rounded-full bg-[#bbd2bc]"></div><div class="absolute left-14 top-10 h-16 w-16 rounded-full bg-[#e9a27d]"></div><div class="absolute left-28 top-0 h-28 w-28 rounded-full border-[1.5rem] border-[#d9e7d8]"></div>
+                                <div class="relative ml-auto max-w-[16rem] rounded-2xl border border-[#71a095] bg-[#2d685e] p-4 shadow-[0_18px_36px_-18px_rgba(4,31,26,.85)]">
+                                    <div class="flex items-center justify-between"><span class="text-xs font-semibold tracking-[.01em] text-[#f0f7ef]">Your search snapshot</span><span class="h-2 w-2 rounded-full bg-[#f0b08b]"></span></div>
+                                    <div class="mt-4 grid grid-cols-2 gap-2"><div class="rounded-xl border border-white/10 bg-[#417a6f] p-3"><p class="text-[11px] text-[#d8eade]">Countries</p><p class="mt-1 text-xl font-bold text-white">{{ number_format((int) ($stats['countries'] ?? 0)) }}</p></div><div class="rounded-xl border border-white/10 bg-[#417a6f] p-3"><p class="text-[11px] text-[#d8eade]">Universities</p><p class="mt-1 text-xl font-bold text-white">{{ number_format((int) ($stats['universities'] ?? 0)) }}</p></div></div>
+                                    <div class="mt-2 rounded-xl bg-[#f4eee2] px-3 py-2.5 text-xs font-semibold text-[#345c50]">Compare options at a glance <span class="float-right" aria-hidden="true">↗</span></div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-4 grid grid-cols-2 gap-3">
-                        <div class="rounded-2xl border border-slate-200 bg-white p-4">
-                            <div class="text-xs text-slate-500">Scholarship</div>
-                            <div class="font-semibold mt-1 text-slate-900">Guidance</div>
-                        </div>
-                        <div class="rounded-2xl border border-slate-200 bg-white p-4">
-                            <div class="text-xs text-slate-500">Visa</div>
-                            <div class="font-semibold mt-1 text-slate-900">Checklist</div>
+                            <p class="mt-6 text-xs text-[#c1d9cc]">A little clarity can take you a long way.</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    {{-- How it works --}}
-    <section id="how-it-works" class="border-t border-slate-200 bg-white">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14">
-            <div class="text-center max-w-2xl mx-auto">
-                <div class="text-sm text-slate-500">Simple steps</div>
-                <h2 class="text-2xl lg:text-3xl font-bold mt-2 text-slate-900">How it works</h2>
-                <p class="text-slate-600 mt-3">
-                    A clean flow that matches your admin hierarchy: Country → State → City → University → Programs.
-                </p>
+        <section class="border-y border-[#e8e5db] bg-white" aria-label="Study directory overview">
+            <div class="mx-auto grid max-w-7xl grid-cols-2 gap-5 px-4 py-6 sm:px-6 md:grid-cols-4 lg:px-8">
+                <div class="border-l-2 border-[#e6a17f] pl-4"><p class="text-2xl font-bold tracking-tight text-[#183b36]">{{ number_format((int) ($stats['countries'] ?? 0)) }}</p><p class="mt-1 text-xs font-medium text-[#71817a] sm:text-sm">Study destinations</p></div>
+                <div class="border-l-2 border-[#b6cfb8] pl-4"><p class="text-2xl font-bold tracking-tight text-[#183b36]">{{ number_format((int) ($stats['universities'] ?? 0)) }}</p><p class="mt-1 text-xs font-medium text-[#71817a] sm:text-sm">Universities to explore</p></div>
+                <div class="border-l-2 border-[#c1b7dc] pl-4"><p class="text-2xl font-bold tracking-tight text-[#183b36]">{{ number_format((int) ($stats['programs'] ?? 0)) }}</p><p class="mt-1 text-xs font-medium text-[#71817a] sm:text-sm">Programs in our directory</p></div>
+                <div class="border-l-2 border-[#e8d394] pl-4"><p class="text-2xl font-bold tracking-tight text-[#183b36]">{{ $stats['support'] ?? '1:1' }}</p><p class="mt-1 text-xs font-medium text-[#71817a] sm:text-sm">Personal guidance</p></div>
             </div>
+        </section>
 
-            <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
-                @foreach ([['n' => 'Step 1', 't' => 'Create your account', 'd' => 'Register in seconds and get your dashboard.'], ['n' => 'Step 2', 't' => 'Explore & shortlist', 'd' => 'Compare universities and programs easily.'], ['n' => 'Step 3', 't' => 'Apply with guidance', 'd' => 'Next: Inquiry/Apply workflow and tracking.']] as $s)
-                    <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 hover:bg-slate-100/60 transition">
-                        <div class="text-xs text-slate-500">{{ $s['n'] }}</div>
-                        <div class="text-lg font-semibold mt-1 text-slate-900">{{ $s['t'] }}</div>
-                        <div class="text-slate-600 mt-2 text-sm">{{ $s['d'] }}</div>
-                    </div>
+        <section id="how-it-works" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+            <div class="grid gap-8 lg:grid-cols-[.75fr_1.25fr] lg:items-end">
+                <div><p class="text-xs font-bold uppercase tracking-[.18em] text-[#b96748]">A simple place to begin</p><h2 class="mt-3 max-w-md text-3xl font-semibold leading-tight tracking-tight text-[#183b36] sm:text-4xl">Turn “where should I study?” into a clear next step.</h2></div>
+                <p class="max-w-xl text-base leading-7 text-[#687871] lg:justify-self-end">Start broad, narrow down by what matters to you, then explore universities and the options they offer.</p>
+            </div>
+            <div class="mt-9 grid gap-4 md:grid-cols-3">
+                @foreach ([['01', 'Choose a destination', 'Browse active countries and see universities listed for each place.'], ['02', 'Compare your options', 'Use tuition, location, study level and intake filters to refine your search.'], ['03', 'Plan your next move', 'Create an account to continue with your student dashboard and guidance.']] as $step)
+                    <article class="rounded-2xl border border-[#e6e5dc] bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-[#183b36]/5"><span class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#edf4eb] text-sm font-bold text-[#38665a]">{{ $step[0] }}</span><h3 class="mt-5 text-lg font-bold text-[#183b36]">{{ $step[1] }}</h3><p class="mt-2 text-sm leading-6 text-[#71817a]">{{ $step[2] }}</p></article>
                 @endforeach
             </div>
-        </div>
-    </section>
+        </section>
 
-    {{-- Features --}}
-    <section id="features" class="border-t border-slate-200 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14">
-            <div class="flex items-end justify-between gap-3">
-                <div>
-                    <div class="text-sm text-slate-500">Designed for students</div>
-                    <h2 class="text-2xl lg:text-3xl font-bold mt-2 text-slate-900">Features that make decisions easier
-                    </h2>
+        <section id="destinations" class="border-y border-[#e8e5db] bg-[#f1f3eb]">
+            <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+                <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><p class="text-xs font-bold uppercase tracking-[.18em] text-[#b96748]">Go where you can grow</p><h2 class="mt-3 text-3xl font-semibold tracking-tight text-[#183b36] sm:text-4xl">Explore destinations</h2><p class="mt-3 max-w-xl text-sm leading-6 text-[#687871]">Start with a country. Find universities, cities and programs that match your plans.</p></div><a href="{{ route('search') }}" class="inline-flex items-center gap-2 text-sm font-bold text-[#174f46] transition hover:text-[#b96748]">Browse all universities <span aria-hidden="true">→</span></a></div>
+                <div class="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                    @forelse($topCountries as $country)
+                        <a href="{{ route('public.destinations.show', $country->slug) }}" class="group rounded-2xl border border-[#e2e4d9] bg-white p-5 transition hover:-translate-y-1 hover:border-[#b8cabb] hover:shadow-lg hover:shadow-[#183b36]/5">
+                            <div class="flex items-center gap-3"><span class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#f2f0e8] text-lg font-bold text-[#527066]">@if($country->flag_path)<img src="{{ asset('storage/' . ltrim($country->flag_path, '/')) }}" alt="" class="h-full w-full object-cover">@else{{ mb_substr($country->name, 0, 1) }}@endif</span><span class="min-w-0"><span class="block truncate font-bold text-[#183b36]">{{ $country->name }}</span><span class="mt-1 block text-xs text-[#819087]">{{ number_format($country->universities_count ?? 0) }} universities</span></span><span class="ml-auto text-[#9caaa0] transition group-hover:translate-x-1 group-hover:text-[#b96748]" aria-hidden="true">→</span></div>
+                        </a>
+                    @empty
+                        <div class="col-span-full rounded-2xl border border-dashed border-[#d5ddd2] bg-white p-8 text-center text-sm text-[#71817a]">Destinations will appear here as they are added to the directory.</div>
+                    @endforelse
                 </div>
-                <a href="{{ route('register') }}"
-                    class="hidden sm:inline-flex px-4 py-2 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
-                    Get started
-                </a>
             </div>
+        </section>
 
-            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                @foreach ([['t' => 'University Profiles', 'd' => 'Rankings, acceptance rate, tuition & living cost range.'], ['t' => 'Programs & Intakes', 'd' => 'Levels, fields, languages, intake months in one place.'], ['t' => 'Scholarship Tag', 'd' => 'Quickly spot scholarship-available universities.'], ['t' => 'Location Hierarchy', 'd' => 'Country → State → City filters (fast & organized).'], ['t' => 'Student Accounts', 'd' => 'Registration + dashboard built-in.'], ['t' => 'Admin Control', 'd' => 'Manage everything from a clean admin panel.']] as $f)
-                    <div class="rounded-3xl border border-slate-200 bg-white p-6 hover:bg-slate-50 transition">
-                        <div class="text-lg font-semibold text-slate-900">{{ $f['t'] }}</div>
-                        <div class="text-slate-600 mt-2 text-sm">{{ $f['d'] }}</div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    {{-- Top Countries (DB) --}}
-    <section id="countries" class="border-t border-slate-200 bg-white">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14">
-            <div class="flex items-end justify-between gap-3">
-                <div>
-                    <div class="text-sm text-slate-500">Popular destinations</div>
-                    <h2 class="text-2xl lg:text-3xl font-bold mt-2 text-slate-900">Top Countries</h2>
-                    <p class="text-slate-600 mt-2 text-sm">Powered by your database (active countries + university
-                        count).</p>
-                </div>
-                <a href="{{ route('register') }}"
-                    class="hidden sm:inline-flex px-4 py-2 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 text-sm transition">
-                    Browse all (Next)
-                </a>
-            </div>
-
-            <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                @forelse(($topCountries ?? []) as $c)
-                    <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5 hover:bg-slate-100/60 transition">
-                        <div class="flex items-start justify-between gap-3">
-                            <div class="flex items-center gap-3 min-w-0">
-                                <div
-                                    class="h-12 w-12 rounded-2xl bg-white border border-slate-200 overflow-hidden flex items-center justify-center shrink-0">
-                                    @if (!empty($c->flag_path))
-                                        <img src="{{ asset('storage/' . $c->flag_path) }}"
-                                            class="h-12 w-12 object-cover" alt="">
+        <section id="universities" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><p class="text-xs font-bold uppercase tracking-[.18em] text-[#b96748]">A good place to start</p><h2 class="mt-3 text-3xl font-semibold tracking-tight text-[#183b36] sm:text-4xl">Featured universities</h2><p class="mt-3 max-w-xl text-sm leading-6 text-[#687871]">A selection from our active university directory.</p></div><a href="{{ route('search') }}" class="inline-flex items-center gap-2 text-sm font-bold text-[#174f46] transition hover:text-[#b96748]">See all universities <span aria-hidden="true">→</span></a></div>
+            <div class="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                @forelse($featuredUniversities as $university)
+                    <article class="group overflow-hidden rounded-2xl border border-[#e6e5dc] bg-white transition hover:-translate-y-1 hover:shadow-xl hover:shadow-[#183b36]/8">
+                        <div class="relative flex h-36 items-end overflow-hidden bg-gradient-to-br from-[#dce8d9] via-[#e9e7d8] to-[#edc7ad] p-4">
+                            @if($university->cover_path)<img src="{{ asset('storage/' . ltrim($university->cover_path, '/')) }}" alt="" class="absolute inset-0 h-full w-full object-cover">@else<div class="absolute -right-5 -top-10 h-40 w-40 rounded-full border-[1.2rem] border-white/35"></div><div class="absolute -right-2 -top-7 h-28 w-28 rounded-full bg-[#174f46]/15"></div>@endif
+                            <div class="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border border-white/80 bg-white text-lg font-bold text-[#174f46] shadow-sm">@if($university->logo_path)<img src="{{ asset('storage/' . ltrim($university->logo_path, '/')) }}" alt="{{ $university->name }} logo" class="h-full w-full object-contain p-1">@else{{ mb_substr($university->name, 0, 1) }}@endif</div>
+                            @if($university->is_featured)<span class="relative ml-auto rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[#38665a]">Featured</span>@endif
+                        </div>
+                        <div class="p-5"><h3 class="line-clamp-2 min-h-[3.25rem] text-base font-bold leading-6 text-[#183b36]">{{ $university->name }}</h3><p class="mt-2 truncate text-xs text-[#819087]">{{ collect([$university->city?->name, $university->state?->name, $university->country?->name])->filter()->unique()->implode(', ') ?: 'Location details coming soon' }}</p>
+                            <div class="mt-4 flex flex-wrap gap-2">@if($university->world_ranking)<span class="rounded-full bg-[#f2f0e8] px-2.5 py-1 text-[11px] font-semibold text-[#52665f]">Rank #{{ number_format($university->world_ranking) }}</span>@endif @if($university->scholarship_available)<span class="rounded-full bg-[#fff0e8] px-2.5 py-1 text-[11px] font-semibold text-[#a65e41]">Scholarships</span>@endif</div>
+                            <div class="mt-4 border-t border-[#eeeee8] pt-4">
+                                <p class="text-[11px] font-semibold uppercase tracking-wide text-[#91a097]">Annual tuition</p>
+                                <p class="mt-1 text-sm font-bold text-[#345c50]">
+                                    @if ($university->tuition_min !== null || $university->tuition_max !== null)
+                                        {{ $university->cost_currency ? $university->cost_currency . ' ' : '' }}{{ $university->tuition_min !== null ? number_format($university->tuition_min) : '—' }}–{{ $university->tuition_max !== null ? number_format($university->tuition_max) : '—' }}
                                     @else
-                                        <span class="text-[10px] text-slate-500">FLAG</span>
+                                        Contact university
                                     @endif
-                                </div>
-                                <div class="min-w-0">
-                                    <div class="font-semibold text-slate-900 text-lg truncate">{{ $c->name }}
-                                    </div>
-                                    <div class="text-xs text-slate-500 mt-1 truncate">
-                                        {{ $c->universities_count ?? 0 }} universities
-                                    </div>
-                                </div>
+                                </p>
                             </div>
-
-                            <span
-                                class="text-[11px] px-2.5 py-1 rounded-full border border-slate-200 bg-white text-slate-700 shrink-0">
-                                Popular
-                            </span>
+                        <a href="{{ route('public.universities.show', $university->slug) }}" class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-[#174f46] transition group-hover:text-[#b96748]">Explore university <span aria-hidden="true">→</span></a>
                         </div>
-
-                        <div class="mt-3 text-sm text-slate-600">
-                            Explore universities, cities and programs.
-                        </div>
-
-                        <div class="mt-5 flex items-center gap-2">
-                            <a href="{{ route('search', ['country_id' => $c->id]) }}"
-                                class="px-4 py-2 rounded-2xl border border-slate-200 bg-white text-sm hover:bg-slate-50 transition">
-                                Explore
-                            </a>
-                            <a href="{{ route('register') }}"
-                                class="px-4 py-2 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
-                                Shortlist
-                            </a>
-                        </div>
-                    </div>
+                    </article>
                 @empty
-                    <div
-                        class="rounded-3xl border border-slate-200 bg-white p-10 text-center text-slate-600 col-span-4">
-                        No countries found yet. Add countries from admin panel.
-                    </div>
+                    <div class="col-span-full rounded-2xl border border-dashed border-[#d5ddd2] bg-white p-8 text-center text-sm text-[#71817a]">Featured universities will appear here when available.</div>
                 @endforelse
             </div>
-        </div>
-    </section>
+        </section>
 
-    {{-- Featured Universities (DB) --}}
-    <section id="universities" class="border-t border-slate-200 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14">
-            <div class="flex items-end justify-between gap-3">
-                <div>
-                    <div class="text-sm text-slate-500">Hand-picked</div>
-                    <h2 class="text-2xl lg:text-3xl font-bold mt-2 text-slate-900">Featured Universities</h2>
-                    <p class="text-slate-600 mt-2 text-sm">Pulled from universities where featured + active.</p>
+        <section id="stories" class="border-y border-[#e8e5db] bg-[#f1f3eb]">
+            <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+                <div class="max-w-2xl"><p class="text-xs font-bold uppercase tracking-[.18em] text-[#b96748]">From students, for students</p><h2 class="mt-3 text-3xl font-semibold tracking-tight text-[#183b36] sm:text-4xl">Every journey has a story.</h2><p class="mt-3 text-sm leading-6 text-[#687871]">A little perspective from students who have taken their next step.</p></div>
+                <div class="mt-9 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                    @forelse($successStories as $story)
+                        <article class="flex flex-col rounded-2xl border border-[#e2e4d9] bg-white p-5 shadow-sm">
+                            <div class="flex items-center gap-3"><span class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#e9eee5] text-sm font-bold text-[#38665a]">@if($story->photo_path)<img src="{{ asset('storage/' . ltrim($story->photo_path, '/')) }}" alt="Photo of {{ $story->name }}" class="h-full w-full object-cover">@else{{ mb_substr($story->name, 0, 1) }}@endif</span><div class="min-w-0"><h3 class="truncate text-sm font-bold text-[#183b36]">{{ $story->name }}</h3><p class="truncate text-xs text-[#819087]">{{ $story->from ?: 'Student' }}</p></div></div>
+                            @if($story->badge)<span class="mt-4 self-start rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ring-inset {{ $badgeStyle($story->badge) }}">{{ $story->badge }}</span>@endif
+                            @if($story->destination)<p class="mt-3 text-sm font-semibold text-[#345c50]">{{ $story->destination }}</p>@endif
+                            <blockquote class="mt-3 flex-1 text-sm leading-6 text-[#687871]">“{{ $story->story }}”</blockquote>
+                            @if($story->year || $story->score)<div class="mt-4 flex flex-wrap gap-2 border-t border-[#eeeee8] pt-3">@if($story->year)<span class="text-xs font-medium text-[#819087]">{{ $story->year }}</span>@endif @if($story->score)<span class="text-xs font-medium text-[#819087]">{{ $story->score }}</span>@endif</div>@endif
+                        </article>
+                    @empty
+                        <div class="col-span-full rounded-2xl border border-dashed border-[#d5ddd2] bg-white p-8 text-center text-sm text-[#71817a]">Student stories will be shared here as they become available.</div>
+                    @endforelse
                 </div>
-                <a href="{{ route('register') }}"
-                    class="hidden sm:inline-flex px-4 py-2 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
-                    Start Free
-                </a>
             </div>
+        </section>
 
-            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                @forelse(($featuredUniversities ?? []) as $u)
-                    <div class="rounded-3xl border border-slate-200 bg-white p-6 hover:bg-slate-50 transition">
-                        <div class="flex items-start justify-between gap-3">
-                            <div class="min-w-0">
-                                <div class="font-semibold text-slate-900 truncate">{{ $u->name }}</div>
-                                <div class="text-sm text-slate-600 mt-1 truncate">
-                                    {{ $u->city?->name ?? '—' }}, {{ $u->state?->name ?? '—' }}
-                                </div>
-                                <div class="text-xs text-slate-500 truncate">
-                                    {{ $u->country?->name ?? '—' }}
-                                </div>
-                            </div>
+        <section class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+            <x-enquiry-form source="landing" />
+        </section>
 
-                            <div
-                                class="h-10 w-10 rounded-2xl bg-slate-50 border border-slate-200 overflow-hidden flex items-center justify-center shrink-0">
-                                @if (!empty($u->logo_path))
-                                    <img src="{{ asset('storage/' . $u->logo_path) }}" class="h-10 w-10 object-cover"
-                                        alt="">
-                                @else
-                                    <span class="text-[10px] text-slate-500">LOGO</span>
-                                @endif
-                            </div>
-                        </div>
+        <section class="px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+            <div class="mx-auto flex max-w-7xl flex-col gap-7 overflow-hidden rounded-[2rem] bg-[#174f46] px-6 py-9 text-white sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-12">
+                <div class="max-w-2xl"><p class="text-xs font-bold uppercase tracking-[.18em] text-[#c3d9c8]">Your next chapter</p><h2 class="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Ready to see what’s out there?</h2><p class="mt-3 max-w-xl text-sm leading-6 text-[#d4e2d7]">Search universities and compare the details that help you make a confident choice.</p></div>
+                <a href="{{ route('search') }}" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#f0b08b] px-5 py-3.5 text-sm font-bold text-[#183b36] transition hover:bg-[#f5c4a6]">Explore universities <span aria-hidden="true">→</span></a>
+            </div>
+        </section>
+    </main>
 
-                        <div class="mt-4 flex flex-wrap gap-2">
-                            @if ($u->scholarship_available)
-                                <span
-                                    class="text-[11px] px-2.5 py-1 rounded-full border border-slate-200 bg-slate-50 text-slate-700">
-                                    Scholarship
-                                </span>
-                            @endif
-                            @if (!empty($u->world_ranking))
-                                <span
-                                    class="text-[11px] px-2.5 py-1 rounded-full border border-slate-200 bg-slate-50 text-slate-700">
-                                    Rank #{{ $u->world_ranking }}
-                                </span>
-                            @endif
-                            <span
-                                class="text-[11px] px-2.5 py-1 rounded-full border border-slate-200 bg-slate-50 text-slate-700">
-                                Programs: {{ $u->programs_count ?? 0 }}
-                            </span>
-                        </div>
-
-                        <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
-                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-3">
-                                <div class="text-xs text-slate-500">Tuition</div>
-                                <div class="font-semibold mt-1 text-slate-900">
-                                    @if ($u->tuition_min !== null || $u->tuition_max !== null)
-                                        {{ $u->tuition_min !== null ? number_format($u->tuition_min) : '—' }}
-                                        -
-                                        {{ $u->tuition_max !== null ? number_format($u->tuition_max) : '—' }}
-                                    @else
-                                        —
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-3">
-                                <div class="text-xs text-slate-500">Living</div>
-                                <div class="font-semibold mt-1 text-slate-900">
-                                    @if ($u->living_cost_min !== null || $u->living_cost_max !== null)
-                                        {{ $u->living_cost_min !== null ? number_format($u->living_cost_min) : '—' }}
-                                        -
-                                        {{ $u->living_cost_max !== null ? number_format($u->living_cost_max) : '—' }}
-                                    @else
-                                        —
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-
-                        <a href="{{ route('search', ['q' => $u->name]) }}"
-                            class="mt-5 w-full inline-flex justify-center px-4 py-2.5 rounded-2xl bg-slate-900 text-white font-semibold text-sm hover:opacity-90 transition">
-                            View (Next)
-                        </a>
-
-                        <div class="mt-2 text-xs text-slate-500 text-center">
-                            Public university page can be linked later.
-                        </div>
-                    </div>
-                @empty
-                    <div
-                        class="rounded-3xl border border-slate-200 bg-white p-10 text-center text-slate-600 col-span-4">
-                        No featured universities found. Mark some universities as featured from admin panel.
-                    </div>
-                @endforelse
+    <footer id="footer" class="border-t border-[#285b51] bg-[#143f38] text-white">
+        <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.2fr_.8fr_.8fr] lg:px-8 lg:py-14">
+            <div class="max-w-sm">
+                <a href="{{ route('home') }}" class="inline-flex items-center gap-3" aria-label="{{ config('app.name', 'Studee Abroad') }} home"><span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#f0b08b] text-xs font-bold text-[#183b36]">SA</span><span class="font-bold tracking-tight">{{ config('app.name', 'Studee Abroad') }}</span></a>
+                <p class="mt-4 text-sm leading-6 text-[#c5d8ce]">Explore study destinations and find universities that fit your plans.</p>
+            </div>
+            <div>
+                <h2 class="text-xs font-bold uppercase tracking-[.16em] text-[#f0b08b]">Explore</h2>
+                <nav class="mt-4 flex flex-col items-start gap-3 text-sm text-[#e1ebe4]" aria-label="Footer navigation">
+                    <a href="{{ route('search') }}" class="transition hover:text-white">Find universities</a>
+                    <a href="{{ route('public.programs.index') }}" class="transition hover:text-white">Find programs</a>
+                    <a href="#destinations" class="transition hover:text-white">Study destinations</a>
+                    <a href="#universities" class="transition hover:text-white">Featured universities</a>
+                </nav>
+            </div>
+            <div>
+                <h2 class="text-xs font-bold uppercase tracking-[.16em] text-[#f0b08b]">Your journey</h2>
+                <nav class="mt-4 flex flex-col items-start gap-3 text-sm text-[#e1ebe4]" aria-label="Journey links">
+                    <a href="#how-it-works" class="transition hover:text-white">How it works</a>
+                    <a href="#stories" class="transition hover:text-white">Student stories</a>
+                    <a href="#top" class="transition hover:text-white">Back to top ↑</a>
+                </nav>
             </div>
         </div>
-    </section>
-
-    {{-- Testimonials / Success Stories --}}
-    <section id="testimonials" class="border-t border-slate-200 bg-white">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14">
-            <div class="flex items-end justify-between gap-4">
-                <div>
-                    <div class="text-sm text-slate-500">Success stories</div>
-                    <h2 class="text-2xl lg:text-3xl font-bold mt-2 text-slate-900">
-                        Students who reached their dream universities
-                    </h2>
-                    <p class="text-slate-600 mt-2 text-sm max-w-2xl">
-                        Real stories submitted by students (only approved ones are shown here).
-                    </p>
-                </div>
-
-                <a href="{{ route('register') }}"
-                    class="hidden sm:inline-flex px-4 py-2 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
-                    Start your journey
-                </a>
-            </div>
-
-            @php
-                $badgeStyle = function ($badge) {
-                    return match ($badge) {
-                        'Admitted' => 'bg-emerald-50 text-emerald-700 border-emerald-200',
-                        'Offer Received' => 'bg-indigo-50 text-indigo-700 border-indigo-200',
-                        'Visa Approved' => 'bg-amber-50 text-amber-700 border-amber-200',
-                        default => 'bg-slate-50 text-slate-700 border-slate-200',
-                    };
-                };
-            @endphp
-            @php
-                $successStories = $successStories ?? collect();
-            @endphp
-            <div class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                @forelse($successStories as $t)
-                    <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 hover:bg-slate-100/60 transition">
-                        <div class="flex items-start justify-between gap-3">
-                            <div class="flex items-center gap-3 min-w-0">
-                                <div
-                                    class="h-10 w-10 rounded-2xl bg-white border border-slate-200 overflow-hidden flex items-center justify-center shrink-0">
-                                    @if ($t->photo_path)
-                                        <img src="{{ asset('storage/' . $t->photo_path) }}"
-                                            class="h-10 w-10 object-cover" alt="">
-                                    @else
-                                        <span class="text-[10px] text-slate-500">Photo</span>
-                                    @endif
-                                </div>
-
-                                <div class="min-w-0">
-                                    <div class="font-semibold text-slate-900 truncate">{{ $t->name }}</div>
-                                    <div class="text-xs text-slate-500 truncate">{{ $t->from ?? '—' }}</div>
-                                </div>
-                            </div>
-
-                            @if ($t->badge)
-                                <span
-                                    class="shrink-0 text-[11px] px-2.5 py-1 rounded-full border {{ $badgeStyle($t->badge) }}">
-                                    {{ $t->badge }}
-                                </span>
-                            @endif
-                        </div>
-
-                        @if ($t->destination)
-                            <div class="mt-3 text-sm text-slate-700 font-medium">
-                                {{ $t->destination }}
-                            </div>
-                        @endif
-
-                        <p class="mt-3 text-sm text-slate-600 leading-relaxed line-clamp-5">
-                            “{{ $t->story }}”
-                        </p>
-
-                        <div class="mt-4 flex items-center justify-between text-xs text-slate-500">
-                            <div class="inline-flex items-center gap-2">
-                                @if ($t->year)
-                                    <span class="px-2 py-1 rounded-full border border-slate-200 bg-white">📅
-                                        {{ $t->year }}</span>
-                                @endif
-                                @if ($t->score)
-                                    <span class="px-2 py-1 rounded-full border border-slate-200 bg-white">🏅
-                                        {{ $t->score }}</span>
-                                @endif
-                            </div>
-
-                            <div class="text-xs text-slate-500">
-                                {{ $t->created_at?->format('d M, Y') }}
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <div
-                        class="col-span-4 rounded-3xl border border-dashed border-slate-200 bg-white p-10 text-center text-slate-600">
-                        No approved success stories yet.
-                    </div>
-                @endforelse
-            </div>
-
-            <div
-                class="mt-10 rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
-                <div>
-                    <div class="text-sm text-slate-500">Want to share your story?</div>
-                    <div class="text-lg font-semibold text-slate-900 mt-1">
-                        Register and submit your success story.
-                    </div>
-                    <div class="text-sm text-slate-600 mt-1">
-                        Admin approval is required before it appears publicly.
-                    </div>
-                </div>
-
-                <div class="flex gap-2">
-                    <a href="{{ route('register') }}"
-                        class="px-5 py-3 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
-                        Create Free Account
-                    </a>
-                    <a href="{{ route('login') }}"
-                        class="px-5 py-3 rounded-2xl border border-slate-200 bg-white text-sm hover:bg-slate-50 transition">
-                        Login
-                    </a>
-                </div>
+        <div class="border-t border-white/15">
+            <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-[#c5d8ce] sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+                <p>© {{ date('Y') }} {{ config('app.name', 'Studee Abroad') }}. All rights reserved.</p>
+                <p>Find your place to study.</p>
             </div>
         </div>
-    </section>
+    </footer>
 
-    {{-- Contact --}}
-    <section id="contact" class="border-t border-slate-200 bg-white">
-        <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                <div>
-                    <div class="text-sm text-slate-500">Need help choosing?</div>
-                    <h2 class="text-2xl lg:text-3xl font-bold mt-2 text-slate-900">
-                        Talk to our team and get a shortlist that fits your budget.
-                    </h2>
-                    <p class="text-slate-600 mt-3">
-                        Next we can add Inquiry form + consultation workflow so students can submit their profile
-                        directly.
-                    </p>
-
-                    <div class="mt-6 flex flex-wrap gap-2">
-                        <a href="{{ route('register') }}"
-                            class="px-5 py-3 rounded-2xl bg-slate-900 text-white text-sm font-semibold hover:opacity-90 transition">
-                            Register Now
-                        </a>
-                        <a href="{{ route('login') }}"
-                            class="px-5 py-3 rounded-2xl border border-slate-200 bg-white text-sm hover:bg-slate-50 transition">
-                            Login
-                        </a>
-                    </div>
-                </div>
-
-                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-6">
-                    <div class="text-sm font-semibold text-slate-900">Quick Contact (UI)</div>
-                    <div class="text-sm text-slate-600 mt-1">Connect to backend later</div>
-
-                    <div class="mt-4 space-y-3">
-                        <input type="text" placeholder="Your name"
-                            class="w-full rounded-2xl border-slate-200 bg-white placeholder:text-slate-400 focus:border-indigo-400 focus:ring-indigo-200" />
-                        <input type="text" placeholder="Phone / WhatsApp"
-                            class="w-full rounded-2xl border-slate-200 bg-white placeholder:text-slate-400 focus:border-indigo-400 focus:ring-indigo-200" />
-                        <input type="email" placeholder="Email"
-                            class="w-full rounded-2xl border-slate-200 bg-white placeholder:text-slate-400 focus:border-indigo-400 focus:ring-indigo-200" />
-                        <textarea rows="4" placeholder="Your message..."
-                            class="w-full rounded-2xl border-slate-200 bg-white placeholder:text-slate-400 focus:border-indigo-400 focus:ring-indigo-200"></textarea>
-
-                        <button type="button"
-                            class="w-full px-5 py-3 rounded-2xl bg-slate-900 text-white font-semibold text-sm hover:opacity-90 transition">
-                            Send (Coming Soon)
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div
-                class="mt-10 border-t border-slate-200 pt-6 text-sm text-slate-500 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
-                <div>© {{ date('Y') }} {{ config('app.name', 'Studee Abroad') }}. All rights reserved.</div>
-                <div class="flex gap-3">
-                    <a class="hover:text-slate-900 transition" href="#">Privacy</a>
-                    <a class="hover:text-slate-900 transition" href="#">Terms</a>
-                    <a class="hover:text-slate-900 transition" href="#">Support</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    {{-- Dependent dropdown JS (country -> states -> cities) --}}
     <script>
-        (function() {
+        (() => {
             const country = document.getElementById('country_id');
             const state = document.getElementById('state_id');
             const city = document.getElementById('city_id');
 
-            async function loadStates(countryId) {
-                if (!state) return;
-                state.innerHTML = `<option value="">Any</option>`;
-                city.innerHTML = `<option value="">Any</option>`;
-                if (!countryId) return;
-
-                const res = await fetch(`{{ route('api.states') }}?country_id=${countryId}`);
-                const data = await res.json();
-                data.forEach(s => {
-                    const opt = document.createElement('option');
-                    opt.value = s.id;
-                    opt.textContent = s.name;
-                    state.appendChild(opt);
-                });
+            async function populate(select, endpoint, emptyLabel) {
+                select.innerHTML = '';
+                select.add(new Option(emptyLabel, ''));
+                if (!endpoint) return;
+                select.disabled = true;
+                try {
+                    const response = await fetch(endpoint, { headers: { Accept: 'application/json' } });
+                    if (!response.ok) throw new Error('Could not load locations');
+                    (await response.json()).forEach(item => select.add(new Option(item.name, item.id)));
+                } catch (error) {
+                    select.add(new Option('Could not load options', ''));
+                } finally {
+                    select.disabled = false;
+                }
             }
 
-            async function loadCities(stateId) {
-                if (!city) return;
-                city.innerHTML = `<option value="">Any</option>`;
-                if (!stateId) return;
-
-                const res = await fetch(`{{ route('api.cities') }}?state_id=${stateId}`);
-                const data = await res.json();
-                data.forEach(c => {
-                    const opt = document.createElement('option');
-                    opt.value = c.id;
-                    opt.textContent = c.name;
-                    city.appendChild(opt);
-                });
-            }
-
-            if (country) {
-                country.addEventListener('change', e => loadStates(e.target.value));
-            }
-            if (state) {
-                state.addEventListener('change', e => loadCities(e.target.value));
-            }
+            country?.addEventListener('change', async () => {
+                await populate(state, country.value ? `{{ route('api.states') }}?country_id=${encodeURIComponent(country.value)}` : '', 'Any region');
+                await populate(city, '', 'Any city');
+            });
+            state?.addEventListener('change', () => populate(city, state.value ? `{{ route('api.cities') }}?state_id=${encodeURIComponent(state.value)}` : '', 'Any city'));
         })();
     </script>
-
 </body>
-
 </html>
