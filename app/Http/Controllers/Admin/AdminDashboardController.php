@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Lead;
 use App\Models\State;
 use App\Models\University;
 use App\Models\UniversityMedia;
@@ -23,6 +24,7 @@ class AdminDashboardController extends Controller
             'programs'     => UniversityProgram::count(),
             'media'        => UniversityMedia::count(),
             'students'     => User::query()->where('role', 'student')->count(),
+            'enquiries'    => Lead::query()->count(),
         ];
 
         $latestStudents = User::query()

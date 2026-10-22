@@ -27,6 +27,7 @@
                 ],
                 ['label' => 'Media', 'value' => $stats['media'] ?? 0, 'route' => route('universities.index')],
                 ['label' => 'Students', 'value' => $stats['students'] ?? 0, 'route' => route('students.index')],
+                ['label' => 'Enquiries', 'value' => $stats['enquiries'] ?? 0, 'route' => route('leads.index')],
             ];
         @endphp
 
