@@ -33,7 +33,7 @@ class SuccessStoryController extends Controller
             'score'       => ['nullable', 'string', 'max:50'],
             'year'        => ['nullable', 'string', 'max:10'],
             'story'       => ['required', 'string'],
-            'photo_path'       => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'photo'       => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
         $data['user_id'] = auth()->id();
@@ -44,6 +44,7 @@ class SuccessStoryController extends Controller
         if ($request->hasFile('photo')) {
             $data['photo_path'] = $request->file('photo')->store('success-stories/photos', 'public');
         }
+        unset($data['photo']);
 
         SuccessStory::create($data);
 
@@ -69,7 +70,7 @@ class SuccessStoryController extends Controller
             'score'       => ['nullable', 'string', 'max:50'],
             'year'        => ['nullable', 'string', 'max:10'],
             'story'       => ['required', 'string'],
-            'photo_path'       => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'photo'       => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
         $data['is_active'] = false;
@@ -80,6 +81,7 @@ class SuccessStoryController extends Controller
             }
             $data['photo_path'] = $request->file('photo')->store('success-stories/photos', 'public');
         }
+        unset($data['photo']);
 
         $success_story->update($data);
 

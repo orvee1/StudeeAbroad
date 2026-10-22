@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Studee Abroad') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="flex min-h-screen flex-col bg-[#fbf9f4]">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -28,9 +28,15 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="flex-1">
                 {{ $slot }}
             </main>
+            <footer class="border-t border-[#e8e5db] bg-white">
+                <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-6 text-sm text-[#71817a] sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+                    <p>© {{ date('Y') }} {{ config('app.name', 'Studee Abroad') }}. All rights reserved.</p>
+                    <nav class="flex gap-5" aria-label="Footer navigation"><a class="hover:text-[#174f46]" href="{{ route('home') }}">Home</a><a class="hover:text-[#174f46]" href="{{ route('search') }}">Universities</a><a class="hover:text-[#174f46]" href="{{ route('public.programs.index') }}">Programs</a></nav>
+                </div>
+            </footer>
         </div>
     </body>
 </html>
