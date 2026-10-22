@@ -19,7 +19,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        return view($user->isAdmin() ? 'admin.profile.edit' : 'profile.edit', [
+        return view($user->isAdmin() ? 'admin.profile.edit' : 'student.profile.edit', [
             'user' => $user,
         ]);
     }
