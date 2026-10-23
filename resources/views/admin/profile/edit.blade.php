@@ -7,7 +7,7 @@
     <div class="mb-6 overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-emerald-950 to-teal-900 px-6 py-7 text-white shadow-lg shadow-emerald-950/10 sm:px-8 sm:py-8">
         <p class="text-xs font-extrabold uppercase tracking-[.18em] text-emerald-200">Administrator account</p>
         <h2 class="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">Manage your profile</h2>
-        <p class="mt-2 max-w-2xl text-sm leading-6 text-emerald-50/80">Update the account details and password used to access the Studee Abroad admin workspace.</p>
+        <p class="mt-2 max-w-2xl text-sm leading-6 text-emerald-50/80">Update the account details and password used to access the EXFREELANCE admin workspace.</p>
     </div>
 
     <div class="grid gap-5 xl:grid-cols-2">

@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ request()->routeIs('login') ? 'Log in' : 'Create account' }} | {{ config('app.name', 'Studee Abroad') }}</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/exfreelance-logo-cropped.jpeg') }}">
+    <title>{{ request()->routeIs('login') ? 'Log in' : 'Create account' }} | {{ config('app.name', 'EXFREELANCE') }}</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -13,9 +14,9 @@
     <div class="flex min-h-screen flex-col">
         <header class="border-b border-[#e8e5db] bg-white">
             <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-                <a href="{{ route('home') }}" class="flex items-center gap-3" aria-label="{{ config('app.name', 'Studee Abroad') }} home">
-                    <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#174f46] text-xs font-bold text-white">SA</span>
-                    <span><strong class="block text-sm tracking-tight">{{ config('app.name', 'Studee Abroad') }}</strong><span class="block text-xs text-[#819087]">Your study-abroad guide</span></span>
+                <a href="{{ route('home') }}" class="flex items-center gap-3" aria-label="{{ config('app.name', 'EXFREELANCE') }} home">
+                    <x-brand-mark />
+                    <span><strong class="block text-sm tracking-tight">{{ config('app.name', 'EXFREELANCE') }}</strong><span class="block text-xs text-[#819087]">Your study-abroad guide</span></span>
                 </a>
                 <nav class="flex items-center gap-3 text-sm font-semibold">
                     <a href="{{ route('search') }}" class="hidden rounded-lg px-3 py-2 text-[#52665f] hover:bg-[#f7f8f3] sm:inline-flex">Universities</a>
@@ -38,7 +39,7 @@
                     <p class="mt-2 text-sm leading-6 text-[#71817a]">{{ request()->routeIs('login') ? 'Continue exploring your study options.' : 'Keep your guidance requests and student stories together.' }}</p>
                     <div class="mt-7">{{ $slot }}</div>
                     @if (request()->routeIs('login'))
-                        <p class="mt-6 border-t border-[#eeeee8] pt-5 text-sm text-[#687871]">New to {{ config('app.name', 'Studee Abroad') }}? <a href="{{ route('register') }}" class="font-bold text-[#174f46] hover:text-[#b96748]">Create an account</a></p>
+                        <p class="mt-6 border-t border-[#eeeee8] pt-5 text-sm text-[#687871]">New to {{ config('app.name', 'EXFREELANCE') }}? <a href="{{ route('register') }}" class="font-bold text-[#174f46] hover:text-[#b96748]">Create an account</a></p>
                     @endif
                 </section>
             </div>
@@ -46,7 +47,7 @@
 
         <footer class="border-t border-[#e8e5db] bg-white">
             <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-5 text-xs text-[#71817a] sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-                <p>© {{ date('Y') }} {{ config('app.name', 'Studee Abroad') }}. All rights reserved.</p>
+                <p>© {{ date('Y') }} {{ config('app.name', 'EXFREELANCE') }}. All rights reserved.</p>
                 <nav class="flex gap-5" aria-label="Footer navigation"><a href="{{ route('home') }}" class="hover:text-[#174f46]">Home</a><a href="{{ route('search') }}" class="hover:text-[#174f46]">Universities</a><a href="{{ route('public.programs.index') }}" class="hover:text-[#174f46]">Programs</a></nav>
             </div>
         </footer>

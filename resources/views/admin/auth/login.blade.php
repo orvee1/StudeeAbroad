@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin Login - {{ config('app.name', 'Studee Abroad') }}</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/exfreelance-logo-cropped.jpeg') }}">
+    <title>Admin Login - {{ config('app.name', 'EXFREELANCE') }}</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -17,9 +18,9 @@
     <div class="min-h-screen flex items-center justify-center px-4">
         <div class="w-full max-w-md">
             <a href="{{ route('home') }}" class="flex items-center gap-2 justify-center mb-6">
-                <div class="h-10 w-10 rounded-xl bg-slate-900"></div>
+                <x-brand-mark />
                 <div class="text-center">
-                    <div class="text-sm font-semibold">{{ config('app.name', 'Studee Abroad') }}</div>
+                    <div class="text-sm font-semibold">{{ config('app.name', 'EXFREELANCE') }}</div>
                     <div class="text-xs text-slate-500">Admin Panel Login</div>
                 </div>
             </a>

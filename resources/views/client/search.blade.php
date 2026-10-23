@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Studee Abroad') }} — University search</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/exfreelance-logo-cropped.jpeg') }}">
+    <title>{{ config('app.name', 'EXFREELANCE') }} — University search</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -13,8 +14,7 @@
     <header class="sticky top-0 z-30 border-b border-slate-200/80 bg-white/95 backdrop-blur">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
             <a href="{{ route('home') }}" class="flex items-center gap-3" aria-label="{{ config('app.name') }} home">
-                <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#174f46] text-sm font-bold text-white">SA</span>
-                <span><span class="block text-sm font-bold tracking-tight">{{ config('app.name', 'Studee Abroad') }}</span><span class="block text-xs text-slate-500">Find your next campus</span></span>
+                <x-brand-mark size="h-16 w-64" wrapper-class="rounded-lg ring-0 bg-transparent" />
             </a>
             <nav class="flex items-center gap-2 sm:gap-3" aria-label="Main navigation">
                 <a href="{{ route('home') }}" class="hidden rounded-xl px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 sm:inline-flex">Home</a>

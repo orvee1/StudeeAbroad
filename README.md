@@ -64,3 +64,15 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Public uploads
+
+Files under `storage/app/public` are tracked in Git so uploaded country flags,
+university images, and profile photos are available after deployment. Include
+new uploads in the next commit and push so they are available to the server.
+
+After pulling on a new server, create Laravel's public storage link once:
+
+```bash
+php artisan storage:link
+```

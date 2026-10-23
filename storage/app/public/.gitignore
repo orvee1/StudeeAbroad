@@ -1,2 +1,1 @@
-*
-!.gitignore
+# Public uploads in this directory are committed so they deploy with the app.

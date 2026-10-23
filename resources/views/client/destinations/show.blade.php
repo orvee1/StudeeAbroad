@@ -8,7 +8,7 @@
 </head>
 <body id="top" class="brand-theme bg-[#fbf9f4] font-sans text-[#183b36] antialiased">
     <header class="border-b border-[#e8e5db] bg-white"><div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <a href="{{ route('home') }}" class="flex items-center gap-3"><span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#174f46] text-xs font-bold text-white">SA</span><span><strong class="block text-sm">{{ config('app.name', 'Studee Abroad') }}</strong><span class="text-xs text-[#819087]">Your study-abroad guide</span></span></a>
+        <a href="{{ route('home') }}" class="flex items-center gap-3"><x-brand-mark size="h-16 w-64" wrapper-class="rounded-lg ring-0 bg-transparent" /><span><strong class="block text-sm">{{ config('app.name', 'EXFREELANCE') }}</strong><span class="text-xs text-[#819087]">Your study-abroad guide</span></span></a>
         <nav class="flex items-center gap-3 text-sm"><a href="{{ route('search', ['country_id' => $country->id]) }}" class="hidden font-semibold text-[#52665f] sm:inline">Find universities</a><a href="{{ route('public.programs.index', ['country_id' => $country->id]) }}" class="hidden font-semibold text-[#52665f] sm:inline">Find programs</a>@auth<a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student.dashboard') }}" class="rounded-xl bg-[#174f46] px-4 py-2.5 font-semibold text-white">Dashboard</a>@else<a href="{{ route('login') }}" class="font-semibold text-[#52665f]">Log in</a>@endauth</nav>
     </div></header>
     <main>

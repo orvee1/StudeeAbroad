@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('page_title', config('app.name', 'Studee Abroad'))</title>
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/exfreelance-logo-cropped.jpeg') }}">
+    <title>@yield('page_title', config('app.name', 'EXFREELANCE'))</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -13,9 +14,9 @@
 <body class="brand-theme min-h-screen bg-[#fffaf5] font-sans text-[#133f39] antialiased">
     <header x-data="{ open: false }" class="sticky top-0 z-30 border-b border-[#ebe4d9] bg-white/90 shadow-[0_4px_18px_rgba(19,63,57,0.04)] backdrop-blur">
         <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-            <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-3" aria-label="{{ config('app.name', 'Studee Abroad') }} home">
-                <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#0b6158] text-xs font-extrabold text-white shadow-sm shadow-[#0b6158]/20">SA</span>
-                <span><strong class="block text-sm tracking-tight text-[#133f39]">{{ config('app.name', 'Studee Abroad') }}</strong><span class="block text-xs text-[#778880]">Student portal</span></span>
+            <a href="{{ route('home') }}" class="flex shrink-0 items-center gap-3" aria-label="{{ config('app.name', 'EXFREELANCE') }} home">
+                <x-brand-mark />
+                <span><strong class="block text-sm tracking-tight text-[#133f39]">{{ config('app.name', 'EXFREELANCE') }}</strong><span class="block text-xs text-[#778880]">Student portal</span></span>
             </a>
             <nav class="hidden items-center gap-5 text-sm font-semibold text-[#536b64] lg:flex" aria-label="Student navigation">
                 <a href="{{ route('search') }}" class="transition hover:text-[#0b6158]">Universities</a>
@@ -60,7 +61,7 @@
 
     <footer class="mt-10 border-t border-[#ebe4d9] bg-[#fffaf5]">
         <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-6 text-sm text-[#71817a] sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-            <p>© {{ date('Y') }} {{ config('app.name', 'Studee Abroad') }}. All rights reserved.</p>
+            <p>© {{ date('Y') }} {{ config('app.name', 'EXFREELANCE') }}. All rights reserved.</p>
             <nav class="flex flex-wrap gap-x-5 gap-y-2" aria-label="Footer navigation"><a class="transition hover:text-[#0b6158]" href="{{ route('home') }}">Home</a><a class="transition hover:text-[#0b6158]" href="{{ route('search') }}">Universities</a><a class="transition hover:text-[#0b6158]" href="{{ route('public.programs.index') }}">Programs</a></nav>
         </div>
     </footer>

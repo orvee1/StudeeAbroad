@@ -1,9 +1,9 @@
 <footer id="footer" class="border-t border-[#285b51] bg-[#143f38] text-white">
     <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.2fr_.8fr_.8fr] lg:px-8 lg:py-14">
         <div class="max-w-sm">
-            <a href="{{ route('home') }}" class="inline-flex items-center gap-3" aria-label="{{ config('app.name', 'Studee Abroad') }} home">
-                <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#f0b08b] text-xs font-bold text-[#183b36]">SA</span>
-                <span class="font-bold tracking-tight">{{ config('app.name', 'Studee Abroad') }}</span>
+            <a href="{{ route('home') }}" class="inline-flex items-center gap-3" aria-label="{{ config('app.name', 'EXFREELANCE') }} home">
+                <x-brand-mark size="h-16 w-64" wrapper-class="rounded-lg ring-0 bg-transparent" />
+                <span class="font-bold tracking-tight">{{ config('app.name', 'EXFREELANCE') }}</span>
             </a>
             <p class="mt-4 text-sm leading-6 text-[#c5d8ce]">Explore study destinations and find universities that fit your plans.</p>
         </div>
@@ -27,7 +27,7 @@
     </div>
     <div class="border-t border-white/15">
         <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-[#c5d8ce] sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-            <p>© {{ date('Y') }} {{ config('app.name', 'Studee Abroad') }}. All rights reserved.</p>
+            <p>© {{ date('Y') }} {{ config('app.name', 'EXFREELANCE') }}. All rights reserved.</p>
             <p>Find your place to study.</p>
         </div>
     </div>

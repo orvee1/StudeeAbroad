@@ -5,8 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/jpeg" href="{{ asset('images/exfreelance-logo-cropped.jpeg') }}">
 
-    <title>@yield('page_title', config('app.name', 'Studee Abroad') . ' Admin')</title>
+    <title>@yield('page_title', config('app.name', 'EXFREELANCE') . ' Admin')</title>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
@@ -25,9 +26,9 @@
         <aside class="fixed inset-y-0 left-0 z-30 hidden w-[17rem] flex-col border-r border-slate-200/80 bg-white lg:flex">
             <div class="border-b border-slate-100 px-5 py-5">
                 <a href="{{ route('dashboard') }}" class="group flex items-center gap-3 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">
-                    <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-800 to-teal-600 text-sm font-extrabold tracking-wide text-white shadow-md shadow-emerald-900/15 transition group-hover:-translate-y-0.5">SA</span>
+                    <x-brand-mark size="h-11 w-11" class="shadow-md shadow-emerald-900/15 transition group-hover:-translate-y-0.5" />
                     <span class="min-w-0">
-                        <span class="block truncate text-sm font-extrabold tracking-tight text-slate-950">{{ config('app.name', 'Studee Abroad') }}</span>
+                        <span class="block truncate text-sm font-extrabold tracking-tight text-slate-950">{{ config('app.name', 'EXFREELANCE') }}</span>
                         <span class="mt-0.5 block text-[11px] font-semibold uppercase tracking-[.16em] text-slate-400">Admin workspace</span>
                     </span>
                 </a>
@@ -93,7 +94,13 @@
 
             <div class="border-t border-slate-100 p-3">
                 <a href="{{ route('admin.profile.edit') }}" class="flex items-center gap-3 rounded-2xl p-2.5 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600">
-                    <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-sm font-extrabold text-emerald-900">{{ $adminInitial }}</span>
+                    <span class="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-emerald-100 text-sm font-extrabold text-emerald-900">
+                        @if ($adminUser?->profile_photo_path)
+                            <img src="{{ asset('storage/' . ltrim($adminUser->profile_photo_path, '/')) }}" alt="{{ $adminUser->name }} profile photo" class="h-full w-full object-cover">
+                        @else
+                            {{ $adminInitial }}
+                        @endif
+                    </span>
                     <span class="min-w-0 flex-1">
                         <span class="block truncate text-sm font-bold text-slate-800">{{ $adminUser?->name ?? 'Admin' }}</span>
                         <span class="mt-0.5 block text-xs text-slate-500">Administrator</span>
@@ -107,6 +114,7 @@
             <header x-data="{ navOpen: false, accountOpen: false }" @keydown.escape.window="navOpen = false; accountOpen = false" class="sticky top-0 z-20 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl">
                 <div class="mx-auto flex max-w-[1600px] items-center justify-between gap-3 px-4 py-3.5 sm:px-6 xl:px-9">
                     <div class="flex min-w-0 items-center gap-3">
+                        <span class="lg:hidden"><x-brand-mark size="h-9 w-9" /></span>
                         <button type="button" @click="navOpen = !navOpen" :aria-expanded="navOpen.toString()" aria-controls="admin-mobile-nav" aria-label="Toggle admin navigation" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 lg:hidden">
                             <svg x-show="!navOpen" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
                             <svg x-cloak x-show="navOpen" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" d="m6 6 12 12M18 6 6 18"/></svg>
@@ -119,7 +127,13 @@
 
                     <div class="relative shrink-0" @click.outside="accountOpen = false">
                         <button type="button" @click="accountOpen = !accountOpen" :aria-expanded="accountOpen.toString()" aria-haspopup="menu" aria-controls="admin-account-menu" class="group flex items-center gap-2 rounded-2xl border border-slate-200 bg-white p-1.5 pr-2.5 shadow-sm transition hover:border-emerald-300 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 sm:gap-3 sm:pr-3">
-                            <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-800 to-teal-600 text-sm font-extrabold text-white shadow-sm">{{ $adminInitial }}</span>
+                            <span class="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-emerald-800 to-teal-600 text-sm font-extrabold text-white shadow-sm">
+                                @if ($adminUser?->profile_photo_path)
+                                    <img src="{{ asset('storage/' . ltrim($adminUser->profile_photo_path, '/')) }}" alt="{{ $adminUser->name }} profile photo" class="h-full w-full object-cover">
+                                @else
+                                    {{ $adminInitial }}
+                                @endif
+                            </span>
                             <span class="hidden min-w-0 text-left sm:block">
                                 <span class="block max-w-36 truncate text-xs font-extrabold text-slate-800">{{ $adminUser?->name ?? 'Admin' }}</span>
                                 <span class="mt-0.5 block text-[10px] font-semibold uppercase tracking-[.12em] text-emerald-700">Administrator</span>

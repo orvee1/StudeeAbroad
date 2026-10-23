@@ -4,8 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="icon" type="image/jpeg" href="{{ asset('images/exfreelance-logo-cropped.jpeg') }}">
 
-        <title>{{ config('app.name', 'Studee Abroad') }}</title>
+        <title>{{ config('app.name', 'EXFREELANCE') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -33,7 +34,7 @@
             </main>
             <footer class="border-t border-[#e8e5db] bg-white">
                 <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-6 text-sm text-[#71817a] sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-                    <p>© {{ date('Y') }} {{ config('app.name', 'Studee Abroad') }}. All rights reserved.</p>
+                    <p>© {{ date('Y') }} {{ config('app.name', 'EXFREELANCE') }}. All rights reserved.</p>
                     <nav class="flex gap-5" aria-label="Footer navigation"><a class="hover:text-[#174f46]" href="{{ route('home') }}">Home</a><a class="hover:text-[#174f46]" href="{{ route('search') }}">Universities</a><a class="hover:text-[#174f46]" href="{{ route('public.programs.index') }}">Programs</a></nav>
                 </div>
             </footer>
