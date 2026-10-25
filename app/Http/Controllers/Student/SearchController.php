@@ -22,10 +22,9 @@ class SearchController extends Controller
             'intake'      => ['nullable', 'string', 'max:20'], // e.g. January
             'level'       => ['nullable', 'string', 'max:40'], // Bachelor/Master etc
             'sort'        => ['nullable', 'string', 'in:relevance,tuition_low,tuition_high,ranking'],
-            'per_page'    => ['nullable', 'integer', 'min:6', 'max:48'],
         ]);
 
-        $perPage = (int) ($filters['per_page'] ?? 12);
+        $perPage = 12;
 
         $query = University::query()
             ->where('is_active', true);
@@ -100,6 +99,13 @@ class SearchController extends Controller
             ->withCount(['programs' => fn ($programs) => $programs->where('is_active', true)])
             ->paginate($perPage)
             ->appends(request()->query());
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'html' => view('client.partials.search-results', compact('universities'))->render(),
+                'next_page_url' => $universities->nextPageUrl(),
+            ]);
+        }
 
         // For dropdowns
         $countries = Country::where('is_active', true)->orderBy('sort_order')->orderBy('name')->get(['id', 'name']);

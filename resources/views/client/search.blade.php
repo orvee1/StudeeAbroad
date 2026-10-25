@@ -75,46 +75,11 @@
             <section class="lg:col-span-8 xl:col-span-9" aria-labelledby="results-heading">
                 <div class="flex flex-col justify-between gap-3 border-b border-slate-200 pb-5 sm:flex-row sm:items-end">
                     <div><p class="text-sm text-slate-500">University directory</p><h2 id="results-heading" class="mt-1 text-2xl font-bold tracking-tight">{{ number_format($universities->total()) }} {{ Str::plural('university', $universities->total()) }} found</h2></div>
-                    <p class="text-sm text-slate-500">Page {{ $universities->currentPage() }} of {{ max(1, $universities->lastPage()) }}</p>
+                    <p id="results-count" class="text-sm text-slate-500">Showing {{ $universities->count() }} of {{ number_format($universities->total()) }}</p>
                 </div>
-                <div class="mt-5 space-y-4">
+                <div id="university-results" class="mt-5 space-y-4">
                     @if ($universities->isNotEmpty())
-                        @foreach ($universities as $u)
-                        <article class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:border-[#b8cabb] hover:shadow-md">
-                            <div class="p-5 sm:p-6">
-                                <div class="flex flex-col gap-5 sm:flex-row">
-                                    <div class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 text-2xl font-bold text-[#174f46]">
-                                        @if($u->logo_path)<img src="{{ asset('storage/' . ltrim($u->logo_path, '/')) }}" alt="{{ $u->name }} logo" class="h-full w-full object-contain p-2">@else<span aria-hidden="true">{{ mb_substr($u->name, 0, 1) }}</span>@endif
-                                    </div>
-                                    <div class="min-w-0 flex-1">
-                                        <div class="flex flex-wrap items-center gap-2">
-                                            <h3 class="text-lg font-bold tracking-tight text-slate-950">{{ $u->name }}</h3>
-                                            @if ($u->is_featured)<span class="rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-800 ring-1 ring-inset ring-amber-200">Featured</span>@endif
-                                        </div>
-                                        <p class="mt-1 text-sm text-slate-600">{{ collect([$u->city?->name, $u->state?->name, $u->country?->name])->filter()->unique()->implode(', ') ?: 'Location details coming soon' }}</p>
-                                        <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-600">{{ $u->short_description ?: 'Explore this university and discover the study opportunities available to you.' }}</p>
-                                        <dl class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
-                                            <div class="rounded-2xl bg-slate-50 px-4 py-3">
-                                                <dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Annual tuition</dt>
-                                                <dd class="mt-1 text-sm font-bold text-slate-900">
-                                                    @if ($u->tuition_min !== null || $u->tuition_max !== null)
-                                                        {{ $u->cost_currency ?: '' }} {{ $u->tuition_min !== null ? number_format($u->tuition_min) : '—' }}–{{ $u->tuition_max !== null ? number_format($u->tuition_max) : '—' }}
-                                                    @else
-                                                        Contact university
-                                                    @endif
-                                                </dd>
-                                            </div>
-                                            <div class="rounded-2xl bg-slate-50 px-4 py-3"><dt class="text-xs font-medium uppercase tracking-wide text-slate-500">World ranking</dt><dd class="mt-1 text-sm font-bold text-slate-900">{{ $u->world_ranking ? '#' . number_format($u->world_ranking) : 'Not listed' }}</dd></div>
-                                            <div class="col-span-2 rounded-2xl bg-slate-50 px-4 py-3 sm:col-span-1"><dt class="text-xs font-medium uppercase tracking-wide text-slate-500">Study options</dt><dd class="mt-1 text-sm font-bold text-slate-900">{{ $u->programs_count }} {{ Str::plural('program', $u->programs_count) }}</dd></div>
-                                        </dl>
-                                        <div class="mt-5 flex flex-wrap items-center gap-3">
-                                            <a href="{{ route('public.universities.show', $u->slug) }}" class="inline-flex items-center justify-center rounded-xl bg-[#174f46] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#103e37]">View university <span class="ml-2" aria-hidden="true">→</span></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                        @endforeach
+                        @include('client.partials.search-results', ['universities' => $universities])
                     @else
                         <div class="rounded-3xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
                             <span class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#edf4eb] text-xl text-[#174f46]" aria-hidden="true">⌕</span>
@@ -124,7 +89,7 @@
                         </div>
                     @endif
                 </div>
-                @if($universities->hasPages())<nav class="mt-7" aria-label="University results pages">{{ $universities->links() }}</nav>@endif
+                <div id="load-more-sentinel" class="mt-7 flex min-h-10 items-center justify-center text-sm text-slate-500" aria-live="polite">{{ $universities->hasMorePages() ? 'Scroll to load more universities' : 'You have reached the end of the results' }}</div>
             </section>
         </div>
     </main>
@@ -136,6 +101,34 @@
             const city = document.getElementById('city_id');
             const selectedState = @json($filters['state_id'] ?? '');
             const selectedCity = @json($filters['city_id'] ?? '');
+            const results = document.getElementById('university-results');
+            const sentinel = document.getElementById('load-more-sentinel');
+            const resultsCount = document.getElementById('results-count');
+            let nextPageUrl = @json($universities->nextPageUrl());
+            let loadedCount = {{ $universities->count() }};
+            const totalCount = {{ $universities->total() }};
+            let loading = false;
+            if (nextPageUrl && 'IntersectionObserver' in window) {
+                const observer = new IntersectionObserver(async entries => {
+                    if (!entries.some(entry => entry.isIntersecting) || loading || !nextPageUrl) return;
+                    loading = true;
+                    sentinel.textContent = 'Loading universities?';
+                    try {
+                        const response = await fetch(nextPageUrl, { headers: { Accept: 'application/json' } });
+                        if (!response.ok) throw new Error('Unable to load more universities');
+                        const page = await response.json();
+                        results.insertAdjacentHTML('beforeend', page.html);
+                        loadedCount += (page.html.match(/<article\b/g) || []).length;
+                        resultsCount.textContent = `Showing ${loadedCount} of ${new Intl.NumberFormat().format(totalCount)}`;
+                        nextPageUrl = page.next_page_url;
+                        sentinel.textContent = nextPageUrl ? 'Scroll to load more universities' : 'You have reached the end of the results';
+                        if (!nextPageUrl) observer.disconnect();
+                    } catch (error) {
+                        sentinel.textContent = 'Could not load more universities. Scroll to try again.';
+                    } finally { loading = false; }
+                }, { rootMargin: '300px' });
+                observer.observe(sentinel);
+            }
             async function populate(select, url, selected) {
                 select.innerHTML = '<option value="">Any</option>';
                 if (!url) return;

@@ -67,7 +67,7 @@
             </div>
             <div class="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
                 @forelse($featuredUniversities as $university)
-                    <a href="{{ route('public.universities.show', $university->slug) }}" class="group rounded-2xl border border-[#eadfd3] bg-white p-5 transition hover:-translate-y-1 hover:shadow-lg">
+                    <a href="{{ route('search') }}" class="group rounded-2xl border border-[#eadfd3] bg-white p-5 transition hover:-translate-y-1 hover:shadow-lg">
                         <div class="flex items-center gap-3">
                         <span class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#e9f4eb] text-lg font-bold text-[#26705f]">@if($university->logo_path)<img src="{{ asset('storage/' . ltrim($university->logo_path, '/')) }}" alt="" class="h-full w-full object-contain p-1">@else{{ mb_substr($university->name, 0, 1) }}@endif</span>
                             <span class="min-w-0"><strong class="block truncate text-sm text-[#133f39]">{{ $university->name }}</strong><span class="mt-1 block truncate text-xs text-[#819087]">{{ collect([$university->city?->name, $university->country?->name])->filter()->implode(', ') }}</span></span>
@@ -85,7 +85,7 @@
             <div class="flex items-end justify-between gap-4"><div><p class="text-xs font-bold uppercase tracking-[.14em] text-[#b96748]">Where to study</p><h2 class="mt-2 text-2xl font-semibold text-[#183b36]">Explore destinations</h2></div><a href="{{ route('search') }}" class="text-sm font-bold text-[#174f46]">All universities →</a></div>
             <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 @forelse($topCountries as $country)
-                    <a href="{{ route('public.destinations.show', $country->slug) }}" class="flex items-center gap-3 rounded-2xl border border-[#e5e5dc] bg-white p-4 transition hover:border-[#b8cabb] hover:shadow-sm">
+                    <a href="{{ route('search', ['country_id' => $country->id]) }}" class="flex items-center gap-3 rounded-2xl border border-[#e5e5dc] bg-white p-4 transition hover:border-[#b8cabb] hover:shadow-sm">
                         <span class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#eef2e9] text-sm font-bold text-[#38665a]">@if($country->flag_path)<img src="{{ asset('storage/' . ltrim($country->flag_path, '/')) }}" alt="" class="h-full w-full object-cover">@else{{ mb_substr($country->name, 0, 1) }}@endif</span>
                         <span class="font-semibold text-[#183b36]">{{ $country->name }}</span><span class="ml-auto text-[#819087]" aria-hidden="true">→</span>
                     </a>
