@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="csrf-token" content="{{ csrf_token() }}"><link rel="icon" type="image/jpeg" href="{{ asset('images/exfreelance-logo-cropped.jpeg') }}"><link rel="shortcut icon" type="image/jpeg" href="{{ asset('images/exfreelance-logo-cropped.jpeg') }}">
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="csrf-token" content="{{ csrf_token() }}"><link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2"><link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2">
     <title>{{ $program->title }} at {{ $university->name }} | {{ config('app.name', 'EXFREELANCE') }}</title>
     <meta name="description" content="{{ Str::limit(strip_tags($program->notes ?: $program->entry_requirements ?: $program->title . ' at ' . $university->name), 155) }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" type="image/jpeg" href="{{ asset('images/exfreelance-logo-cropped.jpeg') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2">
     <meta name="description" content="Explore universities and study destinations around the world. Compare tuition, rankings and programs to plan your next step.">
     <title>{{ config('app.name', 'EXFREELANCE') }} — Find your place to study</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
