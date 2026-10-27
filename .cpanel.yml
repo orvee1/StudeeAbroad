@@ -1,0 +1,12 @@
+---
+deployment:
+  tasks:
+    - export APPPATH=/home/exfreel1/studeeabroad
+    - export WEBPATH=/home/exfreel1/public_html
+    - /bin/cp -R app bootstrap config database resources routes $APPPATH/
+    - /bin/cp -R public/build $APPPATH/public/
+    - /bin/cp -R public/build $WEBPATH/
+    - /bin/cp -R public/images $APPPATH/public/
+    - /bin/cp -R public/images $WEBPATH/
+    - /bin/cp public/favicon.ico public/robots.txt $APPPATH/public/
+    - /bin/cp public/favicon.ico public/robots.txt $WEBPATH/

@@ -32,42 +32,42 @@
                 <x-brand-mark size="h-16 w-64" wrapper-class="rounded-lg ring-0 bg-transparent" />
             </a>
 
-            <nav class="hidden items-center gap-7 text-sm font-medium text-[#47645f] md:flex" aria-label="Main navigation">
-                <a href="#destinations" class="transition hover:text-[#0b6158]">Destinations</a>
-                <a href="#universities" class="transition hover:text-[#0b6158]">Universities</a>
-                <a href="{{ route('public.programs.index') }}" class="transition hover:text-[#0b6158]">Programs</a>
-                <a href="#stories" class="transition hover:text-[#0b6158]">Student stories</a>
-                <a href="#how-it-works" class="transition hover:text-[#0b6158]">How it works</a>
+            <nav class="hidden items-center gap-4 text-sm font-semibold lg:flex" aria-label="Main navigation">
+                <a href="#destinations" class="home-nav-link">Destinations</a>
+                <a href="#universities" class="home-nav-link">Universities</a>
+                <a href="{{ route('public.programs.index') }}" class="home-nav-link">Programs</a>
+                <a href="#stories" class="home-nav-link">Student stories</a>
+                <a href="#how-it-works" class="home-nav-link">How it works</a>
             </nav>
 
-            <div class="hidden items-center gap-3 sm:flex">
+            <div class="hidden items-center gap-3 lg:flex">
                 @auth
-                    <a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student.dashboard') }}" class="rounded-xl bg-[#0b6158] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#083f3a]">{{ auth()->user()->isAdmin() ? 'Admin dashboard' : 'My dashboard' }}</a>
+                    <a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student.dashboard') }}" class="rounded-xl bg-gradient-to-r from-[#142b4a] via-[#0757a6] to-[#0aa9cf] px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#0757a6]/20 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0aa9cf] focus-visible:ring-offset-2">{{ auth()->user()->isAdmin() ? 'Admin dashboard' : 'My dashboard' }}</a>
                 @else
-                    <a href="{{ route('login') }}" class="px-2 py-2 text-sm font-semibold text-[#47645f] transition hover:text-[#0b6158]">Log in</a>
-                    <a href="{{ route('register') }}" class="rounded-xl bg-[#0b6158] px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-[#0b6158]/20 transition hover:bg-[#083f3a]">Create account</a>
+                    <a href="{{ route('login') }}" class="home-nav-link text-sm font-semibold">Log in</a>
+                    <a href="{{ route('register') }}" class="rounded-xl bg-gradient-to-r from-[#142b4a] via-[#0757a6] to-[#0aa9cf] px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#0757a6]/20 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0aa9cf] focus-visible:ring-offset-2">Create account</a>
                 @endauth
             </div>
 
-            <button type="button" @click="open = !open" :aria-expanded="open.toString()" aria-controls="mobile-navigation" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#d9e0d8] text-[#0b6158] sm:hidden" aria-label="Toggle navigation">
+            <button type="button" @click="open = !open" :aria-expanded="open.toString()" aria-controls="mobile-navigation" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#d9e0d8] text-[#0b6158] lg:hidden" aria-label="Toggle navigation">
                 <svg x-show="!open" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
                 <svg x-show="open" x-cloak class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" d="m6 6 12 12M18 6 6 18"/></svg>
             </button>
         </div>
 
-        <div id="mobile-navigation" x-show="open" x-cloak x-transition class="border-t border-[#ebe4d9] bg-[#fffaf5] px-4 py-4 sm:hidden">
+        <div id="mobile-navigation" x-show="open" x-cloak x-transition class="border-t border-[#ebe4d9] bg-[#fffaf5] px-4 py-4 lg:hidden">
             <nav class="mx-auto flex max-w-7xl flex-col gap-1 text-sm font-medium" aria-label="Mobile navigation">
-                    <a @click="open = false" href="#destinations" class="rounded-lg px-3 py-2.5 hover:bg-white">Destinations</a>
-                    <a @click="open = false" href="#universities" class="rounded-lg px-3 py-2.5 hover:bg-white">Universities</a>
-                    <a @click="open = false" href="{{ route('public.programs.index') }}" class="rounded-lg px-3 py-2.5 hover:bg-white">Programs</a>
-                    <a @click="open = false" href="#stories" class="rounded-lg px-3 py-2.5 hover:bg-white">Student stories</a>
-                <a @click="open = false" href="#how-it-works" class="rounded-lg px-3 py-2.5 hover:bg-white">How it works</a>
+                    <a @click="open = false" href="#destinations" class="home-nav-link">Destinations</a>
+                    <a @click="open = false" href="#universities" class="home-nav-link">Universities</a>
+                    <a @click="open = false" href="{{ route('public.programs.index') }}" class="home-nav-link">Programs</a>
+                    <a @click="open = false" href="#stories" class="home-nav-link">Student stories</a>
+                    <a @click="open = false" href="#how-it-works" class="home-nav-link">How it works</a>
                 <div class="mt-2 flex gap-3 border-t border-[#ebe4d9] pt-3">
                     @auth
-                        <a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student.dashboard') }}" class="w-full rounded-xl bg-[#0b6158] px-4 py-3 text-center font-semibold text-white">{{ auth()->user()->isAdmin() ? 'Admin dashboard' : 'My dashboard' }}</a>
+                        <a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student.dashboard') }}" class="w-full rounded-xl bg-gradient-to-r from-[#142b4a] via-[#0757a6] to-[#0aa9cf] px-4 py-3 text-center font-semibold text-white shadow-md shadow-[#0757a6]/20">{{ auth()->user()->isAdmin() ? 'Admin dashboard' : 'My dashboard' }}</a>
                     @else
-                        <a href="{{ route('login') }}" class="flex-1 rounded-xl border border-[#cbd7ce] px-4 py-3 text-center font-semibold text-[#0b6158]">Log in</a>
-                        <a href="{{ route('register') }}" class="flex-1 rounded-xl bg-[#0b6158] px-4 py-3 text-center font-semibold text-white">Create account</a>
+                        <a href="{{ route('login') }}" class="home-nav-link flex-1 justify-center font-semibold">Log in</a>
+                        <a href="{{ route('register') }}" class="flex-1 rounded-xl bg-gradient-to-r from-[#142b4a] via-[#0757a6] to-[#0aa9cf] px-4 py-3 text-center font-semibold text-white shadow-md shadow-[#0757a6]/20">Create account</a>
                     @endauth
                 </div>
             </nav>

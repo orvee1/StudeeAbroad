@@ -260,3 +260,44 @@
 .brand-theme [class~="focus:text-gray-500"]:focus {
     color: var(--brand-primary) !important;
 }
+
+/* Unboxed homepage links echo the multicolour sweep in the logo. */
+.brand-theme .home-nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.65rem 0.2rem;
+    color: #365d7e;
+    transition: color 180ms ease;
+}
+
+.brand-theme .home-nav-link::after {
+    position: absolute;
+    right: 0.2rem;
+    bottom: 0.35rem;
+    left: 0.2rem;
+    height: 2px;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #c52b86 0%, #d96545 22%, #ef8b22 43%, #198b54 67%, #0aa9cf 100%);
+    content: "";
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 220ms ease;
+}
+
+.brand-theme .home-nav-link:hover,
+.brand-theme .home-nav-link:focus-visible {
+    color: #0757a6;
+}
+
+.brand-theme .home-nav-link:hover::after,
+.brand-theme .home-nav-link:focus-visible::after {
+    transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .brand-theme .home-nav-link,
+    .brand-theme .home-nav-link::after {
+        transition: none;
+    }
+}
