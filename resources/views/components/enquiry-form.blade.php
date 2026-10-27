@@ -1,27 +1,42 @@
 @props(['country' => null, 'university' => null, 'program' => null, 'source' => 'landing'])
 
-<section id="enquiry" class="rounded-3xl border border-[#dce5dc] bg-white p-6 shadow-sm sm:p-8">
-    <div class="max-w-xl">
-        <p class="text-xs font-bold uppercase tracking-[.16em] text-[#b96748]">Talk with our team</p>
-        <h2 class="mt-2 text-2xl font-semibold tracking-tight text-[#183b36]">Get guidance for your next step</h2>
-        <p class="mt-2 text-sm leading-6 text-[#687871]">Share a few details and our team can help you understand the options.</p>
-    </div>
+<section id="enquiry" class="relative isolate scroll-mt-28 overflow-hidden rounded-[2rem] border border-[#cfe1ec] bg-gradient-to-br from-[#eaf7ff] via-white to-[#fff3e4] p-5 shadow-[0_24px_70px_-36px_rgba(7,87,166,.35)] sm:p-8 lg:p-10">
+    <div class="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-[#0aa9cf]/10 blur-3xl" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-[#ef8b22]/10 blur-3xl" aria-hidden="true"></div>
 
-    @if (session('success'))
-        <div role="status" class="mt-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">{{ session('success') }}</div>
-    @endif
-    @if ($errors->any())
-        <div role="alert" class="mt-5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
-            <p class="font-semibold">Please check the form:</p>
-            <ul class="mt-1 list-inside list-disc">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
+    <div class="relative grid gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-center lg:gap-12">
+        <div class="max-w-lg">
+            <p class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[.16em] text-[#0757a6]">
+                <span class="h-2 w-2 rounded-full bg-[#ef8b22]"></span> Talk with our team
+            </p>
+            <h2 class="mt-3 text-3xl font-semibold leading-tight tracking-tight text-[#142b4a] sm:text-4xl">Get a clearer plan for your study abroad journey.</h2>
+            <p class="mt-4 text-base leading-7 text-[#58718a]">Tell us what you’re looking for. Our team can help you explore destinations, universities, and next steps that fit your plans.</p>
+            <ul class="mt-6 space-y-3 text-sm font-medium text-[#365d7e]">
+                <li class="flex items-start gap-3"><span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#e3f4e8] text-xs font-bold text-[#198b54]" aria-hidden="true">✓</span><span>Explore destinations that fit your goals</span></li>
+                <li class="flex items-start gap-3"><span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#e8faff] text-xs font-bold text-[#0757a6]" aria-hidden="true">✓</span><span>Talk through universities and study options</span></li>
+                <li class="flex items-start gap-3"><span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#fff3df] text-xs font-bold text-[#c56c12]" aria-hidden="true">✓</span><span>Work out a clearer next step for your application</span></li>
             </ul>
         </div>
-    @endif
 
-    <form method="POST" action="{{ route('enquiries.store') }}" class="mt-6 grid gap-4 sm:grid-cols-2">
+        <div class="rounded-[1.5rem] border border-[#dce8f1] bg-white/95 p-5 shadow-xl shadow-[#142b4a]/10 sm:p-7">
+            <p class="text-sm font-bold text-[#142b4a]">Request personal guidance</p>
+            <p class="mt-1 text-sm text-[#71879b]">Share a few details so we know how to help.</p>
+
+            @if (session('success'))
+                <div role="status" class="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">{{ session('success') }}</div>
+            @endif
+            @if ($errors->any())
+                <div role="alert" class="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
+                    <p class="font-semibold">Please check the form:</p>
+                    <ul class="mt-1 list-inside list-disc">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('enquiries.store') }}" class="mt-5 grid gap-4 sm:grid-cols-2">
         @csrf
         <input type="hidden" name="source" value="{{ $source }}">
         @if ($country)
@@ -77,5 +92,7 @@
         <div class="sm:col-span-2">
             <button type="submit" class="inline-flex items-center gap-2 rounded-xl bg-[#174f46] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#103e37]">Request guidance <span aria-hidden="true">→</span></button>
         </div>
-    </form>
+            </form>
+        </div>
+    </div>
 </section>

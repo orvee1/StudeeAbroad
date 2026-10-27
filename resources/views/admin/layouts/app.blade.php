@@ -49,9 +49,12 @@
                         <svg class="h-5 w-5 shrink-0 {{ request()->routeIs('universities.*') ? 'text-emerald-700' : 'text-slate-400 group-hover:text-slate-600' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.5 20.5h17M5.5 20V8.5l6.5-4 6.5 4V20M9 20v-5.5h6V20M8.5 10h.01M12 10h.01M15.5 10h.01"/></svg>
                         <span>Universities</span>
                     </a>
-                    <a href="{{ route('leads.index') }}" @class(['group mt-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold transition duration-150', 'bg-emerald-50 text-emerald-900 ring-1 ring-inset ring-emerald-100' => request()->routeIs('leads.*'), 'text-slate-600 hover:bg-slate-50 hover:text-slate-950' => !request()->routeIs('leads.*')]) @if(request()->routeIs('leads.*')) aria-current="page" @endif>
+                    <a href="{{ route('leads.index') }}" aria-label="Enquiries, {{ $newEnquiryCount }} new guidance requests" @class(['group mt-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold transition duration-150', 'bg-emerald-50 text-emerald-900 ring-1 ring-inset ring-emerald-100' => request()->routeIs('leads.*'), 'text-slate-600 hover:bg-slate-50 hover:text-slate-950' => !request()->routeIs('leads.*')]) @if(request()->routeIs('leads.*')) aria-current="page" @endif>
                         <svg class="h-5 w-5 shrink-0 {{ request()->routeIs('leads.*') ? 'text-emerald-700' : 'text-slate-400 group-hover:text-slate-600' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 7 7.5 5.5L19.5 7"/></svg>
                         <span>Enquiries</span>
+                        @if ($newEnquiryCount > 0)
+                            <span class="ml-auto inline-flex min-w-6 items-center justify-center rounded-full bg-[#ef8b22] px-2 py-0.5 text-[11px] font-extrabold text-[#142b4a]" aria-hidden="true">{{ $newEnquiryCount > 99 ? '99+' : $newEnquiryCount }}</span>
+                        @endif
                     </a>
                 </div>
 
@@ -169,7 +172,12 @@
                     <div>
                         <p class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-[.18em] text-slate-400">Catalog &amp; enquiries</p>
                         <a href="{{ route('universities.index') }}" @class(['block rounded-xl px-3 py-2.5 text-sm font-bold transition', 'bg-emerald-50 text-emerald-900' => request()->routeIs('universities.*'), 'text-slate-600 hover:bg-slate-50' => !request()->routeIs('universities.*')])>Universities</a>
-                        <a href="{{ route('leads.index') }}" @class(['mt-1 block rounded-xl px-3 py-2.5 text-sm font-bold transition', 'bg-emerald-50 text-emerald-900' => request()->routeIs('leads.*'), 'text-slate-600 hover:bg-slate-50' => !request()->routeIs('leads.*')])>Enquiries</a>
+                        <a href="{{ route('leads.index') }}" aria-label="Enquiries, {{ $newEnquiryCount }} new guidance requests" @class(['mt-1 flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-bold transition', 'bg-emerald-50 text-emerald-900' => request()->routeIs('leads.*'), 'text-slate-600 hover:bg-slate-50' => !request()->routeIs('leads.*')])>
+                            <span>Enquiries</span>
+                            @if ($newEnquiryCount > 0)
+                                <span class="inline-flex min-w-6 items-center justify-center rounded-full bg-[#ef8b22] px-2 py-0.5 text-[11px] font-extrabold text-[#142b4a]" aria-hidden="true">{{ $newEnquiryCount > 99 ? '99+' : $newEnquiryCount }}</span>
+                            @endif
+                        </a>
                     </div>
                     <div>
                         <p class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-[.18em] text-slate-400">Destinations</p>

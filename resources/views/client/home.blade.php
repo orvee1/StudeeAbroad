@@ -32,7 +32,7 @@
                 <x-brand-mark size="h-16 w-64" wrapper-class="rounded-lg ring-0 bg-transparent" />
             </a>
 
-            <nav class="hidden items-center gap-4 text-sm font-semibold lg:flex" aria-label="Main navigation">
+            <nav class="hidden items-center gap-3 text-sm font-semibold xl:flex" aria-label="Main navigation">
                 <a href="#destinations" class="home-nav-link">Destinations</a>
                 <a href="#universities" class="home-nav-link">Universities</a>
                 <a href="{{ route('public.programs.index') }}" class="home-nav-link">Programs</a>
@@ -40,29 +40,43 @@
                 <a href="#how-it-works" class="home-nav-link">How it works</a>
             </nav>
 
-            <div class="hidden items-center gap-3 lg:flex">
+            <div class="hidden items-center gap-3 xl:flex">
                 @auth
+                    <a href="#enquiry" class="inline-flex items-center gap-2 rounded-xl bg-[#ef8b22] px-3.5 py-2.5 text-sm font-bold text-[#142b4a] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#d96a18] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ef8b22] focus-visible:ring-offset-2">
+                        Talk with our team
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h6m-8 8 2.7-3H17a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7a3 3 0 0 0 1 2.3V20Z"/></svg>
+                    </a>
                     <a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student.dashboard') }}" class="rounded-xl bg-gradient-to-r from-[#142b4a] via-[#0757a6] to-[#0aa9cf] px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#0757a6]/20 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0aa9cf] focus-visible:ring-offset-2">{{ auth()->user()->isAdmin() ? 'Admin dashboard' : 'My dashboard' }}</a>
                 @else
+                    <a href="#enquiry" class="inline-flex items-center gap-2 rounded-xl bg-[#ef8b22] px-3.5 py-2.5 text-sm font-bold text-[#142b4a] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#d96a18] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ef8b22] focus-visible:ring-offset-2">
+                        Talk with our team
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h6m-8 8 2.7-3H17a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7a3 3 0 0 0 1 2.3V20Z"/></svg>
+                    </a>
                     <a href="{{ route('login') }}" class="home-nav-link text-sm font-semibold">Log in</a>
                     <a href="{{ route('register') }}" class="rounded-xl bg-gradient-to-r from-[#142b4a] via-[#0757a6] to-[#0aa9cf] px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#0757a6]/20 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0aa9cf] focus-visible:ring-offset-2">Create account</a>
                 @endauth
             </div>
 
-            <button type="button" @click="open = !open" :aria-expanded="open.toString()" aria-controls="mobile-navigation" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#d9e0d8] text-[#0b6158] lg:hidden" aria-label="Toggle navigation">
+            <button type="button" @click="open = !open" :aria-expanded="open.toString()" aria-controls="mobile-navigation" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#d9e0d8] text-[#0b6158] xl:hidden" aria-label="Toggle navigation">
                 <svg x-show="!open" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
                 <svg x-show="open" x-cloak class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" d="m6 6 12 12M18 6 6 18"/></svg>
             </button>
         </div>
 
-        <div id="mobile-navigation" x-show="open" x-cloak x-transition class="border-t border-[#ebe4d9] bg-[#fffaf5] px-4 py-4 lg:hidden">
+        <div id="mobile-navigation" x-show="open" x-cloak x-transition class="border-t border-[#ebe4d9] bg-[#fffaf5] px-4 py-4 xl:hidden">
             <nav class="mx-auto flex max-w-7xl flex-col gap-1 text-sm font-medium" aria-label="Mobile navigation">
                     <a @click="open = false" href="#destinations" class="home-nav-link">Destinations</a>
                     <a @click="open = false" href="#universities" class="home-nav-link">Universities</a>
                     <a @click="open = false" href="{{ route('public.programs.index') }}" class="home-nav-link">Programs</a>
                     <a @click="open = false" href="#stories" class="home-nav-link">Student stories</a>
                     <a @click="open = false" href="#how-it-works" class="home-nav-link">How it works</a>
-                <div class="mt-2 flex gap-3 border-t border-[#ebe4d9] pt-3">
+                <div class="mt-3 border-t border-[#ebe4d9] pt-3">
+                    <a @click="open = false" href="#enquiry" class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#ef8b22] px-4 py-3 text-center font-bold text-[#142b4a] shadow-sm transition hover:bg-[#d96a18]">
+                        Talk with our team
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h6m-8 8 2.7-3H17a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7a3 3 0 0 0 1 2.3V20Z"/></svg>
+                    </a>
+                </div>
+                <div class="mt-2 flex gap-3">
                     @auth
                         <a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student.dashboard') }}" class="w-full rounded-xl bg-gradient-to-r from-[#142b4a] via-[#0757a6] to-[#0aa9cf] px-4 py-3 text-center font-semibold text-white shadow-md shadow-[#0757a6]/20">{{ auth()->user()->isAdmin() ? 'Admin dashboard' : 'My dashboard' }}</a>
                     @else

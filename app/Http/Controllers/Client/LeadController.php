@@ -40,6 +40,6 @@ class LeadController extends Controller
 
         Lead::create($data);
 
-        return back()->with('success', 'Your enquiry has been received. Our team will be in touch soon.');
+        return back()->withFragment('enquiry')->with('success', 'Your enquiry has been received. Our team will be in touch soon.');
     }
 }

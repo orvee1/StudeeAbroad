@@ -24,7 +24,8 @@ class AdminDashboardController extends Controller
             'programs'     => UniversityProgram::count(),
             'media'        => UniversityMedia::count(),
             'students'     => User::query()->where('role', 'student')->count(),
-            'enquiries'    => Lead::query()->count(),
+            'enquiries'     => Lead::query()->count(),
+            'new_enquiries' => Lead::query()->where('status', 'new')->count(),
         ];
 
         $latestStudents = User::query()
