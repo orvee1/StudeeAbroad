@@ -35,6 +35,11 @@ class LeadController extends Controller
             }
         }
 
+        if (isset($data['message'])) {
+            $data['message'] = trim(strip_tags($data['message']));
+            $data['message'] = $data['message'] !== '' ? $data['message'] : null;
+        }
+
         $data['email'] = mb_strtolower($data['email']);
         $data['status'] = 'new';
 
