@@ -98,6 +98,10 @@
                     </div>
                     <h1 class="mt-6 max-w-xl text-[2.65rem] font-semibold leading-[1.08] tracking-[-.045em] text-[#133f39] sm:text-5xl lg:text-[3.65rem]">A world of study. <span class="text-[#d96545]">A place for you.</span></h1>
                     <p class="mt-5 max-w-xl text-base leading-7 text-[#5f716a] sm:text-lg">Explore universities, compare the details that matter and find a destination that feels right for your future.</p>
+                    <a href="https://wa.me/8801965999950" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp at +880 1965-999950" class="mt-6 inline-flex items-center gap-3 rounded-2xl bg-[#20b763] px-5 py-3.5 text-white shadow-lg shadow-[#147b42]/20 transition hover:-translate-y-0.5 hover:bg-[#159447] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#20b763] focus-visible:ring-offset-2">
+                        <svg class="h-6 w-6 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.47 0 .1 5.36.1 11.96c0 2.1.55 4.15 1.6 5.96L0 24l6.23-1.63a11.96 11.96 0 0 0 5.83 1.49h.01c6.6 0 11.96-5.37 11.96-11.96 0-3.2-1.25-6.2-3.51-8.42ZM12.07 21.8h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.7.97.99-3.6-.24-.37a9.85 9.85 0 0 1-1.52-5.25c0-5.46 4.44-9.9 9.9-9.9a9.82 9.82 0 0 1 7 2.9 9.82 9.82 0 0 1 2.9 7c0 5.46-4.45 9.9-9.92 9.9Zm5.43-7.42c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.88-.78-1.48-1.75-1.65-2.05-.18-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.38-.03-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.2 5.08 4.48.7.3 1.25.49 1.68.62.7.22 1.34.19 1.84.12.56-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.08-.13-.28-.2-.58-.35Z"/></svg>
+                        <span class="text-left"><span class="block text-xs font-semibold uppercase tracking-wide text-white/85">Chat with us on WhatsApp</span><span class="mt-0.5 block text-base font-bold sm:text-lg">+880 1965-999950</span></span>
+                    </a>
 
                     <form action="{{ route('search') }}" method="GET" class="mt-8 rounded-[1.6rem] border border-[#e9e5dd] bg-white p-4 shadow-[0_22px_60px_-35px_rgba(19,63,57,.35)] sm:p-5">
                         <div class="mb-4 flex items-center gap-2 text-sm font-bold text-[#133f39]"><span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#e4f5ec] text-[#2b776b]" aria-hidden="true">⌕</span>Start exploring</div>
@@ -239,6 +243,7 @@
             <div class="max-w-sm">
                 <a href="{{ route('home') }}" class="inline-flex items-center gap-3" aria-label="{{ config('app.name', 'EXFREELANCE') }} home"><x-brand-mark size="h-16 w-64" wrapper-class="rounded-lg ring-0 bg-transparent" /></a>
                 <p class="mt-4 text-sm leading-6 text-[#c5d8ce]">Explore study destinations and find universities that fit your plans.</p>
+                <a href="https://wa.me/8801965999950" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp at +880 1965-999950" class="mt-5 inline-flex items-center gap-2 rounded-xl border border-[#4ac782]/40 bg-[#20b763]/15 px-3.5 py-2.5 text-sm font-bold text-white transition hover:bg-[#20b763]/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4ac782] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a453f]"><span class="text-[#4ac782]" aria-hidden="true">WhatsApp</span><span>+880 1965-999950</span></a>
             </div>
             <div>
                 <h2 class="text-xs font-bold uppercase tracking-[.16em] text-[#ffb08f]">Explore</h2>

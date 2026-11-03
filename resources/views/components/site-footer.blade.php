@@ -6,6 +6,7 @@
                 <span class="font-bold tracking-tight">{{ config('app.name', 'EXFREELANCE') }}</span>
             </a>
             <p class="mt-4 text-sm leading-6 text-[#c5d8ce]">Explore study destinations and find universities that fit your plans.</p>
+            <a href="https://wa.me/8801965999950" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp at +880 1965-999950" class="mt-5 inline-flex items-center gap-2 rounded-xl border border-[#4ac782]/40 bg-[#20b763]/15 px-3.5 py-2.5 text-sm font-bold text-white transition hover:bg-[#20b763]/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4ac782] focus-visible:ring-offset-2 focus-visible:ring-offset-[#143f38]"><span class="text-[#4ac782]" aria-hidden="true">WhatsApp</span><span>+880 1965-999950</span></a>
         </div>
         <div>
             <h2 class="text-xs font-bold uppercase tracking-[.16em] text-[#f0b08b]">Explore</h2>
