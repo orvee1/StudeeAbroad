@@ -87,6 +87,14 @@
                 </div>
 
                 <div>
+                    <p class="px-3 pb-2 text-[10px] font-extrabold uppercase tracking-[.18em] text-slate-400">Administration</p>
+                    <a href="{{ route('admins.index') }}" @class(['group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold transition duration-150', 'bg-emerald-50 text-emerald-900 ring-1 ring-inset ring-emerald-100' => request()->routeIs('admins.*'), 'text-slate-600 hover:bg-slate-50 hover:text-slate-950' => !request()->routeIs('admins.*')]) @if(request()->routeIs('admins.*')) aria-current="page" @endif>
+                        <svg class="h-5 w-5 shrink-0 {{ request()->routeIs('admins.*') ? 'text-emerald-700' : 'text-slate-400 group-hover:text-slate-600' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16 20v-1.5a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V20M9.5 10.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM17 8h4m-2-2v4"/></svg>
+                        <span>Administrators</span>
+                    </a>
+                </div>
+
+                <div>
                     <p class="px-3 pb-2 text-[10px] font-extrabold uppercase tracking-[.18em] text-slate-400">Account</p>
                     <a href="{{ route('admin.profile.edit') }}" @class(['group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold transition duration-150', 'bg-emerald-50 text-emerald-900 ring-1 ring-inset ring-emerald-100' => request()->routeIs('admin.profile.*'), 'text-slate-600 hover:bg-slate-50 hover:text-slate-950' => !request()->routeIs('admin.profile.*')]) @if(request()->routeIs('admin.profile.*')) aria-current="page" @endif>
                         <svg class="h-5 w-5 shrink-0 {{ request()->routeIs('admin.profile.*') ? 'text-emerald-700' : 'text-slate-400 group-hover:text-slate-600' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="3.2"/><path stroke-linecap="round" stroke-linejoin="round" d="M5 20a7 7 0 0 1 14 0"/></svg>
@@ -191,6 +199,10 @@
                         <p class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-[.18em] text-slate-400">Students</p>
                         <a href="{{ route('students.index') }}" @class(['block rounded-xl px-3 py-2.5 text-sm font-bold transition', 'bg-emerald-50 text-emerald-900' => request()->routeIs('students.*'), 'text-slate-600 hover:bg-slate-50' => !request()->routeIs('students.*')])>Registered students</a>
                         <a href="{{ route('success_stories.index') }}" @class(['mt-1 block rounded-xl px-3 py-2.5 text-sm font-bold transition', 'bg-emerald-50 text-emerald-900' => request()->routeIs('success_stories.*'), 'text-slate-600 hover:bg-slate-50' => !request()->routeIs('success_stories.*')])>Success stories</a>
+                    </div>
+                    <div>
+                        <p class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-[.18em] text-slate-400">Administration</p>
+                        <a href="{{ route('admins.index') }}" @class(['block rounded-xl px-3 py-2.5 text-sm font-bold transition', 'bg-emerald-50 text-emerald-900' => request()->routeIs('admins.*'), 'text-slate-600 hover:bg-slate-50' => !request()->routeIs('admins.*')])>Administrators</a>
                     </div>
                     <div>
                         <p class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-[.18em] text-slate-400">Account</p>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\StateController;
@@ -74,6 +75,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     // Students
     Route::get('students', [StudentController::class, 'index'])->name('students.index');
+
+    // Administrator accounts
+    Route::get('admins', [AdminUserController::class, 'index'])->name('admins.index');
+    Route::get('admins/create', [AdminUserController::class, 'create'])->name('admins.create');
+    Route::post('admins', [AdminUserController::class, 'store'])->name('admins.store');
 
     // Country Routes
     Route::get('countries', [CountryController::class, 'index'])->name('countries.index');
