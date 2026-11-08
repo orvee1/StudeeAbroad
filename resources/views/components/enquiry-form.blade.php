@@ -25,6 +25,9 @@
             @if (session('success'))
                 <div role="status" class="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">{{ session('success') }}</div>
             @endif
+            @if (session('error'))
+                <div role="alert" class="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">{{ session('error') }}</div>
+            @endif
             @if ($errors->any())
                 <div role="alert" class="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
                     <p class="font-semibold">Please check the form:</p>
@@ -36,7 +39,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('enquiries.store') }}" class="mt-5 grid gap-4 sm:grid-cols-2">
+            <form method="POST" action="{{ $source === 'landing' ? route('enquiries.start') : route('enquiries.store') }}" class="mt-5 grid gap-4 sm:grid-cols-2">
         @csrf
         <input type="hidden" name="source" value="{{ $source }}">
         @if ($country)

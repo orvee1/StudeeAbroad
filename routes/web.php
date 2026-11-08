@@ -30,6 +30,9 @@ Route::get('/universities/{university:slug}/programs/{program:slug}', [PublicCat
     ->scopeBindings()
     ->name('public.programs.show');
 Route::get('/programs', [ProgramSearchController::class, 'index'])->name('public.programs.index');
+Route::post('/enquiries/start', [LeadController::class, 'start'])->middleware('throttle:5,1')->name('enquiries.start');
+Route::get('/enquiries/complete/{draft}', [LeadController::class, 'details'])->name('enquiries.details');
+Route::post('/enquiries/complete', [LeadController::class, 'complete'])->middleware('throttle:5,1')->name('enquiries.complete.store');
 Route::post('/enquiries', [LeadController::class, 'store'])->middleware('throttle:5,1')->name('enquiries.store');
 
 Route::middleware(['auth'])->group(function () {
