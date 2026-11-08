@@ -15,9 +15,9 @@
             <div>
                 <div class="text-sm text-slate-500">Manage</div>
                 <div class="text-xl font-semibold">Success Stories</div>
-                <div class="text-sm text-slate-600 mt-1">Admin can approve (active), maintain sort order, and delete. No
-                    create/edit here.</div>
+                <div class="text-sm text-slate-600 mt-1">Create stories, upload redacted student evidence, and choose what appears on the homepage.</div>
             </div>
+            <a href="{{ route('success_stories.create') }}" class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-700">Add success story</a>
         </div>
 
         <div class="p-4 lg:p-6 border-b border-slate-200">
@@ -54,6 +54,7 @@
                         <th class="px-6 py-3">Student</th>
                         <th class="px-6 py-3">Destination</th>
                         <th class="px-6 py-3">Badge</th>
+                        <th class="px-6 py-3">Evidence</th>
                         <th class="px-6 py-3">Sort</th>
                         <th class="px-6 py-3">Active</th>
                         <th class="px-6 py-3 text-right">Action</th>
@@ -94,12 +95,14 @@
                                 </div>
                             </td>
 
+                            <td class="px-6 py-4 text-slate-600">{{ $s->media_count }} image{{ (int) $s->media_count === 1 ? '' : 's' }}</td>
+
                             {{-- Inline update (sort + active) --}}
                             <td class="px-6 py-4">
-                                <form method="POST" action="{{ route('success_stories.update', $s) }}"
+                                <form method="POST" action="{{ route('success_stories.moderate', $s) }}"
                                     class="flex items-center gap-2">
                                     @csrf
-                                    @method('PUT')
+                                    @method('PATCH')
                                     <input type="number" name="sort_order" value="{{ $s->sort_order }}"
                                         class="w-24 rounded-xl border-slate-200 focus:border-slate-400 focus:ring-slate-200" />
                                     <input type="hidden" name="is_active" value="{{ $s->is_active ? 1 : 0 }}">
@@ -110,9 +113,9 @@
                             </td>
 
                             <td class="px-6 py-4">
-                                <form method="POST" action="{{ route('success_stories.update', $s) }}">
+                                <form method="POST" action="{{ route('success_stories.moderate', $s) }}">
                                     @csrf
-                                    @method('PUT')
+                                    @method('PATCH')
                                     <input type="hidden" name="sort_order" value="{{ $s->sort_order }}">
                                     <input type="hidden" name="is_active" value="{{ $s->is_active ? 0 : 1 }}">
                                     <button
@@ -124,9 +127,10 @@
                             </td>
 
                             <td class="px-6 py-4">
-                                <div class="flex justify-end">
+                                <div class="flex justify-end gap-2">
+                                    <a href="{{ route('success_stories.edit', $s) }}" class="rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Edit</a>
                                     <form method="POST" action="{{ route('success_stories.destroy', $s) }}"
-                                        onsubmit="return confirm('Delete this story?')">
+                                        onsubmit="return confirm('Delete this story and its uploaded images?')">
                                         @csrf
                                         @method('DELETE')
                                         <button
@@ -139,7 +143,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td class="px-6 py-10 text-center text-slate-500" colspan="6">No success stories found.</td>
+                            <td class="px-6 py-10 text-center text-slate-500" colspan="7">No success stories found.</td>
                         </tr>
                     @endforelse
                 </tbody>

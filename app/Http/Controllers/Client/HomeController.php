@@ -44,7 +44,10 @@ class HomeController extends Controller
 
         $successStories = SuccessStory::query()
             ->where('is_active', true)
-            ->with('user:id,profile_photo_path')
+            ->with([
+                'user:id,profile_photo_path,role',
+                'media' => fn ($query) => $query->where('is_public', true)->orderBy('sort_order')->orderBy('id'),
+            ])
             ->orderBy('sort_order')
             ->orderByDesc('id')
             ->take(8)

@@ -15,6 +15,7 @@ use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\LeadController;
 use App\Http\Controllers\Client\ProgramSearchController;
 use App\Http\Controllers\Client\PublicCatalogController;
+use App\Http\Controllers\Client\PublicSuccessStoryController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\SearchController;
@@ -30,6 +31,8 @@ Route::get('/universities/{university:slug}/programs/{program:slug}', [PublicCat
     ->scopeBindings()
     ->name('public.programs.show');
 Route::get('/programs', [ProgramSearchController::class, 'index'])->name('public.programs.index');
+Route::get('/success-stories/{success_story}', [PublicSuccessStoryController::class, 'show'])->name('public.success_stories.show');
+Route::get('/success-stories/{success_story}/documents/{media}', [PublicSuccessStoryController::class, 'media'])->name('public.success_stories.media');
 Route::post('/enquiries/start', [LeadController::class, 'start'])->middleware('throttle:5,1')->name('enquiries.start');
 Route::get('/enquiries/complete/{draft}', [LeadController::class, 'details'])->name('enquiries.details');
 Route::post('/enquiries/complete', [LeadController::class, 'complete'])->middleware('throttle:5,1')->name('enquiries.complete.store');
@@ -141,7 +144,13 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     // Success Stories
     Route::get('success-stories', [AdminSuccessStoryController::class, 'index'])->name('success_stories.index');
+    Route::get('success-stories/create', [AdminSuccessStoryController::class, 'create'])->name('success_stories.create');
+    Route::post('success-stories', [AdminSuccessStoryController::class, 'store'])->name('success_stories.store');
+    Route::get('success-stories/{success_story}/edit', [AdminSuccessStoryController::class, 'edit'])->name('success_stories.edit');
     Route::put('success-stories/{success_story}', [AdminSuccessStoryController::class, 'update'])->name('success_stories.update');
+    Route::patch('success-stories/{success_story}/visibility', [AdminSuccessStoryController::class, 'moderate'])->name('success_stories.moderate');
+    Route::get('success-stories/{success_story}/media/{media}', [AdminSuccessStoryController::class, 'mediaPreview'])->name('success_stories.media.show');
+    Route::delete('success-stories/{success_story}/media/{media}', [AdminSuccessStoryController::class, 'destroyMedia'])->name('success_stories.media.destroy');
     Route::delete('success-stories/{success_story}', [AdminSuccessStoryController::class, 'destroy'])->name('success_stories.destroy');
 });
 
