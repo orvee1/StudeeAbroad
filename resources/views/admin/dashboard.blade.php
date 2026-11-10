@@ -49,7 +49,7 @@
                     <div class="text-lg font-semibold">Registered Students</div>
                 </div>
                 <a href="{{ route('students.index') }}"
-                    class="text-sm px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50">All Students</a>
+                    class="text-sm px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-800 font-semibold shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">All Students</a>
             </div>
 
             <div class="divide-y divide-slate-100">
@@ -82,7 +82,7 @@
                     <div class="text-lg font-semibold">Featured Universities</div>
                 </div>
                 <a href="{{ route('universities.index') }}"
-                    class="text-sm px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50">Manage</a>
+                    class="text-sm px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-800 font-semibold shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">Manage</a>
             </div>
 
             <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">

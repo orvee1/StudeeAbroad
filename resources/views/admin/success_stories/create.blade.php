@@ -6,7 +6,7 @@
 @section('content')
     <div class="mx-auto max-w-5xl space-y-6">
         <div>
-            <a href="{{ route('success_stories.index') }}" class="text-sm font-semibold text-indigo-700 hover:text-indigo-900">← Back to success stories</a>
+            <a href="{{ route('success_stories.index') }}" class="text-sm font-semibold px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-800 shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">← Back to success stories</a>
             <h1 class="mt-3 text-2xl font-bold text-slate-900">Add a student success story</h1>
             <p class="mt-1 text-sm text-slate-600">Add the student’s story and any redacted images they agreed to share publicly.</p>
         </div>

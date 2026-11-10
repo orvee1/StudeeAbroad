@@ -6,10 +6,10 @@
 @section('content')
     <div class="mx-auto max-w-5xl space-y-6">
         <div>
-            <a href="{{ route('success_stories.index') }}" class="text-sm font-semibold text-indigo-700 hover:text-indigo-900">← Back to success stories</a>
+            <a href="{{ route('success_stories.index') }}" class="text-sm font-semibold px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-800 shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">← Back to success stories</a>
             <h1 class="mt-3 text-2xl font-bold text-slate-900">Edit {{ $story->name }}’s story</h1>
             <p class="mt-1 text-sm text-slate-600">Manage the story, public visibility, and shared evidence images.</p>
-            @if($story->is_active)<a href="{{ route('public.success_stories.show', $story) }}" target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex text-sm font-semibold text-indigo-700 hover:text-indigo-900">View public story ↗</a>@endif
+            @if($story->is_active)<a href="{{ route('public.success_stories.show', $story) }}" target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex text-sm font-semibold px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 text-slate-800 shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 items-center justify-center">View public story ↗</a>@endif
         </div>
 
         @if (session('success'))

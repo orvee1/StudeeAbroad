@@ -12,7 +12,7 @@
                     <div class="text-sm text-slate-500">{{ $country->name }}</div>
                 </div>
                 <a href="{{ route('countries.show', $country) }}"
-                    class="px-4 py-2 rounded-xl border border-slate-200 text-sm hover:bg-slate-50">
+                    class="px-4 py-2 rounded-xl border text-sm border-slate-300 bg-slate-50 text-slate-800 font-semibold shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">
                     View Details
                 </a>
             </div>
@@ -29,7 +29,7 @@
                         Update Country
                     </button>
                     <a href="{{ route('countries.index') }}"
-                        class="px-5 py-2.5 rounded-xl border border-slate-200 text-sm hover:bg-slate-50">
+                        class="px-5 py-2.5 rounded-xl border text-sm border-slate-300 bg-slate-50 text-slate-800 font-semibold shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">
                         Back
                     </a>
                 </div>

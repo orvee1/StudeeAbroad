@@ -13,9 +13,9 @@
 
     <div class="mb-4 bg-white border border-slate-200 rounded-2xl p-3 flex flex-wrap gap-2">
         <a href="{{ route('universities.show', $university) }}"
-            class="px-4 py-2 rounded-xl text-sm border border-slate-200 hover:bg-slate-50">Overview</a>
+            class="px-4 py-2 rounded-xl text-sm border border-slate-300 bg-slate-50 text-slate-800 font-semibold shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">Overview</a>
         <a href="{{ route('universities.programs.index', $university) }}"
-            class="px-4 py-2 rounded-xl text-sm border border-slate-200 hover:bg-slate-50">Programs</a>
+            class="px-4 py-2 rounded-xl text-sm border border-slate-300 bg-slate-50 text-slate-800 font-semibold shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">Programs</a>
         <a href="{{ route('universities.media.index', $university) }}"
             class="px-4 py-2 rounded-xl text-sm border border-slate-200 bg-slate-900 text-white">Media</a>
     </div>
@@ -58,7 +58,7 @@
                 <div class="md:col-span-2 flex items-end gap-2">
                     <button class="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm hover:opacity-90">Filter</button>
                     <a href="{{ route('universities.media.index', $university) }}"
-                        class="px-4 py-2 rounded-xl border border-slate-200 text-sm hover:bg-slate-50">Reset</a>
+                        class="px-4 py-2 rounded-xl border text-sm border-slate-300 bg-slate-50 text-slate-800 font-semibold shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">Reset</a>
                 </div>
             </form>
         </div>
@@ -101,14 +101,14 @@
                             <div class="text-xs text-slate-500">Sort: {{ $m->sort_order }}</div>
                             <div class="flex gap-2">
                                 <a href="{{ route('universities.media.edit', [$university, $m]) }}"
-                                    class="px-3 py-2 rounded-xl border border-slate-200 text-sm hover:bg-slate-50">Edit</a>
+                                    class="px-3 py-2 rounded-xl border text-sm border-slate-300 bg-slate-50 text-slate-800 font-semibold shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">Edit</a>
                                 <form method="POST"
                                     action="{{ route('universities.media.destroy', [$university, $m]) }}"
                                     onsubmit="return confirm('Delete this media?')">
                                     @csrf
                                     @method('DELETE')
                                     <button
-                                        class="px-3 py-2 rounded-xl border border-rose-200 text-rose-700 text-sm hover:bg-rose-50">
+                                        class="px-3 py-2 rounded-xl border text-rose-700 text-sm bg-rose-50 border-rose-300 font-semibold shadow-sm transition hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2">
                                         Delete
                                     </button>
                                 </form>

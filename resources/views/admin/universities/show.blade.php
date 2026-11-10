@@ -11,11 +11,11 @@
             Overview
         </a>
         <a href="{{ route('universities.programs.index', $university) }}"
-            class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-900">
+            class="rounded-xl border px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-900 border-slate-300 bg-slate-50 text-slate-800 shadow-sm hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">
             Programs
         </a>
         <a href="{{ route('universities.media.index', $university) }}"
-            class="rounded-xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-900">
+            class="rounded-xl border px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-900 border-slate-300 bg-slate-50 text-slate-800 shadow-sm hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">
             Media
         </a>
     </div>
@@ -85,7 +85,7 @@
 
                 <div class="p-5 border-t border-slate-200 flex items-center gap-2">
                     <a href="{{ route('universities.edit', $university) }}"
-                        class="px-4 py-2 rounded-xl border border-slate-200 text-sm hover:bg-slate-50">Edit</a>
+                        class="px-4 py-2 rounded-xl border text-sm border-slate-300 bg-slate-50 text-slate-800 font-semibold shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">Edit</a>
                     <a href="{{ route('universities.index') }}"
                         class="px-4 py-2 rounded-xl bg-slate-900 text-white text-sm hover:opacity-90">Back</a>
                 </div>

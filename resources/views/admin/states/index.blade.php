@@ -59,7 +59,7 @@
                         Filter
                     </button>
                     <a href="{{ route('states.index') }}"
-                        class="px-4 py-2 rounded-xl border border-slate-200 text-sm hover:bg-slate-50">
+                        class="px-4 py-2 rounded-xl border text-sm border-slate-300 bg-slate-50 text-slate-800 font-semibold shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">
                         Reset
                     </a>
                 </div>
@@ -105,11 +105,11 @@
                             <td class="px-6 py-4">
                                 <div class="flex justify-end gap-2">
                                     <a href="{{ route('states.show', $st) }}"
-                                        class="px-3 py-2 rounded-xl border border-slate-200 text-sm hover:bg-slate-50">
+                                        class="px-3 py-2 rounded-xl border text-sm border-slate-300 bg-slate-50 text-slate-800 font-semibold shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">
                                         View
                                     </a>
                                     <a href="{{ route('states.edit', $st) }}"
-                                        class="px-3 py-2 rounded-xl border border-slate-200 text-sm hover:bg-slate-50">
+                                        class="px-3 py-2 rounded-xl border text-sm border-slate-300 bg-slate-50 text-slate-800 font-semibold shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">
                                         Edit
                                     </a>
 
@@ -118,7 +118,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button
-                                            class="px-3 py-2 rounded-xl border border-rose-200 text-rose-700 text-sm hover:bg-rose-50">
+                                            class="px-3 py-2 rounded-xl border text-rose-700 text-sm bg-rose-50 border-rose-300 font-semibold shadow-sm transition hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2">
                                             Delete
                                         </button>
                                     </form>

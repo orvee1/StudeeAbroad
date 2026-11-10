@@ -231,27 +231,29 @@
             <x-enquiry-form source="landing" />
         </section>
 
-        <section class="border-y border-[#dce8f1] bg-white" aria-labelledby="connect-heading">
-            <div class="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[.8fr_1.2fr] lg:items-center lg:px-8 lg:py-14">
-                <div class="max-w-md">
-                    <p class="text-xs font-bold uppercase tracking-[.18em] text-[#d96a18]">Stay in touch</p>
-                    <h2 id="connect-heading" class="mt-3 text-2xl font-semibold tracking-tight text-[#142b4a] sm:text-3xl">Connect with EXFREELANCE</h2>
-                    <p class="mt-3 text-sm leading-6 text-[#58718a]">Follow our latest news, updates and student stories.</p>
-                </div>
+        <section class="border-y border-[#dce8f1] bg-[#eef7ff]" aria-labelledby="connect-heading">
+            <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
+                <a href="https://www.facebook.com/exfreelancebd/" target="_blank" rel="noopener noreferrer" aria-label="Visit EXFREELANCE BD on Facebook, opens in a new tab" class="group relative isolate block overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#06346e] via-[#0757a6] to-[#0aa9cf] px-6 py-8 text-white shadow-[0_28px_65px_-30px_rgba(7,87,166,.65)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_34px_75px_-28px_rgba(7,87,166,.75)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#1877f2]/30 focus-visible:ring-offset-4 focus-visible:ring-offset-[#eef7ff] sm:px-9 sm:py-10 lg:px-12 lg:py-12">
+                    <span class="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full border border-white/10 transition duration-500 group-hover:scale-110" aria-hidden="true"></span>
+                    <span class="pointer-events-none absolute -right-2 -top-10 h-48 w-48 rounded-full border border-white/10" aria-hidden="true"></span>
+                    <span class="pointer-events-none absolute -bottom-20 left-[42%] h-48 w-48 rounded-full bg-[#38bdf8]/20 blur-3xl" aria-hidden="true"></span>
 
-                <div class="grid gap-3">
-                    <a href="https://www.facebook.com/exfreelancebd/" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-4 rounded-2xl border border-[#dce8f1] bg-[#f7fbff] p-5 transition hover:-translate-y-0.5 hover:border-[#9fc7e8] hover:shadow-lg hover:shadow-[#0757a6]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0757a6] focus-visible:ring-offset-2">
-                        <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#e6f2ff] text-[#0757a6]" aria-hidden="true">
-                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M13.4 21v-8.2h2.8l.4-3.2h-3.2v-2c0-.9.3-1.5 1.6-1.5h1.7V3.2c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.2v2.3H7.6v3.2h2.7V21h3.1Z"/></svg>
+                    <span class="relative grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+                        <span class="max-w-2xl">
+                            <span class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[.16em] text-white/90 backdrop-blur-sm">
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.4 21v-8.2h2.8l.4-3.2h-3.2v-2c0-.9.3-1.5 1.6-1.5h1.7V3.2c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.2v2.3H7.6v3.2h2.7V21h3.1Z"/></svg>
+                                EXFREELANCE BD on Facebook
+                            </span>
+                            <span id="connect-heading" class="mt-5 block max-w-2xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-[2.75rem]">A little inspiration for your next big step.</span>
+                            <span class="mt-3 block max-w-xl text-sm leading-6 text-white/80 sm:text-base">Follow us for study-abroad updates, practical guidance and student success stories.</span>
                         </span>
-                        <span class="min-w-0 flex-1">
-                            <span class="block text-sm font-bold text-[#142b4a]">Follow us on Facebook</span>
-                            <span class="mt-1 block text-xs leading-5 text-[#58718a]">News, updates and student stories</span>
-                        </span>
-                        <span class="text-lg text-[#0757a6] transition group-hover:translate-x-1" aria-hidden="true">→</span>
-                    </a>
 
-                </div>
+                        <span class="inline-flex w-fit items-center gap-3 rounded-2xl bg-white px-5 py-4 text-sm font-extrabold text-[#0757a6] shadow-lg shadow-[#062d61]/20 transition group-hover:bg-[#fff5e9] sm:px-6">
+                            <span>Visit our Facebook page</span>
+                            <svg class="h-5 w-5 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                        </span>
+                    </span>
+                </a>
             </div>
         </section>
 

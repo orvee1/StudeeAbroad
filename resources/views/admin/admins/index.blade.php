@@ -31,7 +31,7 @@
                     class="mt-1 w-full rounded-xl border-slate-200 focus:border-slate-400 focus:ring-slate-200" />
             </div>
             <button class="self-end rounded-xl bg-slate-900 px-4 py-2 text-sm text-white hover:opacity-90">Search</button>
-            <a href="{{ route('admins.index') }}" class="self-end rounded-xl border border-slate-200 px-4 py-2 text-center text-sm hover:bg-slate-50">Reset</a>
+            <a href="{{ route('admins.index') }}" class="self-end rounded-xl border px-4 py-2 text-center text-sm border-slate-300 bg-slate-50 text-slate-800 font-semibold shadow-sm transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 inline-flex items-center justify-center">Reset</a>
         </form>
 
         <div class="overflow-x-auto">
