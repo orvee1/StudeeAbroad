@@ -37,7 +37,7 @@
                 <a href="#universities" class="home-nav-link">Universities</a>
                 <a href="{{ route('public.programs.index') }}" class="home-nav-link">Programs</a>
                 <a href="#stories" class="home-nav-link">Student stories</a>
-                <a href="#how-it-works" class="home-nav-link">How it works</a>
+                <a href="{{ route('contact') }}" class="home-nav-link">Contact us</a>
             </nav>
 
             <div class="hidden items-center gap-3 xl:flex">
@@ -69,7 +69,7 @@
                     <a @click="open = false" href="#universities" class="home-nav-link">Universities</a>
                     <a @click="open = false" href="{{ route('public.programs.index') }}" class="home-nav-link">Programs</a>
                     <a @click="open = false" href="#stories" class="home-nav-link">Student stories</a>
-                    <a @click="open = false" href="#how-it-works" class="home-nav-link">How it works</a>
+                    <a @click="open = false" href="{{ route('contact') }}" class="home-nav-link">Contact us</a>
                 <div class="mt-3 border-t border-[#ebe4d9] pt-3">
                     <a @click="open = false" href="#enquiry" class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#ef8b22] px-4 py-3 text-center font-bold text-[#142b4a] shadow-sm transition hover:bg-[#d96a18]">
                         Talk with our team
@@ -89,53 +89,123 @@
     </header>
 
     <main>
-        <section class="relative isolate overflow-hidden">
-            <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_10%_15%,rgba(211,241,226,.95),transparent_38%),radial-gradient(ellipse_at_92%_8%,rgba(255,222,202,.8),transparent_30%)]"></div>
-            <div class="mx-auto grid max-w-7xl items-center gap-12 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.05fr_.95fr] lg:px-8 lg:py-20">
-                <div class="max-w-2xl">
-                    <div class="inline-flex items-center gap-2 rounded-full border border-[#cfe6d9] bg-white/85 px-3.5 py-2 text-xs font-semibold tracking-wide text-[#2b776b] shadow-sm shadow-[#0b6158]/5">
-                        <span class="h-2 w-2 rounded-full bg-[#ed7958]"></span> Make your next move count
+        @php($heroSlides = $heroSlides ?? collect())
+        <section aria-label="Study abroad highlights" class="bg-[#f4f8f5] pb-10 sm:pb-14">
+            <div
+                x-data="{
+                    active: 0,
+                    count: {{ $heroSlides->count() }},
+                    timer: null,
+                    paused: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+                    start() {
+                        if (this.count < 2 || this.paused) return;
+                        this.stop();
+                        this.timer = window.setInterval(() => { this.active = (this.active + 1) % this.count; }, 5000);
+                    },
+                    stop() { if (this.timer) window.clearInterval(this.timer); this.timer = null; },
+                    next() { if (this.count > 1) { this.active = (this.active + 1) % this.count; this.start(); } },
+                    previous() { if (this.count > 1) { this.active = (this.active + this.count - 1) % this.count; this.start(); } },
+                    goTo(index) { this.active = index; this.start(); },
+                    togglePlayback() { this.paused = !this.paused; this.paused ? this.stop() : this.start(); }
+                }"
+                x-init="start()"
+                @mouseenter="stop()"
+                @mouseleave="start()"
+                @focusin="stop()"
+                @focusout="if (!$el.contains($event.relatedTarget)) start()"
+                class="relative isolate h-[560px] overflow-hidden bg-[#102d48] sm:h-[620px] lg:h-[min(72vh,760px)]"
+            >
+                @forelse ($heroSlides as $index => $slide)
+                    <div
+                        x-cloak
+                        x-show="active === {{ $index }}"
+                        x-transition:enter="transition ease-out duration-1000"
+                        x-transition:enter-start="opacity-0 scale-[1.025]"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-700"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-[1.025]"
+                        class="absolute inset-0"
+                        aria-hidden="true"
+                    >
+                        <img src="{{ asset('storage/' . ltrim($slide->image_path, '/')) }}" alt="" class="h-full w-full object-cover object-center">
                     </div>
-                    <h1 class="mt-6 max-w-xl text-[2.65rem] font-semibold leading-[1.08] tracking-[-.045em] text-[#133f39] sm:text-5xl lg:text-[3.65rem]">A world of study. <span class="text-[#d96545]">A place for you.</span></h1>
-                    <p class="mt-5 max-w-xl text-base leading-7 text-[#5f716a] sm:text-lg">Explore universities, compare the details that matter and find a destination that feels right for your future.</p>
-                    <a href="https://wa.me/8801965999950" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp at +880 1965-999950" class="mt-6 inline-flex items-center gap-3 rounded-2xl bg-[#20b763] px-5 py-3.5 text-white shadow-lg shadow-[#147b42]/20 transition hover:-translate-y-0.5 hover:bg-[#159447] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#20b763] focus-visible:ring-offset-2">
-                        <svg class="h-6 w-6 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.47 0 .1 5.36.1 11.96c0 2.1.55 4.15 1.6 5.96L0 24l6.23-1.63a11.96 11.96 0 0 0 5.83 1.49h.01c6.6 0 11.96-5.37 11.96-11.96 0-3.2-1.25-6.2-3.51-8.42ZM12.07 21.8h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.7.97.99-3.6-.24-.37a9.85 9.85 0 0 1-1.52-5.25c0-5.46 4.44-9.9 9.9-9.9a9.82 9.82 0 0 1 7 2.9 9.82 9.82 0 0 1 2.9 7c0 5.46-4.45 9.9-9.92 9.9Zm5.43-7.42c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.88-.78-1.48-1.75-1.65-2.05-.18-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.38-.03-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.2 5.08 4.48.7.3 1.25.49 1.68.62.7.22 1.34.19 1.84.12.56-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.08-.13-.28-.2-.58-.35Z"/></svg>
-                        <span class="text-left"><span class="block text-xs font-semibold uppercase tracking-wide text-white/85">Chat with us on WhatsApp</span><span class="mt-0.5 block text-base font-bold sm:text-lg">+880 1965-999950</span></span>
-                    </a>
+                @empty
+                    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(9,169,207,.55),transparent_40%),linear-gradient(120deg,#102d48,#0757a6_58%,#0b8eaa)]"></div>
+                    <div class="absolute -right-24 -top-32 h-[34rem] w-[34rem] rounded-full border border-white/10"></div>
+                    <div class="absolute -right-4 -top-12 h-[24rem] w-[24rem] rounded-full border border-white/10"></div>
+                @endforelse
 
-                    <form action="{{ route('search') }}" method="GET" class="mt-8 rounded-[1.6rem] border border-[#e9e5dd] bg-white p-4 shadow-[0_22px_60px_-35px_rgba(19,63,57,.35)] sm:p-5">
-                        <div class="mb-4 flex items-center gap-2 text-sm font-bold text-[#133f39]"><span class="flex h-7 w-7 items-center justify-center rounded-lg bg-[#e4f5ec] text-[#2b776b]" aria-hidden="true">⌕</span>Start exploring</div>
-                        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                            <div class="sm:col-span-2"><label for="home_q" class="text-xs font-semibold text-[#687871]">University or keyword</label><input id="home_q" name="q" type="search" placeholder="e.g. business, Toronto, university name" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm placeholder:text-[#9aa69f] focus:border-[#4e8273] focus:ring-[#4e8273]"></div>
-                            <div><label for="country_id" class="text-xs font-semibold text-[#687871]">Study destination</label><select name="country_id" id="country_id" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm text-[#344e46] focus:border-[#4e8273] focus:ring-[#4e8273]"><option value="">Any country</option>@foreach ($countries ?? [] as $country)<option value="{{ $country->id }}">{{ $country->name }}</option>@endforeach</select></div>
-                            <div><label for="state_id" class="text-xs font-semibold text-[#687871]">State / region</label><select name="state_id" id="state_id" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm text-[#344e46] focus:border-[#4e8273] focus:ring-[#4e8273]"><option value="">Any region</option></select></div>
-                            <div><label for="city_id" class="text-xs font-semibold text-[#687871]">City</label><select name="city_id" id="city_id" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm text-[#344e46] focus:border-[#4e8273] focus:ring-[#4e8273]"><option value="">Any city</option></select></div>
-                            <div class="grid grid-cols-2 gap-2"><div><label for="tuition_min" class="text-xs font-semibold text-[#687871]">Tuition from</label><input id="tuition_min" name="tuition_min" type="number" min="0" placeholder="Min" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm focus:border-[#4e8273] focus:ring-[#4e8273]"></div><div><label for="tuition_max" class="text-xs font-semibold text-[#687871]">Tuition to</label><input id="tuition_max" name="tuition_max" type="number" min="0" placeholder="Max" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm focus:border-[#4e8273] focus:ring-[#4e8273]"></div></div>
-                        </div>
-                        <button type="submit" class="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#0b6158] px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#0b6158]/15 transition hover:bg-[#083f3a] focus:outline-none focus:ring-2 focus:ring-[#2b8a7b] focus:ring-offset-2">Find universities <span aria-hidden="true">→</span></button>
-                        <p class="mt-3 text-center text-xs text-[#829088]">Adjust your search any time with more filters.</p>
-                    </form>
-                </div>
+                <div class="absolute inset-0 bg-gradient-to-r from-[#091b2d]/85 via-[#102d48]/55 to-[#102d48]/10"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#091b2d]/60 via-transparent to-[#091b2d]/10"></div>
 
-                <div class="relative mx-auto w-full max-w-[31rem] lg:ml-auto">
-                    <div class="absolute -right-5 -top-5 h-28 w-28 rounded-full bg-[#ffb08f]/45 blur-xl"></div>
-                    <div class="absolute -bottom-8 -left-8 h-36 w-36 rounded-full bg-[#b4dec8]/60 blur-xl"></div>
-                    <div class="relative overflow-hidden rounded-[2rem] border border-[#23806f] bg-gradient-to-br from-[#0b6158] via-[#0b6158] to-[#083f3a] p-6 text-white shadow-[0_30px_70px_-30px_rgba(11,97,88,.6)] sm:p-8">
-                        <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full border border-white/10"></div><div class="absolute -right-10 -top-10 h-44 w-44 rounded-full border border-white/10"></div>
-                        <div class="relative flex min-h-[22rem] flex-col justify-between sm:min-h-[25rem]">
-                            <div class="flex items-start justify-between gap-4"><div><p class="text-xs font-semibold uppercase tracking-[.18em] text-[#c5ead9]">Your journey, your pace</p><h2 class="mt-3 max-w-xs text-3xl font-semibold leading-tight tracking-tight">The right choice starts with a good search.</h2></div><span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#ff9e76] text-2xl text-[#133f39] shadow-lg shadow-[#082f2b]/20" aria-hidden="true">✳</span></div>
-                            <div class="relative mt-8">
-                                <div class="absolute -left-3 top-4 h-24 w-24 rounded-full bg-[#bbd2bc]"></div><div class="absolute left-14 top-10 h-16 w-16 rounded-full bg-[#e9a27d]"></div><div class="absolute left-28 top-0 h-28 w-28 rounded-full border-[1.5rem] border-[#d9e7d8]"></div>
-                                <div class="relative ml-auto max-w-[16rem] rounded-2xl border border-[#74b2a2] bg-[#2b7569] p-4 shadow-[0_18px_36px_-18px_rgba(4,31,26,.85)]">
-                                    <div class="flex items-center justify-between"><span class="text-xs font-semibold tracking-[.01em] text-[#f7fff9]">Your search snapshot</span><span class="h-2 w-2 rounded-full bg-[#ff9e76]"></span></div>
-                                    <div class="mt-4 grid grid-cols-2 gap-2"><div class="rounded-xl border border-white/10 bg-[#428b7e] p-3"><p class="text-[11px] text-[#d8eade]">Countries</p><p class="mt-1 text-xl font-bold text-white">{{ number_format((int) ($stats['countries'] ?? 0)) }}</p></div><div class="rounded-xl border border-white/10 bg-[#428b7e] p-3"><p class="text-[11px] text-[#d8eade]">Universities</p><p class="mt-1 text-xl font-bold text-white">{{ number_format((int) ($stats['universities'] ?? 0)) }}</p></div></div>
-                                    <div class="mt-2 rounded-xl bg-[#f4eee2] px-3 py-2.5 text-xs font-semibold text-[#345c50]">Compare options at a glance <span class="float-right" aria-hidden="true">↗</span></div>
-                                </div>
+                <div class="relative mx-auto flex h-full max-w-7xl items-center px-5 pb-24 pt-14 sm:px-8 lg:px-10">
+                    <div class="max-w-3xl text-white">
+                        <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[.18em] text-white/90 shadow-sm backdrop-blur-sm sm:text-xs">
+                            <span class="h-2 w-2 rounded-full bg-[#ff9a42] shadow-[0_0_0_4px_rgba(255,154,66,.18)]"></span>
+                            Your next chapter starts here
+                        </p>
+                        @forelse ($heroSlides as $index => $slide)
+                            <div x-cloak x-show="active === {{ $index }}" x-transition.opacity.duration.500ms>
+                                <h1 class="max-w-3xl text-4xl font-semibold leading-[1.08] tracking-[-.04em] drop-shadow-sm sm:text-5xl lg:text-7xl">{{ $slide->title }}</h1>
+                                @if ($slide->subtitle)
+                                    <p class="mt-5 max-w-2xl text-base leading-7 text-white/85 drop-shadow sm:text-lg sm:leading-8">{{ $slide->subtitle }}</p>
+                                @endif
+                                @if ($slide->button_text && $slide->button_url)
+                                    <a href="{{ $slide->button_url }}" class="mt-7 inline-flex items-center gap-3 rounded-xl bg-[#ff922f] px-6 py-3.5 text-sm font-extrabold text-[#162c43] shadow-lg shadow-black/20 transition hover:-translate-y-0.5 hover:bg-[#ffa54e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#102d48]">
+                                        {{ $slide->button_text }}
+                                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6 6 6-6 6"/></svg>
+                                    </a>
+                                @endif
                             </div>
-                            <p class="mt-6 text-xs text-[#c1d9cc]">A little clarity can take you a long way.</p>
-                        </div>
+                        @empty
+                            <h1 class="max-w-3xl text-4xl font-semibold leading-[1.08] tracking-[-.04em] drop-shadow-sm sm:text-5xl lg:text-7xl">A world of study. A place for you.</h1>
+                            <p class="mt-5 max-w-2xl text-base leading-7 text-white/85 sm:text-lg sm:leading-8">Explore universities, compare the details that matter and find a destination that feels right for your future.</p>
+                        @endforelse
                     </div>
                 </div>
+
+                @if ($heroSlides->count() > 1)
+                    <button type="button" @click="togglePlayback()" :aria-label="paused ? 'Play slideshow' : 'Pause slideshow'" class="absolute right-4 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/35 bg-black/20 text-white backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:right-8 sm:top-7">
+                        <svg x-cloak x-show="!paused" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5a1 1 0 0 1 1 1v12a1 1 0 1 1-2 0V6a1 1 0 0 1 1-1Zm8 0a1 1 0 0 1 1 1v12a1 1 0 1 1-2 0V6a1 1 0 0 1 1-1Z"/></svg>
+                        <svg x-cloak x-show="paused" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.5 5.8a1 1 0 0 1 1.52-.85l9 5.7a1.6 1.6 0 0 1 0 2.7l-9 5.7a1 1 0 0 1-1.52-.85V5.8Z"/></svg>
+                    </button>
+                    <div class="absolute bottom-6 left-5 z-10 flex items-center gap-2 sm:left-8 lg:left-[max(2rem,calc((100vw-80rem)/2+2.5rem))]">
+                        <button type="button" @click="previous()" aria-label="Previous slide" class="hidden h-10 w-10 items-center justify-center rounded-full border border-white/35 bg-black/20 text-white backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:flex">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m15 18-6-6 6-6"/></svg>
+                        </button>
+                        <div class="flex items-center gap-1.5" role="group" aria-label="Choose a slide">
+                            @foreach ($heroSlides as $index => $slide)
+                                <button type="button" @click="goTo({{ $index }})" :aria-current="active === {{ $index }} ? 'true' : null" aria-label="Show slide {{ $index + 1 }}" class="h-2.5 rounded-full bg-white/55 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white" :class="active === {{ $index }} ? 'w-8 !bg-white' : 'w-2.5 hover:bg-white/80'"></button>
+                            @endforeach
+                        </div>
+                        <button type="button" @click="next()" aria-label="Next slide" class="hidden h-10 w-10 items-center justify-center rounded-full border border-white/35 bg-black/20 text-white backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white sm:flex">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                @endif
+
+                <a href="https://wa.me/8801965999950" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp at +880 1965-999950" class="absolute bottom-5 right-4 z-20 inline-flex items-center gap-2.5 rounded-2xl border border-white/35 bg-[#18a957] px-3.5 py-3 text-white shadow-[0_12px_35px_-12px_rgba(0,0,0,.65)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-[#138d48] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#102d48] sm:bottom-6 sm:right-8 sm:gap-3 sm:px-5 sm:py-3.5 lg:right-[max(2rem,calc((100vw-80rem)/2+2.5rem))]">
+                    <svg class="h-6 w-6 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.47 0 .1 5.36.1 11.96c0 2.1.55 4.15 1.6 5.96L0 24l6.23-1.63a11.96 11.96 0 0 0 5.83 1.49h.01c6.6 0 11.96-5.37 11.96-11.96 0-3.2-1.25-6.2-3.51-8.42ZM12.07 21.8h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.7.97.99-3.6-.24-.37a9.85 9.85 0 0 1-1.52-5.25c0-5.46 4.44-9.9 9.9-9.9a9.82 9.82 0 0 1 7 2.9 9.82 9.82 0 0 1 2.9 7c0 5.46-4.45 9.9-9.92 9.9Zm5.43-7.42c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.88-.78-1.48-1.75-1.65-2.05-.18-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.38-.03-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.2 5.08 4.48.7.3 1.25.49 1.68.62.7.22 1.34.19 1.84.12.56-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.08-.13-.28-.2-.58-.35Z"/></svg>
+                    <span class="text-left"><span class="block text-[10px] font-bold uppercase tracking-[.12em] text-white/80 sm:text-[11px]">Chat with us</span><span class="mt-0.5 block text-sm font-extrabold sm:text-base">WhatsApp <span class="hidden sm:inline">· +880 1965-999950</span></span></span>
+                </a>
+            </div>
+
+            <div class="relative z-10 mx-auto -mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
+                <form action="{{ route('search') }}" method="GET" class="rounded-3xl border border-[#e5e9e4] bg-white p-5 shadow-[0_24px_70px_-35px_rgba(19,45,57,.38)] sm:p-7">
+                    <div class="mb-5 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+                        <div><p class="text-xs font-bold uppercase tracking-[.17em] text-[#dc6d2b]">Take the next step</p><h2 class="mt-1 text-xl font-bold tracking-tight text-[#15334b] sm:text-2xl">Find a university that fits</h2></div>
+                        <p class="text-sm text-[#708087]">Choose a destination or search by course.</p>
+                    </div>
+                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-12 lg:items-end">
+                        <div class="sm:col-span-2 lg:col-span-3"><label for="home_q" class="text-xs font-semibold text-[#687871]">University or keyword</label><input id="home_q" name="q" type="search" placeholder="e.g. business, Toronto, university" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm placeholder:text-[#9aa69f] focus:border-[#4e8273] focus:ring-[#4e8273]"></div>
+                        <div class="lg:col-span-2"><label for="country_id" class="text-xs font-semibold text-[#687871]">Study destination</label><select name="country_id" id="country_id" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm text-[#344e46] focus:border-[#4e8273] focus:ring-[#4e8273]"><option value="">Any country</option>@foreach ($countries ?? [] as $country)<option value="{{ $country->id }}">{{ $country->name }}</option>@endforeach</select></div>
+                        <div class="lg:col-span-2"><label for="state_id" class="text-xs font-semibold text-[#687871]">State / region</label><select name="state_id" id="state_id" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm text-[#344e46] focus:border-[#4e8273] focus:ring-[#4e8273]"><option value="">Any region</option></select></div>
+                        <div class="lg:col-span-2"><label for="city_id" class="text-xs font-semibold text-[#687871]">City</label><select name="city_id" id="city_id" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm text-[#344e46] focus:border-[#4e8273] focus:ring-[#4e8273]"><option value="">Any city</option></select></div>
+                        <div class="grid grid-cols-2 gap-2 sm:col-span-2 lg:col-span-2"><div><label for="tuition_min" class="text-xs font-semibold text-[#687871]">Tuition from</label><input id="tuition_min" name="tuition_min" type="number" min="0" placeholder="Min" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm focus:border-[#4e8273] focus:ring-[#4e8273]"></div><div><label for="tuition_max" class="text-xs font-semibold text-[#687871]">Tuition to</label><input id="tuition_max" name="tuition_max" type="number" min="0" placeholder="Max" class="mt-1.5 w-full rounded-xl border-[#dfe5df] bg-[#fdfdfb] text-sm focus:border-[#4e8273] focus:ring-[#4e8273]"></div></div>
+                        <button type="submit" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#0757a6] px-5 text-sm font-bold text-white shadow-lg shadow-[#0757a6]/15 transition hover:bg-[#064785] focus:outline-none focus:ring-2 focus:ring-[#0aa9cf] focus:ring-offset-2 sm:col-span-2 lg:col-span-12">Find universities <span aria-hidden="true">→</span></button>
+                    </div>
+                </form>
             </div>
         </section>
 
@@ -283,6 +353,7 @@
                 <nav class="mt-4 flex flex-col items-start gap-3 text-sm text-[#e1ebe4]" aria-label="Journey links">
                     <a href="#how-it-works" class="transition hover:text-white">How it works</a>
                     <a href="#stories" class="transition hover:text-white">Student stories</a>
+                    <a href="{{ route('contact') }}" class="transition hover:text-white">Contact us</a>
                     <a href="#top" class="transition hover:text-white">Back to top ↑</a>
                 </nav>
             </div>

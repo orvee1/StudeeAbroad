@@ -137,8 +137,8 @@ class LeadController extends Controller
             'desired_university_id' => ['nullable', 'integer', Rule::exists('universities', 'id')->where('is_active', true)],
             'desired_level' => ['nullable', 'string', 'max:40'],
             'preferred_intake' => ['nullable', 'string', 'max:20'],
-            'source' => ['required', Rule::in(['landing', 'destination', 'university', 'program'])],
-            'message' => ['nullable', 'string', 'max:2000'],
+            'source' => ['required', Rule::in(['landing', 'destination', 'university', 'program', 'contact'])],
+            'message' => [$request->input('source') === 'contact' ? 'required' : 'nullable', 'string', 'max:2000'],
         ]);
 
         if (! $this->universityMatchesCountry($data)) {

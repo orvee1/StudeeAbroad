@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\HomeSlideController;
 use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SuccessStoryController as AdminSuccessStoryController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Student\SuccessStoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
+Route::view('/contact', 'client.contact')->name('contact');
 
 Route::get('/destinations/{country:slug}', [PublicCatalogController::class, 'country'])->name('public.destinations.show');
 Route::get('/universities/{university:slug}', [PublicCatalogController::class, 'university'])->name('public.universities.show');
@@ -78,6 +80,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     Route::get('/leads', [AdminLeadController::class, 'index'])->name('leads.index');
     Route::patch('/leads/{lead}', [AdminLeadController::class, 'update'])->name('leads.update');
+
+    // Homepage hero slides
+    Route::get('home-slides', [HomeSlideController::class, 'index'])->name('home_slides.index');
+    Route::get('home-slides/create', [HomeSlideController::class, 'create'])->name('home_slides.create');
+    Route::post('home-slides', [HomeSlideController::class, 'store'])->name('home_slides.store');
+    Route::get('home-slides/{home_slide}/edit', [HomeSlideController::class, 'edit'])->name('home_slides.edit');
+    Route::put('home-slides/{home_slide}', [HomeSlideController::class, 'update'])->name('home_slides.update');
+    Route::delete('home-slides/{home_slide}', [HomeSlideController::class, 'destroy'])->name('home_slides.destroy');
 
     // Students
     Route::get('students', [StudentController::class, 'index'])->name('students.index');

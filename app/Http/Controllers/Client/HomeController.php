@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Country;
+use App\Models\HomeSlide;
 use App\Models\SuccessStory;
 use App\Models\University;
 use App\Models\UniversityProgram;
@@ -53,6 +54,13 @@ class HomeController extends Controller
             ->take(8)
             ->get();
 
+        $heroSlides = HomeSlide::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->take(8)
+            ->get();
+
         $stats = [
             'countries'    => Country::where('is_active', true)->count(),
             'universities' => University::where('is_active', true)->count(),
@@ -65,6 +73,7 @@ class HomeController extends Controller
             'topCountries',
             'featuredUniversities',
             'successStories',
+            'heroSlides',
             'stats'
         ));
     }

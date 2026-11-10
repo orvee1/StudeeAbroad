@@ -41,6 +41,10 @@
                         <svg class="h-5 w-5 shrink-0 {{ request()->routeIs('dashboard') ? 'text-emerald-700' : 'text-slate-400 group-hover:text-slate-600' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="4" rx="1.5"/><rect x="13.5" y="10.5" width="7" height="10" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/></svg>
                         <span>Dashboard</span>
                     </a>
+                    <a href="{{ route('home') }}" target="_blank" rel="noopener noreferrer" class="group mt-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-slate-600 transition hover:bg-slate-50 hover:text-slate-950" aria-label="View public homepage in a new tab">
+                        <svg class="h-5 w-5 shrink-0 text-slate-400 group-hover:text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 4h6v6m-.5-5.5L11 13M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg>
+                        <span>View website</span>
+                    </a>
                 </div>
 
                 <div>
@@ -83,6 +87,14 @@
                     <a href="{{ route('success_stories.index') }}" @class(['group mt-1 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold transition duration-150', 'bg-emerald-50 text-emerald-900 ring-1 ring-inset ring-emerald-100' => request()->routeIs('success_stories.*'), 'text-slate-600 hover:bg-slate-50 hover:text-slate-950' => !request()->routeIs('success_stories.*')]) @if(request()->routeIs('success_stories.*')) aria-current="page" @endif>
                         <svg class="h-5 w-5 shrink-0 {{ request()->routeIs('success_stories.*') ? 'text-emerald-700' : 'text-slate-400 group-hover:text-slate-600' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m12 3.5 2.6 5.3 5.9.9-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.9L12 3.5Z"/></svg>
                         <span>Success stories</span>
+                    </a>
+                </div>
+
+                <div>
+                    <p class="px-3 pb-2 text-[10px] font-extrabold uppercase tracking-[.18em] text-slate-400">Website content</p>
+                    <a href="{{ route('home_slides.index') }}" @class(['group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold transition duration-150', 'bg-emerald-50 text-emerald-900 ring-1 ring-inset ring-emerald-100' => request()->routeIs('home_slides.*'), 'text-slate-600 hover:bg-slate-50 hover:text-slate-950' => !request()->routeIs('home_slides.*')]) @if(request()->routeIs('home_slides.*')) aria-current="page" @endif>
+                        <svg class="h-5 w-5 shrink-0 {{ request()->routeIs('home_slides.*') ? 'text-emerald-700' : 'text-slate-400 group-hover:text-slate-600' }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path stroke-linecap="round" stroke-linejoin="round" d="m5 17 4.5-4.5 3 3 2.5-2.5 4 4"/></svg>
+                        <span>Homepage slider</span>
                     </a>
                 </div>
 
@@ -176,6 +188,7 @@
                     <div>
                         <p class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-[.18em] text-slate-400">Overview</p>
                         <a href="{{ route('dashboard') }}" @class(['block rounded-xl px-3 py-2.5 text-sm font-bold transition', 'bg-emerald-50 text-emerald-900' => request()->routeIs('dashboard'), 'text-slate-600 hover:bg-slate-50' => !request()->routeIs('dashboard')])>Dashboard</a>
+                        <a href="{{ route('home') }}" target="_blank" rel="noopener noreferrer" aria-label="View public homepage in a new tab" class="mt-1 flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-bold text-slate-600 transition hover:bg-slate-50 hover:text-slate-950"><span>View website</span><svg class="h-4 w-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 4h6v6m-.5-5.5L11 13M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg></a>
                     </div>
                     <div>
                         <p class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-[.18em] text-slate-400">Catalog &amp; enquiries</p>
@@ -199,6 +212,10 @@
                         <p class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-[.18em] text-slate-400">Students</p>
                         <a href="{{ route('students.index') }}" @class(['block rounded-xl px-3 py-2.5 text-sm font-bold transition', 'bg-emerald-50 text-emerald-900' => request()->routeIs('students.*'), 'text-slate-600 hover:bg-slate-50' => !request()->routeIs('students.*')])>Registered students</a>
                         <a href="{{ route('success_stories.index') }}" @class(['mt-1 block rounded-xl px-3 py-2.5 text-sm font-bold transition', 'bg-emerald-50 text-emerald-900' => request()->routeIs('success_stories.*'), 'text-slate-600 hover:bg-slate-50' => !request()->routeIs('success_stories.*')])>Success stories</a>
+                    </div>
+                    <div>
+                        <p class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-[.18em] text-slate-400">Website content</p>
+                        <a href="{{ route('home_slides.index') }}" @class(['block rounded-xl px-3 py-2.5 text-sm font-bold transition', 'bg-emerald-50 text-emerald-900' => request()->routeIs('home_slides.*'), 'text-slate-600 hover:bg-slate-50' => !request()->routeIs('home_slides.*')])>Homepage slider</a>
                     </div>
                     <div>
                         <p class="px-3 pb-1.5 text-[10px] font-extrabold uppercase tracking-[.18em] text-slate-400">Administration</p>
