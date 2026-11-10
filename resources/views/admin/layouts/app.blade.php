@@ -163,7 +163,7 @@
                             </a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" role="menuitem" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-bold text-rose-700 transition hover:bg-rose-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500">
+                                <button type="submit" role="menuitem" class="flex w-full items-center gap-3 rounded-xl bg-rose-50 px-3 py-2.5 text-left text-sm font-bold text-rose-700 shadow-sm transition hover:bg-rose-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2">
                                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10 5H5.5A1.5 1.5 0 0 0 4 6.5v11A1.5 1.5 0 0 0 5.5 19H10M14 16l4-4-4-4m4 4H9"/></svg>
                                     <span>Log out</span>
                                 </button>
