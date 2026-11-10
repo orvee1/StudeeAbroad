@@ -231,6 +231,30 @@
             <x-enquiry-form source="landing" />
         </section>
 
+        <section class="border-y border-[#dce8f1] bg-white" aria-labelledby="connect-heading">
+            <div class="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[.8fr_1.2fr] lg:items-center lg:px-8 lg:py-14">
+                <div class="max-w-md">
+                    <p class="text-xs font-bold uppercase tracking-[.18em] text-[#d96a18]">Stay in touch</p>
+                    <h2 id="connect-heading" class="mt-3 text-2xl font-semibold tracking-tight text-[#142b4a] sm:text-3xl">Connect with EXFREELANCE</h2>
+                    <p class="mt-3 text-sm leading-6 text-[#58718a]">Follow our latest news, updates and student stories.</p>
+                </div>
+
+                <div class="grid gap-3">
+                    <a href="https://www.facebook.com/exfreelancebd/" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-4 rounded-2xl border border-[#dce8f1] bg-[#f7fbff] p-5 transition hover:-translate-y-0.5 hover:border-[#9fc7e8] hover:shadow-lg hover:shadow-[#0757a6]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0757a6] focus-visible:ring-offset-2">
+                        <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#e6f2ff] text-[#0757a6]" aria-hidden="true">
+                            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M13.4 21v-8.2h2.8l.4-3.2h-3.2v-2c0-.9.3-1.5 1.6-1.5h1.7V3.2c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.2v2.3H7.6v3.2h2.7V21h3.1Z"/></svg>
+                        </span>
+                        <span class="min-w-0 flex-1">
+                            <span class="block text-sm font-bold text-[#142b4a]">Follow us on Facebook</span>
+                            <span class="mt-1 block text-xs leading-5 text-[#58718a]">News, updates and student stories</span>
+                        </span>
+                        <span class="text-lg text-[#0757a6] transition group-hover:translate-x-1" aria-hidden="true">→</span>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
         <section class="px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
             <div class="mx-auto flex max-w-7xl flex-col gap-7 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#0b6158] via-[#0b6158] to-[#083f3a] px-6 py-9 text-white shadow-xl shadow-[#0b6158]/15 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-12">
                 <div class="max-w-2xl"><p class="text-xs font-bold uppercase tracking-[.18em] text-[#b9f0d2]">Your next chapter</p><h2 class="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Ready to see what’s out there?</h2><p class="mt-3 max-w-xl text-sm leading-6 text-[#dcf0e4]">Search universities and compare the details that help you make a confident choice.</p></div>
@@ -240,7 +264,7 @@
     </main>
 
     <footer id="footer" class="border-t border-[#1f675d] bg-[#0a453f] text-white">
-        <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.2fr_.8fr_.8fr] lg:px-8 lg:py-14">
+        <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 xl:grid-cols-[1.2fr_.8fr_.8fr_1.2fr] lg:px-8 lg:py-14">
             <div class="max-w-sm">
                 <a href="{{ route('home') }}" class="inline-flex items-center gap-3" aria-label="{{ config('app.name', 'EXFREELANCE') }} home"><x-brand-mark size="h-16 w-64" wrapper-class="rounded-lg ring-0 bg-transparent" /></a>
                 <p class="mt-4 text-sm leading-6 text-[#c5d8ce]">Explore study destinations and find universities that fit your plans.</p>
@@ -262,6 +286,19 @@
                     <a href="#stories" class="transition hover:text-white">Student stories</a>
                     <a href="#top" class="transition hover:text-white">Back to top ↑</a>
                 </nav>
+            </div>
+            <div>
+                <h2 class="text-xs font-bold uppercase tracking-[.16em] text-[#ffb08f]">Visit us</h2>
+                <a href="https://www.google.com/maps/place/Freelancing+Digital+Marketing+SEO+SMM+and+PPC+Expert+and+Consultant+and+Training/@23.8815642,90.4415625,17z/data=!3m1!4b1!4m6!3m5!1s0x3755c132fceafbfb:0xbc504d26428263d0!8m2!3d23.8815642!4d90.4415625!16s%2Fg%2F11j4xsl_99?entry=tts&amp;g_ep=EgoyMDI2MTEwNC4wIOC7DCoASAFQAw%3D%3D&amp;skid=5be6654c-1d38-4a40-a876-3b3a483c4423" target="_blank" rel="noopener noreferrer" aria-label="Open our location details in Google Maps" class="group mt-4 block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0aa9cf] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a453f]">
+                    <span class="relative block h-48 overflow-hidden rounded-2xl border border-white/15 bg-white/10">
+                        <iframe title="Map showing our location" src="https://maps.google.com/maps?q=23.8815642%2C90.4415625&amp;z=17&amp;output=embed" class="pointer-events-none h-full w-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" aria-hidden="true" tabindex="-1"></iframe>
+                        <span class="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-[#062d61]/95 to-transparent px-4 pb-3 pt-10 text-sm font-bold text-white">
+                            View location in Google Maps <span aria-hidden="true" class="transition group-hover:translate-x-1">→</span>
+                        </span>
+                    </span>
+                    <span class="mt-3 block text-sm font-semibold leading-5 text-white">Freelancing Digital Marketing, SEO, SMM and PPC</span>
+                    <span class="mt-1 block text-xs leading-5 text-[#c5d8ce]">Tap the map to see full details and directions.</span>
+                </a>
             </div>
         </div>
         <div class="border-t border-white/15">
