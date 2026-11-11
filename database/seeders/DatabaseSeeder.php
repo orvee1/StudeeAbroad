@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             CitySeeder::class,
 
             UniversitySeeder::class,
+            HomeSlideSeeder::class,
         ]);
 
         // Demo data only in local development.

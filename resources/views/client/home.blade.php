@@ -140,7 +140,7 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-[#091b2d]/60 via-transparent to-[#091b2d]/10"></div>
 
                 <div class="relative mx-auto flex h-full max-w-7xl items-center px-5 pb-24 pt-14 sm:px-8 lg:px-10">
-                    <div class="max-w-3xl text-white">
+                    <div class="max-w-3xl text-white lg:ml-20">
                         <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[.18em] text-white/90 shadow-sm backdrop-blur-sm sm:text-xs">
                             <span class="h-2 w-2 rounded-full bg-[#ff9a42] shadow-[0_0_0_4px_rgba(255,154,66,.18)]"></span>
                             Your next chapter starts here
@@ -185,9 +185,8 @@
                     </div>
                 @endif
 
-                <a href="https://wa.me/8801965999950" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp at +880 1965-999950" class="absolute bottom-5 right-4 z-20 inline-flex items-center gap-2.5 rounded-2xl border border-white/35 bg-[#18a957] px-3.5 py-3 text-white shadow-[0_12px_35px_-12px_rgba(0,0,0,.65)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-[#138d48] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#102d48] sm:bottom-6 sm:right-8 sm:gap-3 sm:px-5 sm:py-3.5 lg:right-[max(2rem,calc((100vw-80rem)/2+2.5rem))]">
+                <a href="https://wa.me/8801965999950" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp at +880 1965-999950" title="Chat with us on WhatsApp" class="absolute left-4 top-4 z-20 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/45 bg-white/15 text-white shadow-[0_12px_35px_-12px_rgba(0,0,0,.65)] ring-1 ring-white/10 backdrop-blur-xl transition hover:scale-105 hover:bg-white/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#102d48] sm:left-6 sm:top-6 lg:left-[max(1rem,calc((100vw-80rem)/2+1rem))] lg:top-1/2 lg:-translate-y-1/2">
                     <svg class="h-6 w-6 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.47 0 .1 5.36.1 11.96c0 2.1.55 4.15 1.6 5.96L0 24l6.23-1.63a11.96 11.96 0 0 0 5.83 1.49h.01c6.6 0 11.96-5.37 11.96-11.96 0-3.2-1.25-6.2-3.51-8.42ZM12.07 21.8h-.01a9.9 9.9 0 0 1-5.04-1.38l-.36-.21-3.7.97.99-3.6-.24-.37a9.85 9.85 0 0 1-1.52-5.25c0-5.46 4.44-9.9 9.9-9.9a9.82 9.82 0 0 1 7 2.9 9.82 9.82 0 0 1 2.9 7c0 5.46-4.45 9.9-9.92 9.9Zm5.43-7.42c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.88-.78-1.48-1.75-1.65-2.05-.18-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.38-.03-.53-.08-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.1 3.2 5.08 4.48.7.3 1.25.49 1.68.62.7.22 1.34.19 1.84.12.56-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.08-.13-.28-.2-.58-.35Z"/></svg>
-                    <span class="text-left"><span class="block text-[10px] font-bold uppercase tracking-[.12em] text-white/80 sm:text-[11px]">Chat with us</span><span class="mt-0.5 block text-sm font-extrabold sm:text-base">WhatsApp <span class="hidden sm:inline">· +880 1965-999950</span></span></span>
                 </a>
             </div>
 
