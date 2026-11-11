@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}?v=2">
-    <meta name="description" content="Explore universities and study destinations around the world. Compare tuition, rankings and programs to plan your next step.">
+    <meta name="description" content="Plan your study abroad journey with university guidance, student visa and immigration support, accommodation assistance and air ticketing.">
     <title>{{ config('app.name', 'EXFREELANCE') }} — Find your place to study</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
@@ -27,33 +27,34 @@
     @endphp
 
     <header x-data="{ open: false }" class="sticky top-0 z-40 border-b border-[#ebe4d9] bg-[#fffaf5]/95 backdrop-blur">
-        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8 xl:gap-1">
             <a href="{{ route('home') }}" class="group flex shrink-0 items-center gap-3" aria-label="{{ config('app.name', 'EXFREELANCE') }} home">
                 <x-brand-mark size="h-16 w-64" wrapper-class="rounded-lg ring-0 bg-transparent" />
             </a>
 
-            <nav class="hidden items-center gap-3 text-sm font-semibold xl:flex" aria-label="Main navigation">
-                <a href="#destinations" class="home-nav-link">Destinations</a>
-                <a href="#universities" class="home-nav-link">Universities</a>
-                <a href="{{ route('public.programs.index') }}" class="home-nav-link">Programs</a>
-                <a href="#stories" class="home-nav-link">Student stories</a>
-                <a href="{{ route('contact') }}" class="home-nav-link">Contact us</a>
+            <nav class="hidden shrink-0 items-center gap-3 text-sm font-semibold xl:flex xl:gap-1" aria-label="Main navigation">
+                <a href="#destinations" class="home-nav-link whitespace-nowrap">Destinations</a>
+                <a href="#universities" class="home-nav-link whitespace-nowrap">Universities</a>
+                <a href="#services" class="home-nav-link whitespace-nowrap">Our services</a>
+                <a href="{{ route('public.programs.index') }}" class="home-nav-link whitespace-nowrap">Programs</a>
+                <a href="#stories" class="home-nav-link whitespace-nowrap">Student stories</a>
+                <a href="{{ route('contact') }}" class="home-nav-link whitespace-nowrap">Contact us</a>
             </nav>
 
-            <div class="hidden items-center gap-3 xl:flex">
+            <div class="hidden shrink-0 items-center gap-3 xl:flex xl:gap-1">
                 @auth
-                    <a href="#enquiry" class="inline-flex items-center gap-2 rounded-xl bg-[#ef8b22] px-3.5 py-2.5 text-sm font-bold text-[#142b4a] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#d96a18] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ef8b22] focus-visible:ring-offset-2">
+                    <a href="#enquiry" class="inline-flex items-center gap-2 whitespace-nowrap rounded-xl bg-[#ef8b22] px-3.5 py-2.5 text-sm font-bold text-[#142b4a] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#d96a18] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ef8b22] focus-visible:ring-offset-2">
                         Talk with our team
                         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h6m-8 8 2.7-3H17a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7a3 3 0 0 0 1 2.3V20Z"/></svg>
                     </a>
-                    <a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student.dashboard') }}" class="rounded-xl bg-gradient-to-r from-[#142b4a] via-[#0757a6] to-[#0aa9cf] px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#0757a6]/20 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0aa9cf] focus-visible:ring-offset-2">{{ auth()->user()->isAdmin() ? 'Admin dashboard' : 'My dashboard' }}</a>
+                    <a href="{{ auth()->user()->isAdmin() ? route('dashboard') : route('student.dashboard') }}" class="whitespace-nowrap rounded-xl bg-gradient-to-r from-[#142b4a] via-[#0757a6] to-[#0aa9cf] px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#0757a6]/20 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0aa9cf] focus-visible:ring-offset-2">{{ auth()->user()->isAdmin() ? 'Admin dashboard' : 'My dashboard' }}</a>
                 @else
-                    <a href="#enquiry" class="inline-flex items-center gap-2 rounded-xl bg-[#ef8b22] px-3.5 py-2.5 text-sm font-bold text-[#142b4a] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#d96a18] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ef8b22] focus-visible:ring-offset-2">
+                    <a href="#enquiry" class="inline-flex items-center gap-2 whitespace-nowrap rounded-xl bg-[#ef8b22] px-3.5 py-2.5 text-sm font-bold text-[#142b4a] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#d96a18] hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ef8b22] focus-visible:ring-offset-2">
                         Talk with our team
                         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h6m-8 8 2.7-3H17a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7a3 3 0 0 0 1 2.3V20Z"/></svg>
                     </a>
-                    <a href="{{ route('login') }}" class="home-nav-link text-sm font-semibold">Log in</a>
-                    <a href="{{ route('register') }}" class="rounded-xl bg-gradient-to-r from-[#142b4a] via-[#0757a6] to-[#0aa9cf] px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#0757a6]/20 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0aa9cf] focus-visible:ring-offset-2">Create account</a>
+                    <a href="{{ route('login') }}" class="home-nav-link whitespace-nowrap text-sm font-semibold">Log in</a>
+                    <a href="{{ route('register') }}" class="whitespace-nowrap rounded-xl bg-gradient-to-r from-[#142b4a] via-[#0757a6] to-[#0aa9cf] px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#0757a6]/20 transition duration-200 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0aa9cf] focus-visible:ring-offset-2">Create account</a>
                 @endauth
             </div>
 
@@ -67,6 +68,7 @@
             <nav class="mx-auto flex max-w-7xl flex-col gap-1 text-sm font-medium" aria-label="Mobile navigation">
                     <a @click="open = false" href="#destinations" class="home-nav-link">Destinations</a>
                     <a @click="open = false" href="#universities" class="home-nav-link">Universities</a>
+                    <a @click="open = false" href="#services" class="home-nav-link">Our services</a>
                     <a @click="open = false" href="{{ route('public.programs.index') }}" class="home-nav-link">Programs</a>
                     <a @click="open = false" href="#stories" class="home-nav-link">Student stories</a>
                     <a @click="open = false" href="{{ route('contact') }}" class="home-nav-link">Contact us</a>
@@ -143,7 +145,7 @@
                     <div class="max-w-3xl text-white lg:ml-20">
                         <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[.18em] text-white/90 shadow-sm backdrop-blur-sm sm:text-xs">
                             <span class="h-2 w-2 rounded-full bg-[#ff9a42] shadow-[0_0_0_4px_rgba(255,154,66,.18)]"></span>
-                            Your next chapter starts here
+                            STUDY ABROAD | STUDENT VISA | IMMIGRATION | ACCOMMODATION | AIR TICKETING
                         </p>
                         @forelse ($heroSlides as $index => $slide)
                             <div x-cloak x-show="active === {{ $index }}" x-transition.opacity.duration.500ms>
@@ -214,6 +216,37 @@
                 <div class="border-l-2 border-[#abd9bc] pl-4"><p class="text-2xl font-bold tracking-tight text-[#133f39]">{{ number_format((int) ($stats['universities'] ?? 0)) }}</p><p class="mt-1 text-xs font-medium text-[#71817a] sm:text-sm">Universities to explore</p></div>
                 <div class="border-l-2 border-[#b6a6e6] pl-4"><p class="text-2xl font-bold tracking-tight text-[#133f39]">{{ number_format((int) ($stats['programs'] ?? 0)) }}</p><p class="mt-1 text-xs font-medium text-[#71817a] sm:text-sm">Programs in our directory</p></div>
                 <div class="border-l-2 border-[#f1c85c] pl-4"><p class="text-2xl font-bold tracking-tight text-[#133f39]">{{ $stats['support'] ?? '1:1' }}</p><p class="mt-1 text-xs font-medium text-[#71817a] sm:text-sm">Personal guidance</p></div>
+            </div>
+        </section>
+
+        <section id="services" class="border-b border-[#e5ebe5] bg-[#fffaf5]" aria-labelledby="services-heading">
+            <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+                <div class="mx-auto max-w-3xl text-center">
+                    <p class="text-xs font-bold uppercase tracking-[.18em] text-[#d96545]">Support for the journey ahead</p>
+                    <h2 id="services-heading" class="mt-3 text-3xl font-semibold tracking-tight text-[#133f39] sm:text-4xl">From choosing a course to settling in abroad.</h2>
+                    <p class="mt-4 text-base leading-7 text-[#687871]">Studying overseas involves more than choosing a university. We help you understand the key steps and connect the parts of your journey, from study planning and visa preparation to accommodation and flights.</p>
+                </div>
+
+                <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+                    @foreach ([
+                        ['01', 'Study abroad', 'Explore study destinations, courses and universities that suit your goals and budget.'],
+                        ['02', 'Student visa', 'Get practical guidance on student visa requirements, documents and application steps.'],
+                        ['03', 'Immigration guidance', 'Understand relevant immigration options and the next steps for your plans.'],
+                        ['04', 'Accommodation', 'Get help exploring places to stay and planning your move near your campus.'],
+                        ['05', 'Air ticketing', 'Plan your trip and get support with flight options for your destination.'],
+                    ] as $service)
+                        <article class="rounded-2xl border border-[#e6e5dc] bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg hover:shadow-[#0b6158]/10 sm:p-6">
+                            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e4f5ec] text-sm font-bold text-[#2b776b]">{{ $service[0] }}</span>
+                            <h3 class="mt-5 text-base font-bold text-[#133f39]">{{ $service[1] }}</h3>
+                            <p class="mt-2 text-sm leading-6 text-[#71817a]">{{ $service[2] }}</p>
+                        </article>
+                    @endforeach
+                </div>
+
+                <div class="mt-8 flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-center sm:gap-5">
+                    <p class="text-sm text-[#60736d]">Tell us where you want to go, and we’ll help you map out your next steps.</p>
+                    <a href="#enquiry" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#ef8b22] px-5 py-3 text-sm font-bold text-[#142b4a] shadow-sm transition hover:bg-[#d96a18] focus:outline-none focus:ring-2 focus:ring-[#ef8b22] focus:ring-offset-2">Talk with our team <span aria-hidden="true">→</span></a>
+                </div>
             </div>
         </section>
 
