@@ -38,7 +38,9 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            // On hosts without symlink support, point this at public_html/storage
+            // so newly uploaded files are both publicly served and visible in cPanel.
+            'root' => env('PUBLIC_STORAGE_PATH') ?: storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,

@@ -62,7 +62,15 @@ class CountryController extends Controller
         $data['sort_order'] = (int) ($data['sort_order'] ?? 0);
 
         if ($request->hasFile('flag')) {
-            $data['flag_path'] = $request->file('flag')->store('countries/flags', 'public');
+            $flagPath = $request->file('flag')->store('countries/flags', 'public');
+
+            if (! $flagPath) {
+                return back()
+                    ->withInput()
+                    ->withErrors(['flag' => 'The flag could not be saved. Check that the public storage folder exists and is writable.']);
+            }
+
+            $data['flag_path'] = $flagPath;
         }
         unset($data['flag']);
 
@@ -122,15 +130,27 @@ class CountryController extends Controller
         $data['is_active']  = (bool) ($data['is_active'] ?? false);
         $data['sort_order'] = (int) ($data['sort_order'] ?? 0);
 
+        $oldFlagPath = $country->flag_path;
+        $newFlagPath = null;
+
         if ($request->hasFile('flag')) {
-            if ($country->flag_path && Storage::disk('public')->exists($country->flag_path)) {
-                Storage::disk('public')->delete($country->flag_path);
+            $newFlagPath = $request->file('flag')->store('countries/flags', 'public');
+
+            if (! $newFlagPath) {
+                return back()
+                    ->withInput()
+                    ->withErrors(['flag' => 'The flag could not be saved. Check that the public storage folder exists and is writable.']);
             }
-            $data['flag_path'] = $request->file('flag')->store('countries/flags', 'public');
+
+            $data['flag_path'] = $newFlagPath;
         }
         unset($data['flag']);
 
         $country->update($data);
+
+        if ($newFlagPath && $oldFlagPath && $oldFlagPath !== $newFlagPath && Storage::disk('public')->exists($oldFlagPath)) {
+            Storage::disk('public')->delete($oldFlagPath);
+        }
 
         return redirect()
             ->route('countries.index')
