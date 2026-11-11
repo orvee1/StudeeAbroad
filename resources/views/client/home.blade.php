@@ -331,16 +331,16 @@
         </section>
     </main>
 
-    <footer id="footer" class="border-t border-[#1f675d] bg-[#0a453f] text-white">
+    <footer id="footer" class="brand-footer">
         <div class="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 xl:grid-cols-[1.2fr_.8fr_.8fr_1.2fr] lg:px-8 lg:py-14">
             <div class="max-w-sm">
                 <a href="{{ route('home') }}" class="inline-flex items-center gap-3" aria-label="{{ config('app.name', 'EXFREELANCE') }} home"><x-brand-mark size="h-16 w-64" wrapper-class="rounded-lg ring-0 bg-transparent" /></a>
-                <p class="mt-4 text-sm leading-6 text-[#c5d8ce]">Explore study destinations and find universities that fit your plans.</p>
-                <a href="https://wa.me/8801965999950" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp at +880 1965-999950" class="mt-5 inline-flex items-center gap-2 rounded-xl border border-[#4ac782]/40 bg-[#20b763]/15 px-3.5 py-2.5 text-sm font-bold text-white transition hover:bg-[#20b763]/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4ac782] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a453f]"><span class="text-[#4ac782]" aria-hidden="true">WhatsApp</span><span>+880 1965-999950</span></a>
+                <p class="mt-4 text-sm leading-6 text-white/75">Explore study destinations and find universities that fit your plans.</p>
+                <a href="https://wa.me/8801965999950" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp at +880 1965-999950" class="mt-5 inline-flex items-center gap-2 rounded-xl border border-[#4ac782]/45 bg-[#20b763]/20 px-3.5 py-2.5 text-sm font-bold text-white transition hover:bg-[#20b763]/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4ac782] focus-visible:ring-offset-2 focus-visible:ring-offset-[#102d48]"><span class="text-[#69db97]" aria-hidden="true">WhatsApp</span><span>+880 1965-999950</span></a>
             </div>
             <div>
-                <h2 class="text-xs font-bold uppercase tracking-[.16em] text-[#ffb08f]">Explore</h2>
-                <nav class="mt-4 flex flex-col items-start gap-3 text-sm text-[#e1ebe4]" aria-label="Footer navigation">
+                <h2 class="text-xs font-bold uppercase tracking-[.16em] text-[#ffc15e]">Explore</h2>
+                <nav class="mt-4 flex flex-col items-start gap-3 text-sm text-white/80" aria-label="Footer navigation">
                     <a href="{{ route('search') }}" class="transition hover:text-white">Find universities</a>
                     <a href="{{ route('public.programs.index') }}" class="transition hover:text-white">Find programs</a>
                     <a href="#destinations" class="transition hover:text-white">Study destinations</a>
@@ -348,8 +348,8 @@
                 </nav>
             </div>
             <div>
-                <h2 class="text-xs font-bold uppercase tracking-[.16em] text-[#ffb08f]">Your journey</h2>
-                <nav class="mt-4 flex flex-col items-start gap-3 text-sm text-[#e1ebe4]" aria-label="Journey links">
+                <h2 class="text-xs font-bold uppercase tracking-[.16em] text-[#ffc15e]">Your journey</h2>
+                <nav class="mt-4 flex flex-col items-start gap-3 text-sm text-white/80" aria-label="Journey links">
                     <a href="#how-it-works" class="transition hover:text-white">How it works</a>
                     <a href="#stories" class="transition hover:text-white">Student stories</a>
                     <a href="{{ route('contact') }}" class="transition hover:text-white">Contact us</a>
@@ -357,21 +357,21 @@
                 </nav>
             </div>
             <div>
-                <h2 class="text-xs font-bold uppercase tracking-[.16em] text-[#ffb08f]">Visit us</h2>
-                <a href="https://www.google.com/maps/place/Freelancing+Digital+Marketing+SEO+SMM+and+PPC+Expert+and+Consultant+and+Training/@23.8815642,90.4415625,17z/data=!3m1!4b1!4m6!3m5!1s0x3755c132fceafbfb:0xbc504d26428263d0!8m2!3d23.8815642!4d90.4415625!16s%2Fg%2F11j4xsl_99?entry=tts&amp;g_ep=EgoyMDI2MTEwNC4wIOC7DCoASAFQAw%3D%3D&amp;skid=5be6654c-1d38-4a40-a876-3b3a483c4423" target="_blank" rel="noopener noreferrer" aria-label="Open our location details in Google Maps" class="group mt-4 block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0aa9cf] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a453f]">
+                <h2 class="text-xs font-bold uppercase tracking-[.16em] text-[#ffc15e]">Visit us</h2>
+                <a href="https://www.google.com/maps/place/Freelancing+Digital+Marketing+SEO+SMM+and+PPC+Expert+and+Consultant+and+Training/@23.8815642,90.4415625,17z/data=!3m1!4b1!4m6!3m5!1s0x3755c132fceafbfb:0xbc504d26428263d0!8m2!3d23.8815642!4d90.4415625!16s%2Fg%2F11j4xsl_99?entry=tts&amp;g_ep=EgoyMDI2MTEwNC4wIOC7DCoASAFQAw%3D%3D&amp;skid=5be6654c-1d38-4a40-a876-3b3a483c4423" target="_blank" rel="noopener noreferrer" aria-label="Open our location details in Google Maps" class="group mt-4 block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9e76] focus-visible:ring-offset-2 focus-visible:ring-offset-[#102d48]">
                     <span class="relative block h-48 overflow-hidden rounded-2xl border border-white/15 bg-white/10">
                         <iframe title="Map showing our location" src="https://maps.google.com/maps?q=23.8815642%2C90.4415625&amp;z=17&amp;output=embed" class="pointer-events-none h-full w-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" aria-hidden="true" tabindex="-1"></iframe>
-                        <span class="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-[#062d61]/95 to-transparent px-4 pb-3 pt-10 text-sm font-bold text-white">
+                        <span class="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-[#083f3a]/95 to-transparent px-4 pb-3 pt-10 text-sm font-bold text-white">
                             View location in Google Maps <span aria-hidden="true" class="transition group-hover:translate-x-1">→</span>
                         </span>
                     </span>
                     <span class="mt-3 block text-sm font-semibold leading-5 text-white">Freelancing Digital Marketing, SEO, SMM and PPC</span>
-                    <span class="mt-1 block text-xs leading-5 text-[#c5d8ce]">Tap the map to see full details and directions.</span>
+                    <span class="mt-1 block text-xs leading-5 text-white/70">Tap the map to see full details and directions.</span>
                 </a>
             </div>
         </div>
         <div class="border-t border-white/15">
-            <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-[#c5d8ce] sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+            <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-white/65 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
                 <p>© {{ date('Y') }} {{ config('app.name', 'EXFREELANCE') }}. All rights reserved.</p>
                 <p>Find your place to study.</p>
             </div>

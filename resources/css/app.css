@@ -26,6 +26,29 @@
     --brand-line: #dce8f1;
 }
 
+.brand-theme .brand-footer {
+    position: relative;
+    isolation: isolate;
+    color: #fff;
+    background:
+        radial-gradient(ellipse at 88% 0%, rgb(239 139 34 / 12%), transparent 30%),
+        linear-gradient(125deg, #102d48 0%, #0b6158 54%, #083f3a 100%);
+}
+
+.brand-theme .brand-footer::before {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ef8b22 0%, #ffb15e 52%, #198b54 100%);
+    content: "";
+}
+
+.brand-theme .brand-footer > * {
+    position: relative;
+    z-index: 1;
+}
+
 /* The primary colours used by the existing public/student templates. */
 .brand-theme [class~="bg-[#174f46]"],
 .brand-theme [class~="bg-[#0b6158]"],

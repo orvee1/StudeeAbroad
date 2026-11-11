@@ -96,10 +96,10 @@
         </section>
     </main>
 
-    <footer class="border-t border-[#ebe4d9] bg-[#fffaf5]">
-        <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-5 text-xs text-[#71817a] sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+    <footer class="brand-footer">
+        <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-5 text-xs text-white/70 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
             <p>© {{ date('Y') }} {{ config('app.name', 'EXFREELANCE') }}. All rights reserved.</p>
-            <nav class="flex gap-5" aria-label="Footer navigation"><a href="{{ route('home') }}" class="hover:text-[#174f46]">Home</a><a href="{{ route('contact') }}" class="hover:text-[#174f46]">Contact us</a></nav>
+            <nav class="flex gap-5" aria-label="Footer navigation"><a href="{{ route('home') }}" class="transition hover:text-[#ffc15e]">Home</a><a href="{{ route('contact') }}" class="transition hover:text-[#8dd59d]">Contact us</a></nav>
         </div>
     </footer>
 </body>
