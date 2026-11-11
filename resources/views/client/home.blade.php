@@ -146,7 +146,7 @@
                     <div class="max-w-3xl text-white lg:ml-20">
                         <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[.18em] text-white/90 shadow-sm backdrop-blur-sm sm:text-xs">
                             <span class="h-2 w-2 rounded-full bg-[#ff9a42] shadow-[0_0_0_4px_rgba(255,154,66,.18)]"></span>
-                            STUDY ABROAD | STUDENT VISA | IMMIGRATION | ACCOMMODATION | AIR TICKETING
+                            SUPPORT FOR YOUR STUDY ABROAD JOURNEY
                         </p>
                         @forelse ($heroSlides as $index => $slide)
                             <div x-cloak x-show="active === {{ $index }}" x-transition.opacity.duration.500ms>
@@ -220,44 +220,23 @@
             </div>
         </section>
 
-        <section id="services" class="border-b border-[#e5ebe5] bg-[#fffaf5]" aria-labelledby="services-heading">
-            <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-                <div class="mx-auto max-w-3xl text-center">
-                    <p class="text-xs font-bold uppercase tracking-[.18em] text-[#d96545]">Support for the journey ahead</p>
-                    <h2 id="services-heading" class="mt-3 text-3xl font-semibold tracking-tight text-[#133f39] sm:text-4xl">From choosing a course to settling in abroad.</h2>
-                    <p class="mt-4 text-base leading-7 text-[#687871]">Studying overseas involves more than choosing a university. We help you understand the key steps and connect the parts of your journey, from study planning and visa preparation to accommodation and flights.</p>
-                </div>
-
-                <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-                    @foreach ([
-                        ['01', 'Study abroad', 'Explore study destinations, courses and universities that suit your goals and budget.'],
-                        ['02', 'Student visa', 'Get practical guidance on student visa requirements, documents and application steps.'],
-                        ['03', 'Immigration guidance', 'Understand relevant immigration options and the next steps for your plans.'],
-                        ['04', 'Accommodation', 'Get help exploring places to stay and planning your move near your campus.'],
-                        ['05', 'Air ticketing', 'Plan your trip and get support with flight options for your destination.'],
-                    ] as $service)
-                        <article class="rounded-2xl border border-[#e6e5dc] bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg hover:shadow-[#0b6158]/10 sm:p-6">
-                            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e4f5ec] text-sm font-bold text-[#2b776b]">{{ $service[0] }}</span>
-                            <h3 class="mt-5 text-base font-bold text-[#133f39]">{{ $service[1] }}</h3>
-                            <p class="mt-2 text-sm leading-6 text-[#71817a]">{{ $service[2] }}</p>
-                        </article>
-                    @endforeach
-                </div>
-
-                <div class="mt-8 flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-center sm:gap-5">
-                    <p class="text-sm text-[#60736d]">Tell us where you want to go, and we’ll help you map out your next steps.</p>
-                    <a href="#enquiry" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#ef8b22] px-5 py-3 text-sm font-bold text-[#142b4a] shadow-sm transition hover:bg-[#d96a18] focus:outline-none focus:ring-2 focus:ring-[#ef8b22] focus:ring-offset-2">Talk with our team <span aria-hidden="true">→</span></a>
-                </div>
+        <section class="border-b border-[#e5ebe5] bg-white" aria-label="Our services at a glance">
+            <div class="mx-auto grid max-w-7xl grid-cols-2 gap-2 px-4 py-4 sm:grid-cols-3 sm:px-6 lg:grid-cols-5 lg:px-8">
+                @foreach ([['01', 'Study abroad'], ['02', 'Student visa'], ['03', 'Immigration'], ['04', 'Accommodation'], ['05', 'Air ticketing']] as $service)
+                    <a href="#services" class="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[#e6e5dc] bg-[#fffaf5] px-3 py-2 text-center text-sm font-semibold text-[#345c50] transition hover:border-[#abd9bc] hover:bg-[#f3f8f2] hover:text-[#0b6158]">
+                        <span class="text-[11px] font-bold text-[#d96545]">{{ $service[0] }}</span>{{ $service[1] }}
+                    </a>
+                @endforeach
             </div>
         </section>
 
         <section id="how-it-works" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
             <div class="grid gap-8 lg:grid-cols-[.75fr_1.25fr] lg:items-end">
-                <div><p class="text-xs font-bold uppercase tracking-[.18em] text-[#d96545]">A simple place to begin</p><h2 class="mt-3 max-w-md text-3xl font-semibold leading-tight tracking-tight text-[#133f39] sm:text-4xl">Turn “where should I study?” into a clear next step.</h2></div>
-                <p class="max-w-xl text-base leading-7 text-[#687871] lg:justify-self-end">Start broad, narrow down by what matters to you, then explore universities and the options they offer.</p>
+                <div><p class="text-xs font-bold uppercase tracking-[.18em] text-[#d96545]">A simple place to begin</p><h2 class="mt-3 max-w-md text-3xl font-semibold leading-tight tracking-tight text-[#133f39] sm:text-4xl">Plan your next step.</h2></div>
+                <p class="max-w-xl text-base leading-7 text-[#687871] lg:justify-self-end">A simple path from exploring destinations to getting personal guidance.</p>
             </div>
             <div class="mt-9 grid gap-4 md:grid-cols-3">
-                @foreach ([['01', 'Choose a destination', 'Browse active countries and see universities listed for each place.'], ['02', 'Compare your options', 'Use tuition, location, study level and intake filters to refine your search.'], ['03', 'Plan your next move', 'Create an account to continue with your student dashboard and guidance.']] as $step)
+                @foreach ([['01', 'Choose a destination', 'Browse countries and listed universities.'], ['02', 'Compare your options', 'Filter by tuition, location, level and intake.'], ['03', 'Plan your next move', 'Create an account for your dashboard and guidance.']] as $step)
                     <article class="rounded-2xl border border-[#e6e5dc] bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg hover:shadow-[#0b6158]/10"><span class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e4f5ec] text-sm font-bold text-[#2b776b]">{{ $step[0] }}</span><h3 class="mt-5 text-lg font-bold text-[#133f39]">{{ $step[1] }}</h3><p class="mt-2 text-sm leading-6 text-[#71817a]">{{ $step[2] }}</p></article>
                 @endforeach
             </div>
@@ -326,6 +305,37 @@
                     @empty
                         <div class="col-span-full rounded-2xl border border-dashed border-[#d5ddd2] bg-white p-8 text-center text-sm text-[#71817a]">Student stories will be shared here as they become available.</div>
                     @endforelse
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="border-b border-[#e5ebe5] bg-[#fffaf5]" aria-labelledby="services-heading">
+            <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+                <div class="mx-auto max-w-3xl text-center">
+                    <p class="text-xs font-bold uppercase tracking-[.18em] text-[#d96545]">Support for the journey ahead</p>
+                    <h2 id="services-heading" class="mt-3 text-3xl font-semibold tracking-tight text-[#133f39] sm:text-4xl">From choosing a course to settling in abroad.</h2>
+                    <p class="mt-4 text-base leading-7 text-[#687871]">Studying overseas involves more than choosing a university. We help you understand the key steps and connect the parts of your journey, from study planning and visa preparation to accommodation and flights.</p>
+                </div>
+
+                <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+                    @foreach ([
+                        ['01', 'Study abroad', 'Explore study destinations, courses and universities that suit your goals and budget.'],
+                        ['02', 'Student visa', 'Get practical guidance on student visa requirements, documents and application steps.'],
+                        ['03', 'Immigration guidance', 'Understand relevant immigration options and the next steps for your plans.'],
+                        ['04', 'Accommodation', 'Get help exploring places to stay and planning your move near your campus.'],
+                        ['05', 'Air ticketing', 'Plan your trip and get support with flight options for your destination.'],
+                    ] as $service)
+                        <article class="rounded-2xl border border-[#e6e5dc] bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg hover:shadow-[#0b6158]/10 sm:p-6">
+                            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e4f5ec] text-sm font-bold text-[#2b776b]">{{ $service[0] }}</span>
+                            <h3 class="mt-5 text-base font-bold text-[#133f39]">{{ $service[1] }}</h3>
+                            <p class="mt-2 text-sm leading-6 text-[#71817a]">{{ $service[2] }}</p>
+                        </article>
+                    @endforeach
+                </div>
+
+                <div class="mt-8 flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-center sm:gap-5">
+                    <p class="text-sm text-[#60736d]">Tell us where you want to go, and we’ll help you map out your next steps.</p>
+                    <a href="#enquiry" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#ef8b22] px-5 py-3 text-sm font-bold text-[#142b4a] shadow-sm transition hover:bg-[#d96a18] focus:outline-none focus:ring-2 focus:ring-[#ef8b22] focus:ring-offset-2">Talk with our team <span aria-hidden="true">→</span></a>
                 </div>
             </div>
         </section>
