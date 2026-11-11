@@ -25,7 +25,6 @@ class HomeController extends Controller
                     $q->where('is_active', true);
                 },
             ])
-            ->orderByDesc('universities_count')
             ->orderBy('sort_order')
             ->orderBy('name')
             ->take(8)
