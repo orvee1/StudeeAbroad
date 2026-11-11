@@ -19,20 +19,6 @@
                 <p class="mt-1 text-xs text-slate-500">Keep it short so it stays easy to read over the image.</p>
                 @error('subtitle')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror
             </div>
-
-            <div class="grid gap-4 sm:grid-cols-2">
-                <div>
-                    <label for="slide-button-text" class="text-sm font-bold text-slate-800">Optional button label</label>
-                    <input id="slide-button-text" name="button_text" maxlength="50" value="{{ old('button_text', $slide?->button_text) }}" placeholder="Explore destinations" class="mt-1.5 w-full rounded-xl border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
-                    @error('button_text')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror
-                </div>
-                <div>
-                    <label for="slide-button-url" class="text-sm font-bold text-slate-800">Button URL</label>
-                    <input id="slide-button-url" type="url" name="button_url" maxlength="255" value="{{ old('button_url', $slide?->button_url) }}" placeholder="https://example.com" class="mt-1.5 w-full rounded-xl border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
-                    @error('button_url')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror
-                </div>
-            </div>
-            <p class="-mt-3 text-xs text-slate-500">Leave both button fields blank if the slide should only show text.</p>
         </div>
 
         <div class="space-y-4">
@@ -53,23 +39,34 @@
                     The image fills the hero area. A dark overlay will keep your headline readable.
                 </div>
             @endif
-
-            <div class="grid gap-4 sm:grid-cols-2">
-                <div>
-                    <label for="slide-sort-order" class="text-sm font-bold text-slate-800">Display order</label>
-                    <input id="slide-sort-order" type="number" name="sort_order" min="0" step="1" value="{{ old('sort_order', $slide?->sort_order ?? 0) }}" class="mt-1.5 w-full rounded-xl border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
-                    @error('sort_order')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror
-                </div>
-                <div class="flex items-end">
-                    <input type="hidden" name="is_active" value="0">
-                    <label class="flex w-full items-center gap-3 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700">
-                        <input type="checkbox" name="is_active" value="1" @checked((bool) old('is_active', $slide?->is_active ?? true)) class="rounded border-slate-300 text-emerald-700 focus:ring-emerald-600">
-                        Show on homepage
-                    </label>
-                </div>
-            </div>
         </div>
     </section>
+
+    <div class="grid items-start gap-4 border-t border-slate-100 pt-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div>
+            <label for="slide-button-text" class="text-sm font-bold text-slate-800">Optional button label</label>
+            <input id="slide-button-text" name="button_text" maxlength="50" value="{{ old('button_text', $slide?->button_text) }}" placeholder="Explore destinations" class="mt-1.5 w-full rounded-xl border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+            @error('button_text')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror
+        </div>
+        <div>
+            <label for="slide-button-url" class="text-sm font-bold text-slate-800">Button URL</label>
+            <input id="slide-button-url" type="url" name="button_url" maxlength="255" value="{{ old('button_url', $slide?->button_url) }}" placeholder="https://example.com" class="mt-1.5 w-full rounded-xl border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+            @error('button_url')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror
+        </div>
+        <div>
+            <label for="slide-sort-order" class="text-sm font-bold text-slate-800">Display order</label>
+            <input id="slide-sort-order" type="number" name="sort_order" min="0" step="1" value="{{ old('sort_order', $slide?->sort_order ?? 0) }}" class="mt-1.5 w-full rounded-xl border-slate-300 text-sm focus:border-blue-500 focus:ring-blue-500">
+            @error('sort_order')<p class="mt-1 text-sm text-rose-700">{{ $message }}</p>@enderror
+        </div>
+        <div class="sm:mt-7">
+            <input type="hidden" name="is_active" value="0">
+            <label class="flex min-h-[42px] w-full items-center gap-3 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-700">
+                <input type="checkbox" name="is_active" value="1" @checked((bool) old('is_active', $slide?->is_active ?? true)) class="rounded border-slate-300 text-emerald-700 focus:ring-emerald-600">
+                Show on homepage
+            </label>
+        </div>
+    </div>
+    <p class="-mt-4 text-xs text-slate-500">Leave both button fields blank if the slide should only show text.</p>
 
     <div class="flex flex-col-reverse gap-3 border-t border-slate-200 pt-5 sm:flex-row sm:justify-end">
         <a href="{{ route('home_slides.index') }}" class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2">Cancel</a>
