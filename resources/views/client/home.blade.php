@@ -130,7 +130,8 @@
                         class="absolute inset-0"
                         aria-hidden="true"
                     >
-                        <img src="{{ asset('storage/' . ltrim($slide->image_path, '/')) }}" alt="" class="h-full w-full object-cover object-center">
+                        <img src="{{ asset('storage/' . ltrim($slide->image_path, '/')) }}" alt="" class="absolute inset-0 h-full w-full scale-110 object-cover object-center opacity-40 blur-2xl">
+                        <img src="{{ asset('storage/' . ltrim($slide->image_path, '/')) }}" alt="" class="relative h-full w-full object-contain object-center">
                     </div>
                 @empty
                     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(9,169,207,.55),transparent_40%),linear-gradient(120deg,#102d48,#0757a6_58%,#0b8eaa)]"></div>
